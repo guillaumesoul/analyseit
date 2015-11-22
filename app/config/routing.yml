@@ -3,8 +3,11 @@ app:
     type:     annotation
 
 login:
-    path:      /login/
+    path:      /connect/
     defaults:  { _controller: AppBundle:Connection:index }
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 homepage:
     path:      /
