@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\User" table="user">
+    <id name="userId" type="integer" column="user_id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="userLogin" type="string" column="user_login" length="20" nullable="true"/>
+    <field name="userPassword" type="string" column="user_password" length="20" nullable="true"/>
+    <field name="userEmail" type="string" column="user_email" length="50" nullable="true"/>
+    <field name="userFirstname" type="string" column="user_firstname" length="30" nullable="true"/>
+    <field name="userLastname" type="string" column="user_lastname" length="30" nullable="true"/>
+  </entity>
+</doctrine-mapping>
