@@ -2,7 +2,7 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-login:
+connect:
     path:      /connect/
     defaults:  { _controller: AppBundle:Connection:index }
 
