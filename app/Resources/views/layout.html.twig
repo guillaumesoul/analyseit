@@ -12,17 +12,33 @@
 {% block topNavbar %}
 <nav class="navbar navbar-default navbar-top">
     <div class="container">
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="#">home</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Login</a></li>
-        </ul>
+        {% if app.user %}
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">home</a></li>
+                <li><a href="#">Link</a></li>
+            </ul>
+        {% endif %}
+
+        <div class="pull-right">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
     </div>
 </nav>
 {% endblock %}
 
-{% block appWindow %}
-{% endblock %}
+{% if app.user %}
+    {% block appWindow %}
+    {% endblock %}
+{% else %}
+    Bienvenue dans mon application, identifiez-vous
+{% endif %}
 
 
 </body>
