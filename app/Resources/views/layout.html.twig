@@ -22,11 +22,18 @@
         <div class="pull-right">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('fos_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a>
+                <button type="button" class="btn btn-default">
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                </button>
             {% else %}
-                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                <button type="button" class="btn btn-default">
+                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                </button>
+                <button type="button" class="btn btn-default">
+                    <a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a>
+                </button>
             {% endif %}
         </div>
     </div>
@@ -38,6 +45,8 @@
     {% endblock %}
 {% else %}
     Bienvenue dans mon application, identifiez-vous
+    {% block fos_user_content %}
+    {% endblock %}
 {% endif %}
 
 
