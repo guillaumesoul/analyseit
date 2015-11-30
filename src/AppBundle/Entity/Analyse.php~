@@ -1,0 +1,46 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Analyse
+ *
+ * @ORM\Table(name="analyse")
+ * @ORM\Entity
+ */
+class Analyse
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="analyse_name", type="string", length=30, nullable=true)
+     */
+    private $analyseName;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="analyse_userid", type="integer", nullable=true)
+     */
+    private $analyseUserid;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="analyse_serieid", type="integer", nullable=true)
+     */
+    private $analyseSerieid;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ananlyse_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $ananlyseId;
+
+
+}

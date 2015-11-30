@@ -13,6 +13,8 @@
 
 {% block part1 %}
     <div>
-        Creation d'une nouvelle anayse
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}
