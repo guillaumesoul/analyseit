@@ -9,29 +9,33 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Analyse;
 
 class AnalyseController extends Controller
 {
-    public function indexAction()
+
+    public function indexAction(Request $request)
     {
-        $form = $this->createFormBuilder()
-            ->setMethod('post')
-            ->setAction('')
+        $analyse = new Analyse();
+
+        $form = $this->createFormBuilder($analyse)
             ->add('name', 'text')
             ->add('save', 'submit', array('label' => 'Create Analyze'))
             ->getForm();
 
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($analyse);
+            $em->flush();
+            return $this->redirectToRoute('analyse');
+        }
+
         return $this->render('create/index.html.twig', array(
             'form' => $form->createView(),
         ));
-
-    }
-
-    public function createAction()
-    {
-        $analyse = new Analyse();
 
     }
 }
