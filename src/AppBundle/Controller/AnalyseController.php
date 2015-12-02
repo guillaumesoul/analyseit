@@ -33,7 +33,7 @@ class AnalyseController extends Controller
             return $this->redirectToRoute('analyse');
         }
 
-        return $this->render('create/index.html.twig', array(
+        return $this->render('analyse/index.html.twig', array(
             'form' => $form->createView(),
         ));
 

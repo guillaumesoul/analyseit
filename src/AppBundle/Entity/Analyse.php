@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Analyse
  *
  * @ORM\Table()
+ * @ORM\Table(name="analyse", indexes={@ORM\Index(name="id", columns={"user_id"})})
  * @ORM\Entity
  */
 class Analyse
@@ -15,32 +16,34 @@ class Analyse
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="analyse_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="analyse_name", type="string", length=255)
      */
     private $name;
+    /**
+     * @var \AppBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id ", referencedColumnName="id")
+     * })
+     */
+    protected $user;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="userid", type="integer")
+     * @ORM\Column(name="analyse_dataserieid", type="integer")
      */
-    private $userid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="dataserieid", type="integer")
-     */
-    private $dataserieid;
+    protected $dataserieid;
 
 
     /**
