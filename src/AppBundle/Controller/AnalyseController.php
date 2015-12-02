@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Analyse;
+use Doctrine\ORM\EntityManager;
 
 class AnalyseController extends Controller
 {
@@ -26,8 +27,11 @@ class AnalyseController extends Controller
 
         $form->handleRequest($request);
 
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $analyse->setUser($user);
             $em->persist($analyse);
             $em->flush();
             return $this->redirectToRoute('analyse');

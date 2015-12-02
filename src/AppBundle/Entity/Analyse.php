@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Analyse
  *
  * @ORM\Table()
- * @ORM\Table(name="analyse", indexes={@ORM\Index(name="id", columns={"user_id"})})
+ * @ORM\Table(name="analyse")
  * @ORM\Entity
  */
 class Analyse
@@ -36,7 +36,7 @@ class Analyse
      *   @ORM\JoinColumn(name="user_id ", referencedColumnName="id")
      * })
      */
-    protected $user;
+    protected $userid;
 
     /**
      * @var integer
@@ -82,12 +82,12 @@ class Analyse
     /**
      * Set userid
      *
-     * @param integer $userid
+     * @param AppBundle\Entity\User
      * @return Analyse
      */
-    public function setUserid($userid)
+    public function setUser($user)
     {
-        $this->userid = $userid;
+        $this->userid = $user;
 
         return $this;
     }
