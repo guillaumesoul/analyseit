@@ -11,23 +11,21 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Analyse;
-use Doctrine\ORM\EntityManager;
+//use Doctrine\ORM\EntityManager;
 
 class AnalyseController extends Controller
 {
 
     public function indexAction(Request $request)
     {
-        $analyse = new Analyse();
+        $user = $this->container->get('security.context')->getToken()->getUser();
 
+        $analyse = new Analyse();
         $form = $this->createFormBuilder($analyse)
             ->add('name', 'text')
             ->add('save', 'submit', array('label' => 'Create Analyze'))
             ->getForm();
-
         $form->handleRequest($request);
-
-        $user = $this->container->get('security.context')->getToken()->getUser();
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -37,8 +35,12 @@ class AnalyseController extends Controller
             return $this->redirectToRoute('analyse');
         }
 
+        $analyseService = $this->get('analyse_service');
+        $analyseList = $analyseService->getUserAnlayses($user);
+
         return $this->render('analyse/index.html.twig', array(
             'form' => $form->createView(),
+            'analyse_list' => $analyseList,
         ));
 
     }
