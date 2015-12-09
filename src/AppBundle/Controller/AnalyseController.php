@@ -36,7 +36,7 @@ class AnalyseController extends Controller
         }
 
         $analyseService = $this->get('analyse_service');
-        $analyseList = $analyseService->getUserAnlayses($user);
+        $analyseList = $analyseService->getUserAnalyses($user);
 
         return $this->render('analyse/index.html.twig', array(
             'analyse_creation_form' => $form->createView(),

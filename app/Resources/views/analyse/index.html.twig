@@ -71,11 +71,9 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {#<script src="{{ asset('./assets/vendor/datatables/media/js/dataTables.bootstrap.js') }}"></script>#}
-
     {% javascripts 'additionnal_javascript' %}
+        <script src="{{ asset('assets/vendor/datatables/media/js/jquery.dataTables.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/vendor/datatables/media/js/dataTables.bootstrap.js') }}" type="text/javascript"></script>
         <script src="{{ asset('js/analyse.js') }}" type="text/javascript"></script>
     {% endjavascripts %}
-
-
 {% endblock %}

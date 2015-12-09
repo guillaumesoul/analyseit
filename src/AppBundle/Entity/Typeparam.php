@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Analyse
  *
  * @ORM\Table()
- * @ORM\Table(name="typeparamww")
+ * @ORM\Table(name="typeparam")
  * @ORM\Entity
  */
 class Typeparam
@@ -49,4 +49,109 @@ class Typeparam
      * @ORM\Column(name="typeparam_sens", type="boolean")
      */
     protected $sens;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="typeparam_discret", type="boolean")
+     */
+    protected $discret;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return float
+     */
+    public function getParam1()
+    {
+        return $this->param1;
+    }
+
+    /**
+     * @param float $param1
+     */
+    public function setParam1($param1)
+    {
+        $this->param1 = $param1;
+    }
+
+    /**
+     * @return float
+     */
+    public function getParam2()
+    {
+        return $this->param2;
+    }
+
+    /**
+     * @param float $param2
+     */
+    public function setParam2($param2)
+    {
+        $this->param2 = $param2;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSens()
+    {
+        return $this->sens;
+    }
+
+    /**
+     * @param boolean $sens
+     */
+    public function setSens($sens)
+    {
+        $this->sens = $sens;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDiscret()
+    {
+        return $this->discret;
+    }
+
+    /**
+     * @param boolean $discret
+     */
+    public function setDiscret($discret)
+    {
+        $this->discret = $discret;
+    }
+
+
 }

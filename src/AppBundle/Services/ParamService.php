@@ -3,7 +3,7 @@ namespace AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 
-class AnalyseService
+class ParamService
 {
     protected $em;
 
@@ -12,8 +12,8 @@ class AnalyseService
         $this->em = $em;
     }
 
-    public function getUserAnlayses($user)
+    public function getAllTypeparam()
     {
-        return $this->em->getRepository('AppBundle:Analyse')->findByUserid($user);
+        return $this->em->getRepository('AppBundle:Typeparam')->findAll();
     }
 }

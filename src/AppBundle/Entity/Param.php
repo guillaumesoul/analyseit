@@ -44,7 +44,7 @@ class Param
     /**
      * @var \AppBundle\Entity\Typeparam
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Typeparam")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Typeparam")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="typeparam_id", referencedColumnName="typeparam_id")
      * })
@@ -73,6 +73,11 @@ class Param
     protected $ponderation;
 
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="param_unit", type="string", length=50)
+     */
     protected $unit;
 
 
@@ -133,26 +138,19 @@ class Param
     }
 
     /**
-     * Set typeid
-     *
-     * @param integer $typeid
-     * @return Param
+     * @return Typeparam
      */
-    public function setTypeid($typeid)
+    public function getType()
     {
-        $this->typeid = $typeid;
-
-        return $this;
+        return $this->type;
     }
 
     /**
-     * Get typeid
-     *
-     * @return integer 
+     * @param Typeparam $type
      */
-    public function getTypeid()
+    public function setType($type)
     {
-        return $this->typeid;
+        $this->type = $type;
     }
 
     /**

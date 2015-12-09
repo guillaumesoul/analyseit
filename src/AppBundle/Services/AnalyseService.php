@@ -16,7 +16,7 @@ class AnalyseService
     {
         return "test";
     }
-    public function getUserAnlayses($user)
+    public function getUserAnalyses($user)
     {
         return $this->em->getRepository('AppBundle:Analyse')->findByUserid($user);
     }
