@@ -5,9 +5,14 @@
 
 $(document).ready(function() {
 
-    console.log('coucou analyse.js');
+    $('#example').dataTable({
+        searching: false
+    });
 
-    $('#example').dataTable();
+    $('.analyse_thumbnail').on('click', function(){
+        $('.analyse_thumbnail').removeClass('thumbnail_active');
+        $(this).addClass('thumbnail_active');
+    });
 
 });
 

@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('assets/vendor/datatables/media/css/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/analyse.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block appWindow %}
@@ -18,17 +19,7 @@
             </div>
             <div class="col-lg-9">
                 {% block analyse_list %}
-                    {% for analyse in analyse_list %}
-                        <div class="col-lg-3">
-                            <div class="thumbnail">
-                                <div class="caption text-center">
-                                    <h4>{{ analyse.getName }}</h4>
-                                    <p>description</p>
-                                    <p><a href="#" class="btn btn-primary" role="button">Edit</a> <a href="#" class="btn btn-default" role="button">Publish</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+                    {{ render(controller('AppBundle:Analyse:getUserAnalysesList')) }}
                 {% endblock %}
             </div>
         </div>
@@ -38,33 +29,17 @@
             <div class="panel-heading">
                 <h1 class="panel-title">Parameters</h1>
             </div>
-            {% block param_creation %}
-                {{ render(controller('AppBundle:Param:paramform')) }}
-            {% endblock %}
+            <div class="col-lg-3">
+                {% block param_creation %}
+                    {{ render(controller('AppBundle:Param:paramform')) }}
+                {% endblock %}
+            </div>
 
-            {% block analyse_datatable %}
-                <div class="col-lg-9">
-                    <table id="example">
-                        <thead>
-                        <tr>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr><td>zaza</td><td>zaza</td><td>zaza</td><td>zaza</td></tr>
-                            <tr><td>zaza</td><td>zaza</td><td>zaza</td><td>zaza</td></tr>
-                            <tr><td>zaza</td><td>zaza</td><td>zaza</td><td>zaza</td></tr>
-                            <tr><td>zaza</td><td>zaza</td><td>zaza</td><td>zaza</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            {% endblock %}
-
+            <div class="col-lg-9">
+                {% block analyse_datatable %}
+                    {{ render(controller('AppBundle:Datatable:index')) }}
+                {% endblock %}
+            </div>
         </div>
     {% endblock %}
 {% endblock %}

@@ -35,13 +35,21 @@ class AnalyseController extends Controller
             return $this->redirectToRoute('analyse');
         }
 
+        return $this->render('analyse/index.html.twig', array(
+            'analyse_creation_form' => $form->createView(),
+        ));
+
+    }
+
+    public function getUserAnalysesListAction()
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
         $analyseService = $this->get('analyse_service');
         $analyseList = $analyseService->getUserAnalyses($user);
 
-        return $this->render('analyse/index.html.twig', array(
-            'analyse_creation_form' => $form->createView(),
+        return $this->render('analyse/list.html.twig', array(
             'analyse_list' => $analyseList
         ));
-
     }
 }

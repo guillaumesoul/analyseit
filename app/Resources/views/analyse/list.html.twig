@@ -1,0 +1,14 @@
+{% block analyse_list %}
+    {% for analyse in analyse_list %}
+        <div class="col-lg-3">
+            <div class="thumbnail analyse_thumbnail">
+                <div class="caption text-center">
+                    <input type="hidden" class="analyse_id" value="{{ analyse.getId }}">
+                    <h4>{{ analyse.getName }}</h4>
+                    <p>description</p>
+                    <p><a href="#" class="btn btn-primary" role="button">Edit</a> <a href="#" class="btn btn-default" role="button">Publish</a></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
