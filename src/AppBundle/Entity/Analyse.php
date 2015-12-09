@@ -27,7 +27,8 @@ class Analyse
      *
      * @ORM\Column(name="analyse_name", type="string", length=255)
      */
-    private $name;
+    protected $name;
+
     /**
      * @var \AppBundle\Entity\User
      *
@@ -39,12 +40,9 @@ class Analyse
     protected $userid;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="analyse_dataserieid", type="integer")
+     * @ORM\Column(name="analyse_created", type="datetime")
      */
-    protected $dataserieid;
-
+    protected $created;
 
     /**
      * Get id
@@ -100,28 +98,5 @@ class Analyse
     public function getUserid()
     {
         return $this->userid;
-    }
-
-    /**
-     * Set dataserieid
-     *
-     * @param integer $dataserieid
-     * @return Analyse
-     */
-    public function setDataserieid($dataserieid)
-    {
-        $this->dataserieid = $dataserieid;
-
-        return $this;
-    }
-
-    /**
-     * Get dataserieid
-     *
-     * @return integer 
-     */
-    public function getDataserieid()
-    {
-        return $this->dataserieid;
     }
 }

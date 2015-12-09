@@ -42,11 +42,14 @@ class Param
 
 
     /**
-     * @var integer
+     * @var \AppBundle\Entity\Typeparam
      *
-     * @ORM\Column(name="param_typeid", type="integer")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Typeparam")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="typeparam_id", referencedColumnName="typeparam_id")
+     * })
      */
-    protected $typeid;
+    protected $type;
 
     /**
      * @var string
@@ -69,11 +72,7 @@ class Param
      */
     protected $ponderation;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="param_unit", type="string", length=20)
-     */
+
     protected $unit;
 
 

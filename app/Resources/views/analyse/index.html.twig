@@ -1,13 +1,81 @@
 {% extends 'layout.html.twig' %}
 
-{% block appWindow %}
-        {{ block('analyse_creation') }}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/vendor/datatables/media/css/dataTables.bootstrap.css') }}" rel="stylesheet" />
 {% endblock %}
 
-{% block analyse_creation %}
-    <div class="col-lg-12" id="mainWindow">
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-        {{ form_end(form) }}
-    </div>
+{% block appWindow %}
+    {% block analyse_creation %}
+        <div class="col-lg-12 panel">
+            <div class="panel-heading">
+                <h1 class="panel-title">My analyses</h1>
+            </div>
+            <div class="col-lg-3">
+                {{ form_start(analyse_creation_form) }}
+                {{ form_widget(analyse_creation_form) }}
+                {{ form_end(analyse_creation_form) }}
+            </div>
+            <div class="col-lg-9">
+                {% block analyse_list %}
+                    {% for analyse in analyse_list %}
+                        <div class="col-lg-3">
+                            <div class="thumbnail">
+                                <div class="caption text-center">
+                                    <h4>{{ analyse.getName }}</h4>
+                                    <p>description</p>
+                                    <p><a href="#" class="btn btn-primary" role="button">Edit</a> <a href="#" class="btn btn-default" role="button">Publish</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+    {% block analyse_params %}
+        <div class="col-lg-12 panel">
+            <div class="panel-heading">
+                <h1 class="panel-title">Parameters</h1>
+            </div>
+            {% block param_creation %}
+                {{ render(controller('AppBundle:Param:paramform')) }}
+            {% endblock %}
+
+            {% block analyse_datatable %}
+                <div class="col-lg-9">
+                    <table id="example">
+                        <thead>
+                        <tr>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr><td>zaza</td><td>zaza</td><td>zaza</td><td>zaza</td></tr>
+                            <tr><td>zaza</td><td>zaza</td><td>zaza</td><td>zaza</td></tr>
+                            <tr><td>zaza</td><td>zaza</td><td>zaza</td><td>zaza</td></tr>
+                            <tr><td>zaza</td><td>zaza</td><td>zaza</td><td>zaza</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            {% endblock %}
+
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="{{ asset('./assets/vendor/datatables/media/js/dataTables.bootstrap.js') }}"></script>#}
+
+    {% javascripts 'additionnal_javascript' %}
+        <script src="{{ asset('js/analyse.js') }}" type="text/javascript"></script>
+    {% endjavascripts %}
+
+
 {% endblock %}

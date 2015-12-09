@@ -8,8 +8,6 @@ imports:
 parameters:
     locale: en
 
-
-
 framework:
     #esi:             ~
     translator:      { fallbacks: ["%locale%"] }
