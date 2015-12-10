@@ -2,31 +2,29 @@
 
 {% block appWindow %}
     {% block analyse_params %}
-        {#<input type="hidden" id="analyseId" name="analyseId" value="{{ analyseId }}">#}
         <div class="col-lg-12 panel">
             <div class="panel-heading">
                 <h1 class="panel-title">Parameters</h1>
             </div>
             <div class="col-lg-3">
                 {% block param_creation %}
-
                     {{ form_start(param_creation_form) }}
                     {{ form_errors(param_creation_form) }}
-
                     {{ form_widget(param_creation_form) }}
-                    {#{{ form_row(param_creation_form.minvalue) }}
-                    {{ form_row(param_creation_form.maxvalue) }}#}
                     {{ form_end(param_creation_form) }}
-
-
                 {% endblock %}
             </div>
 
-            {#<div class="col-lg-9">
-                {% block analyse_datatable %}
-                    {{ render(controller('AppBundle:Datatable:index')) }}
+            <div class="col-lg-9">
+                {% block params_list %}
+                    {#{{ render(controller('AppBundle:Param:list')) }}#}
+                    {% for param in params_list %}
+                        <div>
+                            1 parametre
+                        </div>
+                    {%  endfor %}
                 {% endblock %}
-            </div>#}
+            </div>
         </div>
     {% endblock %}
 {% endblock %}

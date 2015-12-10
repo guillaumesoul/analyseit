@@ -63,35 +63,36 @@ class AnalyseController extends Controller
         ));
     }
 
-    //public function editAction($analyseId)
     public function editAction(Request $request, $analyseId)
-    //public function editAction()
     {
+        $em = $this->getDoctrine()->getManager();
 
+        //PARAM CREATION FORM HANDLING
         $param = new Param();
         $form = $this->createForm(new ParamType(), $param);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            // do whatever you want ...
-            $param = $form->getData(); // to get submitted data
-
-            $em = $this->getDoctrine()->getManager();
+            $param = $form->getData();
             $analyse = $em->getRepository('AppBundle:Analyse')->findOneById($analyseId);
             $param->setAnalyse($analyse);
-
             $em->persist($param);
             $em->flush();
-            // redirect, show twig, your choice
         }
 
+        //PARAM LIST FOR SELECTED ANALYSE
+        $paramsList = array();
+        //$paramsList = $em->getRepository('AppBundle:Param')->findByAnalyse($analyseId);
+        $paramsList = $em->getRepository('AppBundle:Param')->getParamsByAnalyseId($analyseId);
+
         return $this->render('analyse/edit.html.twig', array(
-            'param_creation_form' => $form->createView()
+            'param_creation_form' => $form->createView(),
+            'params_list' => $paramsList
         ));
 
 
-        /*$paramService = $this->get('param_service');
+        /*
+         * APPEL FORMULAIRE CREATION PARAM PAR SERVICE ---  PAS CONVAINCU
+         * $paramService = $this->get('param_service');
         $paramTypeList = $paramService->getAllTypeparam();
         $paramform = new ParamForm();
         $paramformAction = $this->generateUrl('param_create');
@@ -100,10 +101,6 @@ class AnalyseController extends Controller
             'action' => $paramformAction,
             'paramTypeList' => $paramTypeList,
         ));
-
-        //il me faut la liste actuelle de tous les param pour cette analyse
-
-
         return $this->render('analyse/edit.html.twig', array(
             'analyseId' => $analyseId,
             'param_creation_form' => $formParam->createView()

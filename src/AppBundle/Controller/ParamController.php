@@ -55,4 +55,9 @@ class ParamController extends Controller
             'param_creation_form' => $form->createView()
         ));
     }
+
+    public function paramListByAnalyseAction()
+    {
+
+    }
 }
