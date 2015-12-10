@@ -6,7 +6,7 @@
                     <input type="hidden" class="analyse_id" value="{{ analyse.getId }}">
                     <h4>{{ analyse.getName }}</h4>
                     <p>description</p>
-                    <p><a href="{{ path('analyse_edit', {'analyseId': analyse.getId}) }}" class="btn btn-primary" role="button">Edit</a> <a href="#" class="btn btn-default" role="button">Publish</a></p>
+                    <p><a href="{{ path('analyse_edit', {'analyseId': analyse.getId}) }}" class="btn btn-primary" role="button"><i class="fa fa-pencil-square-o"></i></a> <a href="#" class="btn btn-danger" role="button"><i class="fa fa-trash"></i></a></p>
                 </div>
             </div>
         </div>

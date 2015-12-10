@@ -5,8 +5,9 @@
 
 $(document).ready(function() {
 
-    $('#example').dataTable({
-        searching: false
+    $('#param_datatable').dataTable({
+        "searching": false,
+        "info" : false
     });
 
     $('.analyse_thumbnail').on('click', function(){

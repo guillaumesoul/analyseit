@@ -10,3 +10,6 @@ services:
     param_service:
             class: AppBundle\Services\ParamService
             arguments: [ @doctrine.orm.entity_manager ]
+    datatable_service:
+                class: AppBundle\Services\DatatableService
+                arguments: [ @doctrine.orm.entity_manager ]

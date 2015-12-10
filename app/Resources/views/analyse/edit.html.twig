@@ -1,5 +1,11 @@
 {% extends 'layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/vendor/datatables/media/css/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/analyse.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block appWindow %}
     {% block analyse_params %}
         <div class="col-lg-12 panel">
@@ -16,15 +22,60 @@
             </div>
 
             <div class="col-lg-9">
+                <div class="row">
                 {% block params_list %}
                     {#{{ render(controller('AppBundle:Param:list')) }}#}
                     {% for param in params_list %}
-                        <div>
-                            1 parametre
+                        <div class="col-lg-3">
+                            <div class="thumbnail analyse_thumbnail">
+                                <div class="caption text-center">
+                                    <h4>{{ param.getName }} in ({{ param.getUnit }})</h4>
+                                </div>
+                            </div>
                         </div>
                     {%  endfor %}
                 {% endblock %}
+                </div><hr>
+                <div class="row">
+                    {% block datatable %}
+                        <table id="param_datatable">
+                            <thead>
+                                <tr>
+                                    {% for param in params_list %}
+                                        <td>
+                                            <div><h4>{{ param.getName }}</h4></div>
+                                            <div><label>min : </label>{{ param.getMinvalue }}</div>
+                                            <div><label>max : </label>{{ param.getMaxvalue }}</div>
+                                            <div>in ({{ param.getUnit }})</div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {% for param in params_list %}
+                                        <td><input type="text" class="{{ param.getId }}" value="{{ param.getId }}"/></td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    {% for param in params_list %}
+                                        <td><input type="text" class="{{ param.getId }}" value="{{ param.getId }}"/></td>
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    {% endblock %}
+                </div>
             </div>
         </div>
     {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 'additionnal_javascript' %}
+    <script src="{{ asset('assets/vendor/datatables/media/js/jquery.dataTables.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendor/datatables/media/js/dataTables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/analyse.js') }}" type="text/javascript"></script>
+    {% endjavascripts %}
 {% endblock %}

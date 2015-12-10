@@ -80,9 +80,15 @@ class AnalyseController extends Controller
         }
 
         //PARAM LIST FOR SELECTED ANALYSE
-        $paramsList = array();
         //$paramsList = $em->getRepository('AppBundle:Param')->findByAnalyse($analyseId);
         $paramsList = $em->getRepository('AppBundle:Param')->getParamsByAnalyseId($analyseId);
+
+
+        //MAKE A DATATABLE SERVICE TO GENERATE DATA FOR DATATABLE
+        $datatableService = $this->get('datatable_service');
+        $datatableData = $datatableService->getAnalyseDataTableData($analyseId);
+
+
 
         return $this->render('analyse/edit.html.twig', array(
             'param_creation_form' => $form->createView(),
