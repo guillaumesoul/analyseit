@@ -25,6 +25,10 @@ analyse_create:
     path:      /analyse/create
     defaults:  { _controller: AppBundle:Analyse:create }
 
-paramform:
-    path:      /analyse/param
-    defaults:  { _controller: AppBundle:Param:paramform }
+analyse_edit:
+    path:      /analyse/edit/{analyseId}
+    defaults:  { _controller: AppBundle:Analyse:edit }
+
+param_create:
+    path:      /param/create
+    defaults:  { _controller: AppBundle:Param:create }
