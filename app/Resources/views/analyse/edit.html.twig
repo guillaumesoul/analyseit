@@ -22,9 +22,8 @@
             </div>
 
             <div class="col-lg-9">
-                <div class="row">
-                {% block params_list %}
-                    {#{{ render(controller('AppBundle:Param:list')) }}#}
+                {#{% block params_list %}
+                    &#123;&#35;{{ render(controller('AppBundle:Param:list')) }}&#35;&#125;
                     {% for param in params_list %}
                         <div class="col-lg-3">
                             <div class="thumbnail analyse_thumbnail">
@@ -34,15 +33,16 @@
                             </div>
                         </div>
                     {%  endfor %}
-                {% endblock %}
-                </div><hr>
+                {% endblock %}#}
                 <div class="row">
                     {% block datatable %}
                         <table id="param_datatable">
                             <thead>
                                 <tr>
+                                    <td>serie name</td>
                                     {% for param in params_list %}
                                         <td>
+                                            <div><a href="/param/delete/{{ param.getId }}"><button type="button"><i class="fa fa-trash"></i></button></a></div>
                                             <div><h4>{{ param.getName }}</h4></div>
                                             <div><label>min : </label>{{ param.getMinvalue }}</div>
                                             <div><label>max : </label>{{ param.getMaxvalue }}</div>
@@ -53,14 +53,19 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>serie name</td>
                                     {% for param in params_list %}
                                         <td><input type="text" class="{{ param.getId }}" value="{{ param.getId }}"/></td>
                                     {% endfor %}
                                 </tr>
                                 <tr>
+                                    <td>serie name</td>
                                     {% for param in params_list %}
                                         <td><input type="text" class="{{ param.getId }}" value="{{ param.getId }}"/></td>
                                     {% endfor %}
+                                </tr>
+                                <tr>
+                                    <button type="button" class="addRow"><i class="fa fa-plus"></i></button>
                                 </tr>
                             </tbody>
                         </table>

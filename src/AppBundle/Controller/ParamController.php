@@ -56,8 +56,17 @@ class ParamController extends Controller
         ));
     }
 
-    public function paramListByAnalyseAction()
+    public function deleteAction(Request $request, $paramId)
     {
+        $em = $this->getDoctrine()->getManager();
+        $param = $em->getRepository('AppBundle:Param')->findOneById($paramId);
 
+        if (!$param) {
+            throw $this->createNotFoundException('No param found');
+        }else{
+            $em->remove($param);
+            $em->flush();
+            return $this->redirect($this->generateUrl('analyse_edit', array('analyseId' => $param->getAnalyse()->getId())));
+        }
     }
 }

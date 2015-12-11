@@ -6,3 +6,11 @@
 #param_datatable thead {
     text-align: center;
 }
+
+.paramDelete{
+    margin: 0px;
+}
+
+.addRow{
+    float: left;
+}

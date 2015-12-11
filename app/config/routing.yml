@@ -28,3 +28,7 @@ analyse_create:
 analyse_edit:
     path:      /analyse/edit/{analyseId}
     defaults:  { _controller: AppBundle:Analyse:edit }
+
+param_delete:
+    path:      /param/delete/{paramId}
+    defaults:  { _controller: AppBundle:Param:delete }
