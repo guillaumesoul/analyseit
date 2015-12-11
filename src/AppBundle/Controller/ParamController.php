@@ -15,7 +15,7 @@ use AppBundle\Entity\Param;
 class ParamController extends Controller
 {
 
-    public function paramformAction(Request $request)
+    /*public function paramformAction(Request $request)
     {
 
         $param = new Param();
@@ -54,7 +54,7 @@ class ParamController extends Controller
         return $this->render('param/index.html.twig', array(
             'param_creation_form' => $form->createView()
         ));
-    }
+    }*/
 
     public function deleteAction(Request $request, $paramId)
     {

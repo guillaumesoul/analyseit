@@ -5,35 +5,19 @@
 
 $(document).ready(function() {
 
-    $('.analyse_thumbnail').on('click', function(){
-        $('.analyse_thumbnail').removeClass('thumbnail_active');
-        $(this).addClass('thumbnail_active');
-    });
-
-    $('#param_datatable').dataTable({
+    var dataTable = $('#param_datatable').DataTable({
         "searching": false,
         "info" : false,
-        "bLengthChange": false
+        "bLengthChange": false,
+        "paging" : false
     });
 
-    /*$('.paramDelete').on('click', function(){
-        //get the id
-        var paramId = $(this).val();
-        var url = '/param/delete/' + paramId;
-        console.log(url);
-        //envoi une requete pour supprimer le param
-        $.ajax({
-            url: url,
-            success: function(){
-                console.log('success ajax');
-            }
+    $('#addRowDataTable').on('click', function() {
+        dataTable.row.add(dataTable.rows(0).data()[0]).draw(false);
+    });
 
-        })
-        console.log($(this).val());
-        console.log($(this).closest('.paramId'));
-        console.log($(this).closest('tr'));
-        console.log($(this).closest('tr').find('.paramId'));
-    });*/
+
+
 
 });
 
