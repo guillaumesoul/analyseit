@@ -12,12 +12,11 @@ $(document).ready(function() {
         "paging" : false
     });
 
-    $('#addRowDataTable').on('click', function() {
-        dataTable.row.add(dataTable.rows(0).data()[0]).draw(false);
+    $('#addRow').on('click', function() {
+        dataTable.row.add(dataTable.rows(0).data()[0]).draw(true);
     });
-
-
-
-
+    $('#param_datatable tbody').on( 'click', 'tr td:first-child ',function () {
+        dataTable.row($(this).closest('tr')).remove().draw( false );
+    } );
 });
 
