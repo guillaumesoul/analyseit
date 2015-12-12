@@ -10,9 +10,18 @@
     {% block analyse_params %}
         <div class="col-lg-12 panel">
             <div class="panel-heading">
-                <h1 class="panel-title">Parameters</h1>
+                <h1 class="panel-title">Edit your analyse</h1>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
+                {% block analyse_resume %}
+                    <div class="thumbnail analyse_thumbnail">
+                        <div class="caption text-center">
+                            <input type="hidden" class="analyse_id" value="{{ analyse.getId }}">
+                            <h4>{{ analyse.getName }}</h4>
+                            <p>description</p>
+                        </div>
+                    </div>
+                {% endblock %}
                 {% block param_creation %}
                     {{ form_start(param_creation_form) }}
                     {{ form_errors(param_creation_form) }}
@@ -21,25 +30,20 @@
                 {% endblock %}
             </div>
 
-            <div class="col-lg-9">
-                {#{% block params_list %}
-                    &#123;&#35;{{ render(controller('AppBundle:Param:list')) }}&#35;&#125;
-                    {% for param in params_list %}
-                        <div class="col-lg-3">
-                            <div class="thumbnail analyse_thumbnail">
-                                <div class="caption text-center">
-                                    <h4>{{ param.getName }} in ({{ param.getUnit }})</h4>
-                                </div>
-                            </div>
-                        </div>
-                    {%  endfor %}
-                {% endblock %}#}
+            <div class="col-lg-10">
+                <div class="row analyse_toolbar">
+                    {% block analyse_toolbar %}
+                        <nav class="navbar-default navbar-top">
+                            <a href="#"><button type="button" class="btn btn-default" id="chart_button"><i class="fa fa-bar-chart"></i></button></a>
+                            <a href="#"><button type="button" class="btn btn-default"><i class="fa fa-share"></i></button></a>
+                        </nav>
+                    {% endblock %}
+                </div>
                 <div class="row">
                     {% block datatable %}
                         <div class="col-lg-1">
                             <button type="button" id="addRow"><i class="fa fa-plus"></i></button>
-
-                        </div>c
+                        </div>
                         <div class="col-lg-8">
                             <table id="param_datatable">
                                 <thead>
@@ -47,7 +51,7 @@
                                         {% for param in params_list %}
                                             {% if loop.first %}
                                                 <td></td>
-                                                <td>serie name</td>
+                                                <td>Analyse Id : {{ param.getAnalyse.getId }}</td>
                                             {%  endif %}
                                             <td>
                                                 <div><a href="/param/delete/{{ param.getId }}"><button type="button"><i class="fa fa-trash"></i></button></a></div>
@@ -64,19 +68,33 @@
                                         {% for param in params_list %}
                                             {% if loop.first %}
                                                 <td><button type="button" class="deleteRow"><i class="fa fa-trash"></i></button></td>
-                                                <td><input type="text" value="name"></td>
+                                                <td><input type="text" class="dataTableValue" index="serie_name" value="name_serie_{{ loop.index }}"></td>
                                             {%  endif %}
-                                            <td><input type="text" class="dataTableValue" value="paramId_{{ param.getId }}_ {{ loop.index }} "/></td>
+                                            <td><input type="text" class="dataTableValue" index="param_{{ param.getId }}" value="toto"/></td>
                                         {% endfor %}
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     {% endblock %}
+                    {#{% block analyse_chart %}
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                    {% endblock %}#}
                 </div>
+
+                <hr>
+                {% block datatable_work %}
+                    <div>
+                        <table id="example">
+
+                        </table>
+                    </div>
+                {% endblock %}
             </div>
         </div>
     {% endblock %}
+
+
 {% endblock %}
 
 {% block javascripts %}
@@ -84,6 +102,7 @@
     {% javascripts 'additionnal_javascript' %}
     <script src="{{ asset('assets/vendor/datatables/media/js/jquery.dataTables.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendor/datatables/media/js/dataTables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/analyse.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendor/Chart.js/Chart.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/analyse.js') }}" type="text/javascript" charset="utf-8"></script>
     {% endjavascripts %}
 {% endblock %}

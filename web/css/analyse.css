@@ -3,7 +3,7 @@
 }
 
 /* datatables */
-#param_datatable thead {
+#param_datatable thead{
     text-align: center;
 }
 
@@ -13,4 +13,19 @@
 
 .addRow{
     float: left;
+}
+
+.analyse_toolbar{
+    background-color: lightsteelblue;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.chart div {
+    font: 10px sans-serif;
+    background-color: steelblue;
+    text-align: right;
+    padding: 3px;
+    margin: 1px;
+    color: white;
 }

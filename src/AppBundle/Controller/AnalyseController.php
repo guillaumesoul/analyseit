@@ -54,7 +54,6 @@ class AnalyseController extends Controller
     public function getUserAnalysesListAction()
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
-
         $analyseService = $this->get('analyse_service');
         $analyseList = $analyseService->getUserAnalyses($user);
 
@@ -66,6 +65,7 @@ class AnalyseController extends Controller
     public function editAction(Request $request, $analyseId)
     {
         $em = $this->getDoctrine()->getManager();
+        $analyse = $em->getRepository('AppBundle:Analyse')->findOneById($analyseId);
 
         //PARAM CREATION FORM HANDLING
         $param = new Param();
@@ -73,7 +73,6 @@ class AnalyseController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $param = $form->getData();
-            $analyse = $em->getRepository('AppBundle:Analyse')->findOneById($analyseId);
             $param->setAnalyse($analyse);
             $em->persist($param);
             $em->flush();
@@ -88,26 +87,10 @@ class AnalyseController extends Controller
         $paramsList = $em->getRepository('AppBundle:Param')->getParamsByAnalyseId($analyseId);
 
         return $this->render('analyse/edit.html.twig', array(
+            'analyse' => $analyse,
             'param_creation_form' => $form->createView(),
             'params_list' => $paramsList
         ));
-
-
-        /*
-         * APPEL FORMULAIRE CREATION PARAM PAR SERVICE ---  PAS CONVAINCU
-         * $paramService = $this->get('param_service');
-        $paramTypeList = $paramService->getAllTypeparam();
-        $paramform = new ParamForm();
-        $paramformAction = $this->generateUrl('param_create');
-        $formParam = $this->createForm($paramform, array(
-            'analyseId' => $analyseId,
-            'action' => $paramformAction,
-            'paramTypeList' => $paramTypeList,
-        ));
-        return $this->render('analyse/edit.html.twig', array(
-            'analyseId' => $analyseId,
-            'param_creation_form' => $formParam->createView()
-        ));*/
     }
 
 }
