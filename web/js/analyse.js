@@ -19,67 +19,80 @@ $(document).ready(function() {
         dataTable.row($(this).closest('tr')).remove().draw( false );
     } );
 
+    /*myFather.name = function () {
+        return this.firstName + " " + this.lastName;
+    };*/
+
+    dataTable.getRawData = function(){
+        //get the data from datatable
+        var dtData = dataTable.data();
+        var datatable_inputs = dataTable.$('input');
+        var inputNbrByRow = dataTable.$('input').length / (dtData.length);
+        //cut your inputs into row
+
+        var indexTab = [];
+        var seriesTab = [];
+        var seriesTabAssociative = [];
+        var temp = [];
+        var tempAssociative = {};
+        var temp2 = [];
+        var temp2Associative = {};
+        var cpt = 0;
+        var relativeIndex = 0;
+
+        for (var i=0 ; i<datatable_inputs.length ; i++){
+            relativeIndex = i - cpt*inputNbrByRow;
+            tempAssociative[$(datatable_inputs[i]).attr('index')] = $(datatable_inputs[i]).val();
+            temp[relativeIndex] = $(datatable_inputs[i]).val();
+            if (i<inputNbrByRow) {
+                indexTab[i] = $(datatable_inputs[i]).attr('index');
+            }
+            if (i%inputNbrByRow == inputNbrByRow-1) {
+                temp2Associative = tempAssociative;
+                temp2 = temp;
+                seriesTab[cpt] = temp2;
+                //console.log(seriesTab);
+                seriesTabAssociative[cpt] = temp2Associative;
+                cpt++;
+                temp = [];
+                tempAssociative = {};
+            }
+        }
+
+        var dtColumns = [];
+        for (var i =0 ; i<indexTab.length ; i++){
+            var titleObj = {};
+            titleObj.title = indexTab[i];
+            dtColumns.push(titleObj);
+        }
+
+        var response = {};
+        response.index = indexTab;
+        response.dtColumns = dtColumns;
+        response.seriesData = seriesTab;
+        response.seriesDataAssociative = seriesTabAssociative;
+        return response;
+    }
+
 
 
     $('#chart_button').on('click', function(){
 
-        var rawDatatableData = getDatatableRawData(dataTable);
+        var rawDatatableData = dataTable.getRawData();
 
-        /*var dataserieObjectTab = [];
-        for (var i=0 ; i<rawDatatableData.length ; i++){
-            var dataSerie = new DataSerie(rawDatatableData[i]);
-            console.log(dataSerie);
-            console.log(zaz.serie_name);
-            dataserieObjectTab[i] = new DataSerie(rawDatatableData[i]);
-
-        }*/
-
-        //get data from analyse
-        $('#example').DataTable( {
+        if ( $.fn.dataTable.isDataTable( '#example' ) ) {
+            $('#example').DataTable().destroy();
+        }
+        var workTab = $('#example').DataTable( {
             "searching": false,
             "info" : false,
             "bLengthChange": false,
             "paging" : false,
-            /*data: [
-             new Employee( "Tiger Nixon", "System Architect", "$3,120", "Edinburgh" ),
-             new Employee( "Garrett Winters", "Director", "$5,300", "Edinburgh" )
-             ],*/
-            data: rawDatatableData,
-            columns: [
-                { data: 'serie_name' },
-                { data: 'param_1' },
-                { data: 'param_2' },
-                { data: 'param_3' },
-                { data: 'param_4' }
-            ]
+            data: rawDatatableData.seriesData,
+            columns: rawDatatableData.dtColumns
         } );
+
     });
-
-
-    function DataSerie(serieData) {
-        var obj = {};
-        for (var key in serieData){
-            obj[key] = serieData[key];
-        }
-        return obj;
-    };
-
-    /*function Employee ( name, position, salary, office ) {
-        this.name = name;
-        this.position = position;
-        this.salary = salary;
-        this._office = office;
-
-        this.office = function () {
-            return this._office;
-        }
-    };*/
-
-
-
-
-
-
 
     //CHART
     var data = {
@@ -115,35 +128,52 @@ $(document).ready(function() {
 
 });
 
+/*
 function getDatatableRawData(dataTable)
 {
     //get the data from datatable
     var dtData = dataTable.data();
     var datatable_inputs = dataTable.$('input');
+    var inputNbrByRow = dataTable.$('input').length / (dtData.length);
     //cut your inputs into row
 
-    var seriesTab = [];
     var indexTab = [];
-    var temp = {};
-    var temp2 = {};
+    var seriesTab = [];
+    var seriesTabAssociative = [];
+    var temp = [];
+    var tempAssociative = {};
+    var temp2 = [];
+    var temp2Associative = {};
     var cpt = 0;
+    var relativeIndex = 0;
 
     for (var i=0 ; i<datatable_inputs.length ; i++){
-        temp[$(datatable_inputs[i]).attr('index')] = $(datatable_inputs[i]).val();
-        var inputNbrByRow = dataTable.$('input').length / (dtData.length);
-        /*if (i<inputNbrByRow) {
+        relativeIndex = i - cpt*inputNbrByRow;
+        tempAssociative[$(datatable_inputs[i]).attr('index')] = $(datatable_inputs[i]).val();
+        temp[relativeIndex] = $(datatable_inputs[i]).val();
+        //console.log(temp);
+        if (i<inputNbrByRow) {
             indexTab[i] = $(datatable_inputs[i]).attr('index');
-        }*/
+        }
         if (i%inputNbrByRow == inputNbrByRow-1) {
+            temp2Associative = tempAssociative;
             temp2 = temp;
             seriesTab[cpt] = temp2;
+            //console.log(seriesTab);
+            seriesTabAssociative[cpt] = temp2Associative;
             cpt++;
-            temp = {};
+            temp = [];
+            tempAssociative = {};
         }
     }
 
-    var response = [];
-    response['index'] = indexTab;
-    response['seriesData'] = seriesTab;
-    return seriesTab;
-}
+    //console.log(indexTab);
+    //console.log(seriesTab);
+    //console.log(seriesTabAssociative);
+
+    var response = {};
+    response.index = indexTab;
+    response.seriesData = seriesTab;
+    response.seriesDataAssociative = seriesTabAssociative;
+    return response;
+}*/
