@@ -95,28 +95,64 @@ $(document).ready(function() {
         var rawDatatableData = dataTable.getInputData();
         var paramsAttr = dataTable.getParamsAttribute();
         var calcChartValues = getChartCalcValues(paramsAttr, rawDatatableData.seriesDataAssociative);
-
+        var zaza = calcChartValues;
+        console.log(calcChartValues);
+        console.log(zaza);
 
         if ( $.fn.dataTable.isDataTable( '#example' ) ) {
             $('#example').DataTable().destroy();
         }
 
-        console.log(calcChartValues);
-        console.log(rawDatatableData.seriesData);
+
         var workTab = $('#example').DataTable( {
             "searching": false,
             "info" : false,
             "bLengthChange": false,
             "paging" : false,
-            //data: rawDatatableData.seriesData,
             data: calcChartValues,
             columns: rawDatatableData.dtColumns
         } );
+        //need labels and data
+        var labels = rawDatatableData.index;
+        labels.shift();
 
+        calcChartValues[0].shift();
+
+        console.log(labels);
+        console.log(calcChartValues[0]);
+
+        var data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: calcChartValues[0]
+                }/*,
+                {
+                    label: "My Second dataset",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: [28, 48, 40, 19, 96, 27, 100]
+                }*/
+            ]
+        };
+
+        var ctx = $("#myChart").get(0).getContext("2d");
+        var myRadarChart = new Chart(ctx).Radar(data);
     });
 
-    //CHART
-    var data = {
+
+    /*var data = {
         labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
         datasets: [
             {
@@ -140,11 +176,10 @@ $(document).ready(function() {
                 data: [28, 48, 40, 19, 96, 27, 100]
             }
         ]
-    };
+    };*/
 
 
-    //var ctx = $("#myChart").get(0).getContext("2d");
-    //var myRadarChart = new Chart(ctx).Radar(data);
+
 
 
 });
