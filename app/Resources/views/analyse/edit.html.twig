@@ -54,11 +54,12 @@
                                                 <td>Analyse Id : {{ param.getAnalyse.getId }}</td>
                                             {%  endif %}
                                             <td>
-                                                <div><a href="/param/delete/{{ param.getId }}"><button type="button"><i class="fa fa-trash"></i></button></a></div>
-                                                <div><h4>{{ param.getName }}</h4></div>
-                                                <div><label>min : </label>{{ param.getMinvalue }}</div>
-                                                <div><label>max : </label>{{ param.getMaxvalue }}</div>
-                                                <div>in ({{ param.getUnit }})</div>
+                                                <div><a href="/param/delete/{{ param.getId }}"><button type="button"><i class="fa fa-trash"></i></button></a>
+                                                <input type="hidden" class="paramAttribute" index="paramId" value="{{ param.getId }}">
+                                                <label>name</label><input type="text" class="paramAttribute" index="paramName" value="{{ param.getName }}">
+                                                <label>min</label><input type="text" class="paramAttribute" index="paramMinValue" value="{{ param.getMinvalue }}">
+                                                <label>max</label><input type="text" class="paramAttribute" index="paramMaxValue" value="{{ param.getMaxvalue }}">
+                                                <label>unit</label><input type="text" class="paramAttribute" index="paramUnit" value="{{ param.getUnit }}"></div>
                                             </td>
                                         {% endfor %}
                                     </tr>
@@ -70,7 +71,7 @@
                                                 <td><button type="button" class="deleteRow"><i class="fa fa-trash"></i></button></td>
                                                 <td><input type="text" class="dataTableValue" index="serie_name" value="name_serie_{{ loop.index }}"></td>
                                             {%  endif %}
-                                            <td><input type="text" class="dataTableValue" index="param_{{ param.getId }}" value="toto"/></td>
+                                            <td><input type="text" class="dataTableValue" index="param_{{ param.getId }}" value="1000"/></td>
                                         {% endfor %}
                                     </tr>
                                 </tbody>
