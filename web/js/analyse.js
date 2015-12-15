@@ -95,9 +95,7 @@ $(document).ready(function() {
         var rawDatatableData = dataTable.getInputData();
         var paramsAttr = dataTable.getParamsAttribute();
         var calcChartValues = getChartCalcValues(paramsAttr, rawDatatableData.seriesDataAssociative);
-        var zaza = calcChartValues;
-        console.log(calcChartValues);
-        console.log(zaza);
+        //console.log(calcChartValues);
 
         if ( $.fn.dataTable.isDataTable( '#example' ) ) {
             $('#example').DataTable().destroy();
@@ -112,71 +110,21 @@ $(document).ready(function() {
             data: calcChartValues,
             columns: rawDatatableData.dtColumns
         } );
+
+
         //need labels and data
         var labels = rawDatatableData.index;
         labels.shift();
 
-        calcChartValues[0].shift();
-
-        console.log(labels);
-        console.log(calcChartValues[0]);
+        var datasets = getDataChart(calcChartValues);
 
         var data = {
             labels: labels,
-            datasets: [
-                {
-                    label: "My First dataset",
-                    fillColor: "rgba(220,220,220,0.2)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: calcChartValues[0]
-                }/*,
-                {
-                    label: "My Second dataset",
-                    fillColor: "rgba(151,187,205,0.2)",
-                    strokeColor: "rgba(151,187,205,1)",
-                    pointColor: "rgba(151,187,205,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(151,187,205,1)",
-                    data: [28, 48, 40, 19, 96, 27, 100]
-                }*/
-            ]
+            datasets: datasets
         };
-
         var ctx = $("#myChart").get(0).getContext("2d");
         var myRadarChart = new Chart(ctx).Radar(data);
     });
-
-
-    /*var data = {
-        labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-        datasets: [
-            {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: [65, 59, 90, 81, 56, 55, 40]
-            },
-            {
-                label: "My Second dataset",
-                fillColor: "rgba(151,187,205,0.2)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [28, 48, 40, 19, 96, 27, 100]
-            }
-        ]
-    };*/
 
 
 
@@ -221,6 +169,7 @@ function calcValueWithMinMax(value, paramAttr)
 
 function getChartCalcValues(paramsAttr, rawDatatableData)
 {
+
     //transform ton paramsAttr array avec paramId qui fait l'index
     var paramsAttrByKeyId = transformParamAttrArray(paramsAttr);
 
@@ -254,7 +203,38 @@ function getChartCalcValues(paramsAttr, rawDatatableData)
                 tmpTab[j] = value;
             }
         }
+        console.log(tmpTab)
         tab.push(tmpTab);
+        tmpTab = [];
     }
+    console.log(tab);
     return tab;
+}
+
+function getDataChart(calcChartValues)
+{
+    var response = '';
+
+    var datasets = [];
+    for (var i=0 ; i<calcChartValues.length ; i++) {
+        var serieName = calcChartValues[i][0];
+        var serieData = calcChartValues[i];
+        serieData.shift();
+
+        var rgbaFill = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",0.2)";
+        var rgbaStroke = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",1)";
+
+        var dataset = {
+            label: serieName,
+            fillColor: rgbaFill,
+            strokeColor: rgbaStroke,
+            pointColor: rgbaStroke,
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: rgbaStroke,
+            data: serieData
+        };
+        datasets.push(dataset);
+    }
+    return datasets;
 }
