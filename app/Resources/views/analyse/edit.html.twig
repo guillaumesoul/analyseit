@@ -66,12 +66,26 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+
+                                        {#<form id="parsley" name="parsley">
+                                            <input type="text" id="fillet" name="fillet" value="">
+                                        </form>
+                                        <form>
+                                            <input id="first" type="text" value="hello"/>
+                                            <input id="second" type="text" value="world"/>
+                                        </form>#}
+                                        <input id="zaza" name="zaza" type="text" value="world"/>
+
+
+
                                         {% for param in params_list %}
+                                            <form>
                                             {% if loop.first %}
                                                 <td><button type="button" class="deleteRow"><i class="fa fa-trash"></i></button></td>
-                                                <td><input type="text" class="dataTableValue" index="serie_name" value="name_serie_{{ loop.index }}"></td>
+                                                <td><input type="text" class="dataTableSerieName" index="serie_name" value="name_serie"></td>
                                             {%  endif %}
-                                            <td><input type="text" class="dataTableValue" index="param_{{ param.getId }}" value="1000"/></td>
+                                            <td><input type="text" class="dataTableParamValue" index="param_{{ param.getId }}" value="1000"/></td>
+                                            </form>
                                         {% endfor %}
                                     </tr>
                                 </tbody>
@@ -108,3 +122,4 @@
     <script src="{{ asset('js/analyse.js') }}" type="text/javascript" charset="utf-8"></script>
     {% endjavascripts %}
 {% endblock %}
+

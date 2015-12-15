@@ -2,7 +2,6 @@
  * Created by guillaumesoullard on 09/12/15.
  */
 
-
 $(document).ready(function() {
 
     var dataTable = $('#param_datatable').DataTable({
@@ -88,9 +87,27 @@ $(document).ready(function() {
         return serie;
     }
 
-
-
     $('#chart_button').on('click', function(){
+
+
+        var parsleyParamTab = $('.dataTableParamValue').parsley({
+            type: 'alphanum',
+            min: 0,
+            max: 2000
+
+        });
+        var parsleyParamTab = $('.dataTableParamValue').parsley({
+            type: 'digits',
+            min: 0,
+            max: 2000
+
+        });
+        console.log(instance4Tab);
+        for (var i=0 ; i<instance4Tab.length ; i++){
+            console.log(instance4Tab[i]);
+            console.log(instance4Tab[i].isValid());
+        }
+
 
         var rawDatatableData = dataTable.getInputData();
         var paramsAttr = dataTable.getParamsAttribute();
@@ -169,7 +186,6 @@ function calcValueWithMinMax(value, paramAttr)
 
 function getChartCalcValues(paramsAttr, rawDatatableData)
 {
-
     //transform ton paramsAttr array avec paramId qui fait l'index
     var paramsAttrByKeyId = transformParamAttrArray(paramsAttr);
 
@@ -203,11 +219,9 @@ function getChartCalcValues(paramsAttr, rawDatatableData)
                 tmpTab[j] = value;
             }
         }
-        console.log(tmpTab)
         tab.push(tmpTab);
         tmpTab = [];
     }
-    console.log(tab);
     return tab;
 }
 
