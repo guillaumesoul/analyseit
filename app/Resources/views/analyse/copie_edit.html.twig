@@ -61,7 +61,7 @@
                             <table id="param_datatable">
                                 <thead>
                                     <tr>
-                                        {#{% for param in params_list %}
+                                        {% for param in params_list %}
                                             {% if loop.first %}
                                                 <td></td>
                                                 <td>Analyse Id : {{ param.getAnalyse.getId }}</td>
@@ -77,20 +77,6 @@
                                                     <div><label class="paramAttrLabel">max</label><input type="text" id="maxValue_param_{{ param.getId }}" name="maxValue_param_{{ param.getId }}" class="paramAttribute" index="paramMaxValue" value="{{ param.getMaxvalue }}"></div>
                                                     <div><label class="paramAttrLabel">unit</label><input type="text" id="unit_param_{{ param.getId }}" name="unit_param_{{ param.getId }}" class="paramAttribute" index="paramUnit" value="{{ param.getUnit }}"></div>
                                                 </form>
-                                                </div>
-                                            </td>
-                                        {% endfor %}#}
-                                        {% for form in param_creation_form_list %}
-                                            {% if loop.first %}
-                                                <td></td>
-                                                <td></td>
-                                            {%  endif %}
-                                            <td>
-                                                <div>
-                                            {{ form_start(form) }}
-                                            {{ form_errors(form) }}
-                                            {{ form_widget(form) }}
-                                            {{ form_end(form) }}
                                                 </div>
                                             </td>
                                         {% endfor %}

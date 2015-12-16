@@ -33,6 +33,7 @@ class ParamController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $param = $em->getRepository('AppBundle:Param')->findOneById($paramId);
+        $post = $request->attributes();
 
         if (!$param) {
             throw $this->createNotFoundException('No param found');
@@ -43,5 +44,13 @@ class ParamController extends Controller
             $em->flush();
             return $this->redirect($this->generateUrl('analyse_edit', array('analyseId' => $param->getAnalyse()->getId())));
         }
+    }
+
+    public function testAction()
+    {
+        $ezae = 'fsdf';
+        $ezae = 'fsdf';
+        $ezae = 'fsdf';
+        return $ezae;
     }
 }

@@ -69,7 +69,8 @@ class AnalyseController extends Controller
 
         //PARAM CREATION FORM HANDLING
         $param = new Param();
-        $form = $this->createForm(new ParamType(), $param);
+        $paramType = new ParamType();
+        $form = $this->createForm($paramType, $param);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $param = $form->getData();
@@ -85,10 +86,22 @@ class AnalyseController extends Controller
         //PARAM LIST FOR SELECTED ANALYSE
         //$paramsList = $em->getRepository('AppBundle:Param')->findByAnalyse($analyseId);
         $paramsList = $em->getRepository('AppBundle:Param')->getParamsByAnalyseId($analyseId);
+        $formTab = array();
+        for ($i=0 ; $i<count($paramsList) ; $i++){
+            $formName = 'form' . $i;
+            //$formName = $this->createForm($paramType, $param);
+            $param = $paramsList[$i];
+            $form = $this->createForm($paramType, $param);
+            $formView = $form->createView();
+            array_push($formTab,$formView);
+        }
+
+        $form2 = $this->createForm(new ParamType(), $param);
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
             'param_creation_form' => $form->createView(),
+            'param_creation_form_list' => $formTab,
             'params_list' => $paramsList
         ));
     }
