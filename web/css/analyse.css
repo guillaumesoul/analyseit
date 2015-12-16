@@ -29,3 +29,11 @@
     margin: 1px;
     color: white;
 }
+
+.paramAttrLabel{
+    width: 50%;
+}
+
+.paramAttribute{
+    width: 50%;
+}

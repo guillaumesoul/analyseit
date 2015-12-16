@@ -2,7 +2,8 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('assets/vendor/datatables/media/css/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendor/datatables/media/css/dataTables.bootstrap.css') }}" rel="stylesheet"
+          xmlns="http://www.w3.org/1999/html"/>
     <link href="{{ asset('css/analyse.css') }}" rel="stylesheet" />
 {% endblock %}
 
@@ -40,9 +41,19 @@
                     {% endblock %}
                 </div>
                 <div class="row">
+
+
+                    {#<form>
+                        <input value="42" data-validate="number">
+                        <input value="xx" data-validate="number">
+                        <input type="submit" class="submit">
+                    </form>#}
+
+                    <form>
                     {% block datatable %}
                         <div class="col-lg-1">
                             <button type="button" id="addRow"><i class="fa fa-plus"></i></button>
+                            <input type="submit" class="submit" value="Update Table">
                         </div>
                         <div class="col-lg-8">
                             <table id="param_datatable">
@@ -55,36 +66,29 @@
                                             {%  endif %}
                                             <td>
                                                 <div><a href="/param/delete/{{ param.getId }}"><button type="button"><i class="fa fa-trash"></i></button></a>
+                                                <a href="/param/save/{{ param.getId }}"><button type="button"><i class="fa fa-save"></i></button></a>
                                                 <input type="hidden" class="paramAttribute" index="paramId" value="{{ param.getId }}">
-                                                <label>name</label><input type="text" class="paramAttribute" index="paramName" value="{{ param.getName }}">
-                                                <label>min</label><input type="text" class="paramAttribute" index="paramMinValue" value="{{ param.getMinvalue }}">
+                                                <div><label class="paramAttrLabel">name</label><input type="text" class="paramAttribute" index="paramName" value="{{ param.getName }}"></div>
+                                                <div><label class="paramAttrLabel">min</label><input type="text" class="paramAttribute" index="paramMinValue" value="{{ param.getMinvalue }}"></div>
+                                                <div><label class="paramAttrLabel">max</label><input type="text" class="paramAttribute" index="paramMaxValue" value="{{ param.getMaxvalue }}"></div>
+                                                <div><label class="paramAttrLabel">unit</label><input type="text" class="paramAttribute" index="paramUnit" value="{{ param.getUnit }}"></div>
+                                                {#<label>min</label><input type="text" class="paramAttribute" index="paramMinValue" value="{{ param.getMinvalue }}">
                                                 <label>max</label><input type="text" class="paramAttribute" index="paramMaxValue" value="{{ param.getMaxvalue }}">
-                                                <label>unit</label><input type="text" class="paramAttribute" index="paramUnit" value="{{ param.getUnit }}"></div>
+                                                <label>unit</label><input type="text" class="paramAttribute" index="paramUnit" value="{{ param.getUnit }}"></div>#}
+                                                </div>
                                             </td>
                                         {% endfor %}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-
-                                        {#<form id="parsley" name="parsley">
-                                            <input type="text" id="fillet" name="fillet" value="">
-                                        </form>
-                                        <form>
-                                            <input id="first" type="text" value="hello"/>
-                                            <input id="second" type="text" value="world"/>
-                                        </form>#}
-                                        <input id="zaza" name="zaza" type="text" value="world"/>
-
-
-
                                         {% for param in params_list %}
                                             <form>
                                             {% if loop.first %}
                                                 <td><button type="button" class="deleteRow"><i class="fa fa-trash"></i></button></td>
-                                                <td><input type="text" class="dataTableSerieName" index="serie_name" value="name_serie"></td>
+                                                <td><input type="text" class="dataTableSerieName" index="serie_name" value="name_serie" data-validate="required"></td>
                                             {%  endif %}
-                                            <td><input type="text" class="dataTableParamValue" index="param_{{ param.getId }}" value="1000"/></td>
+                                            <td><input type="text" class="dataTableParamValue" index="param_{{ param.getId }}" data-validate="number,minVal({{ param.getMinvalue }}),maxVal({{ param.getMaxvalue }})" value="10"/></td>
                                             </form>
                                         {% endfor %}
                                     </tr>
@@ -92,6 +96,10 @@
                             </table>
                         </div>
                     {% endblock %}
+
+                    </form>
+
+
                     {% block analyse_chart %}
                         <canvas id="myChart" width="400" height="400"></canvas>
                     {% endblock %}
@@ -118,7 +126,7 @@
     <script src="{{ asset('assets/vendor/datatables/media/js/jquery.dataTables.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendor/datatables/media/js/dataTables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendor/Chart.js/Chart.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/vendor/parsleyjs/dist/parsley.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendor/verify/verify.notify.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/analyse.js') }}" type="text/javascript" charset="utf-8"></script>
     {% endjavascripts %}
 {% endblock %}

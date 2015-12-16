@@ -2,6 +2,8 @@
  * Created by guillaumesoullard on 09/12/15.
  */
 
+
+
 $(document).ready(function() {
 
     var dataTable = $('#param_datatable').DataTable({
@@ -87,32 +89,29 @@ $(document).ready(function() {
         return serie;
     }
 
-    $('#chart_button').on('click', function(){
+    $.verify.addRules({
+        divisibleByThree: function(r) {
+            var n = parseInt(r.val());
+            if(n%3 !== 0){
+                console.log('coucou');
+                return "Not divisible by 3!"
+            }
 
-
-        var parsleyParamTab = $('.dataTableParamValue').parsley({
-            type: 'alphanum',
-            min: 0,
-            max: 2000
-
-        });
-        var parsleyParamTab = $('.dataTableParamValue').parsley({
-            type: 'digits',
-            min: 0,
-            max: 2000
-
-        });
-        console.log(instance4Tab);
-        for (var i=0 ; i<instance4Tab.length ; i++){
-            console.log(instance4Tab[i]);
-            console.log(instance4Tab[i].isValid());
+            return true;
+        },
+        zaza: function(r) {
+            if (r.val() != 'zaza')
+                return "t'es pas zaza!"
+            return true;
         }
+    });
 
+
+    $('#chart_button').on('click', function(){
 
         var rawDatatableData = dataTable.getInputData();
         var paramsAttr = dataTable.getParamsAttribute();
         var calcChartValues = getChartCalcValues(paramsAttr, rawDatatableData.seriesDataAssociative);
-        //console.log(calcChartValues);
 
         if ( $.fn.dataTable.isDataTable( '#example' ) ) {
             $('#example').DataTable().destroy();
@@ -252,3 +251,4 @@ function getDataChart(calcChartValues)
     }
     return datasets;
 }
+

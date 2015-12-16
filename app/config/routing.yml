@@ -32,3 +32,7 @@ analyse_edit:
 param_delete:
     path:      /param/delete/{paramId}
     defaults:  { _controller: AppBundle:Param:delete }
+
+param_save:
+    path:      /param/save/{paramId}
+    defaults:  { _controller: AppBundle:Param:save }
