@@ -2,11 +2,11 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Param
  *
- * @ORM\Table()
  * @ORM\Table(name="param", indexes={@ORM\Index(name="analyse_id", columns={"analyse_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\ParamRepository")
  */
@@ -26,6 +26,7 @@ class Param
      * @var string
      *
      * @ORM\Column(name="param_name", type="string", length=30)
+     *
      */
     protected $name;
 

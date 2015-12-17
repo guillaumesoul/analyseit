@@ -70,18 +70,18 @@ class AnalyseController extends Controller
         //PARAM CREATION FORM HANDLING
         $param = new Param();
         $paramType = new ParamType();
-        $form = $this->createForm($paramType, $param);
+        $emptyForm = $this->createForm($paramType, $param);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $param = $form->getData();
+        $emptyForm->handleRequest($request);
+        if ($emptyForm->isSubmitted() && $emptyForm->isValid()) {
+            $param = $emptyForm->getData();
             $param->setAnalyse($analyse);
             //$em->persist($param);
             //$em->flush();
             unset($param);
-            unset($form);
+            unset($emptyForm);
             $param = new Param();
-            $form = $this->createForm(new ParamType(), $param);
+            $emptyForm = $this->createForm(new ParamType(), $param);
         }
 
         //PARAM LIST FOR SELECTED ANALYSE
@@ -91,10 +91,10 @@ class AnalyseController extends Controller
         $formTabView = array();
         for ($i=0 ; $i<count($paramsList) ; $i++){
             $param = $paramsList[$i];
-            $paramId = $param->getId();
+            /*$paramId = $param->getId();
             $newParam = $em->getRepository('AppBundle:Param')->findById($paramId);
 
-            //$form = $this->createForm($paramType, $param);
+            //$form = $this->createForm($paramType, $param);*/
             $form = $this->createForm($this->get('param_form'), $param);
             $formView = $form->createView();
             array_push($formTabView,$formView);
@@ -102,12 +102,13 @@ class AnalyseController extends Controller
         }
         if ($request->isMethod('POST')) {
             $paramIdForm = $request->get('paramId');
-            $paramToUpdate = $test = $em->getRepository('AppBundle:Param')->find($paramIdForm);
+            $paramToUpdate = $em->getRepository('AppBundle:Param')->find($paramIdForm);
             $formTest = $this->createForm($this->get('param_form'), $paramToUpdate);
             $formTest->handleRequest($request);
             if ($formTest->isSubmitted() && $formTest->isValid()) {
                 $zaz = 'ezae';
                 $param = $formTest->getData();
+                $zaz = 'ezae';
                 //$param->setAnalyse($analyse);
                 //$em->persist($param);
                 $em->flush();
@@ -131,7 +132,7 @@ class AnalyseController extends Controller
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
-            'param_creation_form' => $form->createView(),
+            'param_creation_form' => $emptyForm->createView(),
             'param_creation_form_list' => $formTabView,
             'params_list' => $paramsList
         ));

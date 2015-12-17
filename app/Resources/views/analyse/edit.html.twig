@@ -95,34 +95,40 @@
                                             {%  endif %}
                                             <td>
                                                 <div>
-                                                    {{ form_start(form) }}
+                                                    {#{{ form_start(form) }}#}
+                                                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+
                                                     <div>
-                                                        <label class="paramAttrLabel">{{ form.vars.value.id }}</label>
-                                                        <input type="text" id="paramId" name="paramId" value="{{ form.vars.value.id }}"/>
+                                                        <input type="hidden" id="paramId" name="paramId" class="paramAttribute" index="paramId" value="{{ form.vars.value.id }}"/>
                                                     </div>
                                                     <div>
                                                         <label class="paramAttrLabel">name</label>
-                                                        {{ form_widget(form.name, {'attr': {'class': 'pipou'}}) }}
+                                                        {{ form_widget(form.name, { 'id': 'name_param_' ~ form.vars.value.id, 'name': 'name_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramName' }} )}}
                                                     </div>
                                                     <div>
                                                         <label class="paramAttrLabel">min</label>
-                                                        {{ form_widget(form.minvalue, {'attr': {'class': 'pipou'}}) }}
+                                                        {{ form_widget(form.minvalue, { 'id': 'minValue_param_' ~ form.vars.value.id, 'name': 'minValue_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMinValue' }} )}}
                                                     </div>
                                                     <div>
                                                         <label class="paramAttrLabel">max</label>
-                                                        {{ form_widget(form.maxvalue, {'attr': {'class': 'pipou'}}) }}
-                                                    </div>
-                                                    <div>
-                                                        <label class="paramAttrLabel">pond</label>
-                                                        {{ form_widget(form.ponderation, {'attr': {'class': 'pipou'}}) }}
+                                                        {{ form_widget(form.maxvalue, { 'id': 'maxValue_param_' ~ form.vars.value.id, 'name': 'maxValue_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMaxValue' }} )}}
                                                     </div>
                                                     <div>
                                                         <label class="paramAttrLabel">unit</label>
-                                                        {{ form_widget(form.unit, {'attr': {'class': 'pipou'}}) }}
+                                                        {{ form_widget(form.unit, { 'id': 'unit_param_' ~ form.vars.value.id, 'name': 'unit_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramUnit' }} )}}
+                                                    </div>
+                                                    <div>
+                                                        <label class="paramAttrLabel">pond</label>
+                                                        {{ form_widget(form.ponderation, { 'id': 'ponderation_param_' ~ form.vars.value.id, 'name': 'ponderation_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramPonderation' }} )}}
                                                     </div>
                                                     <div>
                                                         <label class="paramAttrLabel">type</label>
-                                                        {{ form_widget(form.type, {'attr': {'class': 'pipou'}}) }}
+                                                        {{ form_widget(form.type, { 'id': 'type_param_' ~ form.vars.value.id, 'name': 'type_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramType' }} )}}
+                                                    </div>
+                                                    <div style="display: none;">
+                                                        <label class="paramAttrLabel">analyse</label>
+                                                        {{ form_widget(form.analyse, {'attr': {'class': 'paramAttribute'}}) }}
                                                     </div>
                                                     <div>
                                                         {{ form_widget(form.save) }}
