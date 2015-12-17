@@ -8,6 +8,14 @@
 {% endblock %}
 
 {% block appWindow %}
+
+
+    {#{{ form_start(param_creation_form) }}
+    {{ form_errors(param_creation_form) }}
+    {{ form_widget(param_creation_form) }}
+    {{ form_end(param_creation_form) }}#}
+
+
     {% block analyse_params %}
         <div class="col-lg-12 panel">
             <div class="panel-heading">
@@ -87,10 +95,40 @@
                                             {%  endif %}
                                             <td>
                                                 <div>
-                                            {{ form_start(form) }}
-                                            {{ form_errors(form) }}
-                                            {{ form_widget(form) }}
-                                            {{ form_end(form) }}
+                                                    {{ form_start(form) }}
+                                                    <div>
+                                                        <label class="paramAttrLabel">{{ form.vars.value.id }}</label>
+                                                        <input type="text" id="paramId" name="paramId" value="{{ form.vars.value.id }}"/>
+                                                    </div>
+                                                    <div>
+                                                        <label class="paramAttrLabel">name</label>
+                                                        {{ form_widget(form.name, {'attr': {'class': 'pipou'}}) }}
+                                                    </div>
+                                                    <div>
+                                                        <label class="paramAttrLabel">min</label>
+                                                        {{ form_widget(form.minvalue, {'attr': {'class': 'pipou'}}) }}
+                                                    </div>
+                                                    <div>
+                                                        <label class="paramAttrLabel">max</label>
+                                                        {{ form_widget(form.maxvalue, {'attr': {'class': 'pipou'}}) }}
+                                                    </div>
+                                                    <div>
+                                                        <label class="paramAttrLabel">pond</label>
+                                                        {{ form_widget(form.ponderation, {'attr': {'class': 'pipou'}}) }}
+                                                    </div>
+                                                    <div>
+                                                        <label class="paramAttrLabel">unit</label>
+                                                        {{ form_widget(form.unit, {'attr': {'class': 'pipou'}}) }}
+                                                    </div>
+                                                    <div>
+                                                        <label class="paramAttrLabel">type</label>
+                                                        {{ form_widget(form.type, {'attr': {'class': 'pipou'}}) }}
+                                                    </div>
+                                                    <div>
+                                                        {{ form_widget(form.save) }}
+                                                    </div>
+                                                    {{ form_end(form) }}
+                                                    {#{{ form_end(form, {'render_rest': false}) }}#}
                                                 </div>
                                             </td>
                                         {% endfor %}

@@ -71,12 +71,13 @@ class AnalyseController extends Controller
         $param = new Param();
         $paramType = new ParamType();
         $form = $this->createForm($paramType, $param);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $param = $form->getData();
             $param->setAnalyse($analyse);
-            $em->persist($param);
-            $em->flush();
+            //$em->persist($param);
+            //$em->flush();
             unset($param);
             unset($form);
             $param = new Param();
@@ -87,21 +88,51 @@ class AnalyseController extends Controller
         //$paramsList = $em->getRepository('AppBundle:Param')->findByAnalyse($analyseId);
         $paramsList = $em->getRepository('AppBundle:Param')->getParamsByAnalyseId($analyseId);
         $formTab = array();
+        $formTabView = array();
         for ($i=0 ; $i<count($paramsList) ; $i++){
-            $formName = 'form' . $i;
-            //$formName = $this->createForm($paramType, $param);
             $param = $paramsList[$i];
-            $form = $this->createForm($paramType, $param);
+            $paramId = $param->getId();
+            $newParam = $em->getRepository('AppBundle:Param')->findById($paramId);
+
+            //$form = $this->createForm($paramType, $param);
+            $form = $this->createForm($this->get('param_form'), $param);
             $formView = $form->createView();
-            array_push($formTab,$formView);
+            array_push($formTabView,$formView);
+            array_push($formTab,$form);
+        }
+        if ($request->isMethod('POST')) {
+            $paramIdForm = $request->get('paramId');
+            $paramToUpdate = $test = $em->getRepository('AppBundle:Param')->find($paramIdForm);
+            $formTest = $this->createForm($this->get('param_form'), $paramToUpdate);
+            $formTest->handleRequest($request);
+            if ($formTest->isSubmitted() && $formTest->isValid()) {
+                $zaz = 'ezae';
+                $param = $formTest->getData();
+                //$param->setAnalyse($analyse);
+                //$em->persist($param);
+                $em->flush();
+            }
         }
 
-        $form2 = $this->createForm(new ParamType(), $param);
+
+
+        /*for ($i=0 ; $i<count($formTab) ; $i++){
+            $formIndex = $formTab[$i];
+            $formIndex->handleRequest($request);
+            if ($formIndex->isSubmitted() && $formIndex->isValid() && false) {
+                $param = $formIndex->getData();
+                $test = $em->getRepository('AppBundle:Param')->find($param);
+                $param->setAnalyse($analyse);
+                //$em->persist($param);
+                //$em->flush();
+            }
+        }*/
+
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
             'param_creation_form' => $form->createView(),
-            'param_creation_form_list' => $formTab,
+            'param_creation_form_list' => $formTabView,
             'params_list' => $paramsList
         ));
     }

@@ -14,12 +14,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ParamType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->setMethod('POST')
             ->add('name')
-            ->add('type', 'entity', array(
+            ->add('analyse', 'entity', array(
                 'class' => 'AppBundle:Analyse',
                 'property' => 'name',
                 'label' => 'Analyse',
@@ -40,7 +41,7 @@ class ParamType extends AbstractType
 
     public function getName()
     {
-        return 'site_nombundle_nomtype';
+        return 'appbundle_paramtype';
     }
 
     public function configureOptions(OptionsResolver $resolver)

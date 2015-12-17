@@ -10,7 +10,8 @@ $(document).ready(function() {
         "searching": false,
         "info" : false,
         "bLengthChange": false,
-        "paging" : false
+        "paging" : false,
+        "ordering": false
     });
 
     $('#addRow').on('click', function() {
