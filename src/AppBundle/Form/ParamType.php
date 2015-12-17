@@ -35,8 +35,8 @@ class ParamType extends AbstractType
                 'property' => 'name',
                 'label' => 'type',
                 //'choices' => $options['data']['paramTypeList'],
-            ))
-            ->add('save', 'submit', array('label' => 'Create Parameter'));
+            ));
+            //->add('save', 'submit', array('label' => 'Create Parameter'));
     }
 
     public function getName()

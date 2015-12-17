@@ -106,11 +106,7 @@ class AnalyseController extends Controller
             $formTest = $this->createForm($this->get('param_form'), $paramToUpdate);
             $formTest->handleRequest($request);
             if ($formTest->isSubmitted() && $formTest->isValid()) {
-                $zaz = 'ezae';
                 $param = $formTest->getData();
-                $zaz = 'ezae';
-                //$param->setAnalyse($analyse);
-                //$em->persist($param);
                 $em->flush();
             }
         }

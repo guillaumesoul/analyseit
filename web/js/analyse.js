@@ -75,6 +75,7 @@ $(document).ready(function() {
         var param = {};
         var serie = [];
         var paramsCells =  $('#param_datatable thead tr td div');
+        console.log(paramsCells);
         if ( paramsCells.length > 0) {
             paramsCells.each(function() {
                 var paramsAttr = $(this).find('.paramAttribute');
@@ -82,11 +83,13 @@ $(document).ready(function() {
                     paramsAttr.each(function(){
                         param[$(this).attr('index')] = $(this).val();
                     });
+                    console.log(param);
                     serie.push(param);
                     param = {};
                 }
             });
         }
+        console.log(serie);
         return serie;
     }
 
@@ -188,6 +191,8 @@ function getChartCalcValues(paramsAttr, rawDatatableData)
 {
     //transform ton paramsAttr array avec paramId qui fait l'index
     var paramsAttrByKeyId = transformParamAttrArray(paramsAttr);
+    console.log(paramsAttr);
+    console.log(rawDatatableData);
 
     var response = {};
     for (var i=0;  i<paramsAttr.length ; i++){
