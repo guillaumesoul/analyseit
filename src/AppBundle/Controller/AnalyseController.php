@@ -21,7 +21,6 @@ class AnalyseController extends Controller
     public function indexAction(Request $request)
     {
         return $this->render('analyse/index.html.twig');
-
     }
 
     public function createAction(Request $request)
@@ -67,68 +66,41 @@ class AnalyseController extends Controller
         $em = $this->getDoctrine()->getManager();
         $analyse = $em->getRepository('AppBundle:Analyse')->findOneById($analyseId);
 
-        //PARAM CREATION FORM HANDLING
-        $param = new Param();
-        $paramType = new ParamType();
-        $emptyForm = $this->createForm($paramType, $param);
-
-        $emptyForm->handleRequest($request);
-        if ($emptyForm->isSubmitted() && $emptyForm->isValid()) {
-            $param = $emptyForm->getData();
-            $param->setAnalyse($analyse);
-            //$em->persist($param);
-            //$em->flush();
-            unset($param);
-            unset($emptyForm);
-            $param = new Param();
-            $emptyForm = $this->createForm(new ParamType(), $param);
+        if ($request->isMethod('POST')) {
+            $paramIdForm = $request->get('paramId');
+            $paramToUpdate = $em->getRepository('AppBundle:Param')->find($paramIdForm);
+            if ($paramToUpdate instanceof Param && $paramToUpdate != null) {
+                $form = $this->createForm($this->get('param_form'), $paramToUpdate);
+            }else{
+                $form = $this->createForm(new ParamType(), new Param());
+            }
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $param = $form->getData();
+                if ($paramToUpdate == null) {
+                    $em->persist($param);
+                }
+                $em->flush();
+                unset($param);
+                unset($form);
+            }
         }
-
-        //PARAM LIST FOR SELECTED ANALYSE
         //$paramsList = $em->getRepository('AppBundle:Param')->findByAnalyse($analyseId);
+        //@TODO FAIRE UNE COLLECTION DE FORMULAIRE
         $paramsList = $em->getRepository('AppBundle:Param')->getParamsByAnalyseId($analyseId);
         $formTab = array();
         $formTabView = array();
         for ($i=0 ; $i<count($paramsList) ; $i++){
             $param = $paramsList[$i];
-            /*$paramId = $param->getId();
-            $newParam = $em->getRepository('AppBundle:Param')->findById($paramId);
-
-            //$form = $this->createForm($paramType, $param);*/
             $form = $this->createForm($this->get('param_form'), $param);
             $formView = $form->createView();
             array_push($formTabView,$formView);
             array_push($formTab,$form);
         }
-        if ($request->isMethod('POST')) {
-            $paramIdForm = $request->get('paramId');
-            $paramToUpdate = $em->getRepository('AppBundle:Param')->find($paramIdForm);
-            $formTest = $this->createForm($this->get('param_form'), $paramToUpdate);
-            $formTest->handleRequest($request);
-            if ($formTest->isSubmitted() && $formTest->isValid()) {
-                $param = $formTest->getData();
-                $em->flush();
-            }
-        }
-
-
-
-        /*for ($i=0 ; $i<count($formTab) ; $i++){
-            $formIndex = $formTab[$i];
-            $formIndex->handleRequest($request);
-            if ($formIndex->isSubmitted() && $formIndex->isValid() && false) {
-                $param = $formIndex->getData();
-                $test = $em->getRepository('AppBundle:Param')->find($param);
-                $param->setAnalyse($analyse);
-                //$em->persist($param);
-                //$em->flush();
-            }
-        }*/
-
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
-            'param_creation_form' => $emptyForm->createView(),
+            'param_creation_form' => $this->createForm(new ParamType(), new Param())->createView(),
             'param_creation_form_list' => $formTabView,
             'params_list' => $paramsList
         ));

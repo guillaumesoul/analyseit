@@ -8,14 +8,6 @@
 {% endblock %}
 
 {% block appWindow %}
-
-
-    {#{{ form_start(param_creation_form) }}
-    {{ form_errors(param_creation_form) }}
-    {{ form_widget(param_creation_form) }}
-    {{ form_end(param_creation_form) }}#}
-
-
     {% block analyse_params %}
         <div class="col-lg-12 panel">
             <div class="panel-heading">
@@ -32,49 +24,27 @@
                     </div>
                 {% endblock %}
                 {% block param_creation %}
-                    {#{{ form_start(param_creation_form) }}
-                    {{ form_errors(param_creation_form) }}
-                    {{ form_widget(param_creation_form) }}
-                    {{ form_end(param_creation_form) }}#}
-
                     <div>
                         {{ form_start(param_creation_form) }}
-                        <div>
-                            <input type="hidden" id="paramId" name="paramId" class="paramAttribute" index="paramId" value="{{ param_creation_form.vars.value.id }}"/>
-                        </div>
-                        <div>
-                            <label class="paramAttrLabel">name</label>
-                            {{ form_widget(param_creation_form.name, { 'id': 'name_param_' ~ param_creation_form.vars.value.id, 'name': 'name_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramName' }} )}}
-                        </div>
-                        <div>
-                            <label class="paramAttrLabel">min</label>
-                            {{ form_widget(param_creation_form.minvalue, { 'id': 'minValue_param_' ~ param_creation_form.vars.value.id, 'name': 'minValue_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMinValue' }} )}}
-                        </div>
-                        <div>
-                            <label class="paramAttrLabel">max</label>
-                            {{ form_widget(param_creation_form.maxvalue, { 'id': 'maxValue_param_' ~ param_creation_form.vars.value.id, 'name': 'maxValue_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMaxValue' }} )}}
-                        </div>
-                        <div>
-                            <label class="paramAttrLabel">unit</label>
-                            {{ form_widget(param_creation_form.unit, { 'id': 'unit_param_' ~ param_creation_form.vars.value.id, 'name': 'unit_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramUnit' }} )}}
-                        </div>
-                        <div>
-                            <label class="paramAttrLabel">pond</label>
-                            {{ form_widget(param_creation_form.ponderation, { 'id': 'ponderation_param_' ~ param_creation_form.vars.value.id, 'name': 'ponderation_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramPonderation' }} )}}
-                        </div>
-                        <div>
-                            <label class="paramAttrLabel">type</label>
-                            {{ form_widget(param_creation_form.type, { 'id': 'type_param_' ~ param_creation_form.vars.value.id, 'name': 'type_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramType' }} )}}
-                        </div>
+                        <input type="hidden" id="paramId" name="paramId" class="paramAttribute" index="paramId" value="{{ param_creation_form.vars.value.id }}"/>
+                        <label class="paramAttrLabel">name</label>
+                        {{ form_widget(param_creation_form.name, { 'id': 'name_param_' ~ param_creation_form.vars.value.id, 'name': 'name_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramName' }} )}}
+                        <label class="paramAttrLabel">min</label>
+                        {{ form_widget(param_creation_form.minvalue, { 'id': 'minValue_param_' ~ param_creation_form.vars.value.id, 'name': 'minValue_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMinValue' }} )}}
+                        <label class="paramAttrLabel">max</label>
+                        {{ form_widget(param_creation_form.maxvalue, { 'id': 'maxValue_param_' ~ param_creation_form.vars.value.id, 'name': 'maxValue_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMaxValue' }} )}}
+                        <label class="paramAttrLabel">unit</label>
+                        {{ form_widget(param_creation_form.unit, { 'id': 'unit_param_' ~ param_creation_form.vars.value.id, 'name': 'unit_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramUnit' }} )}}
+                        <label class="paramAttrLabel">pond</label>
+                        {{ form_widget(param_creation_form.ponderation, { 'id': 'ponderation_param_' ~ param_creation_form.vars.value.id, 'name': 'ponderation_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramPonderation' }} )}}
+                        <label class="paramAttrLabel">type</label>
+                        {{ form_widget(param_creation_form.type, { 'id': 'type_param_' ~ param_creation_form.vars.value.id, 'name': 'type_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramType' }} )}}
                         <div style="display: none;">
                             <label class="paramAttrLabel">analyse</label>
                             {{ form_widget(param_creation_form.analyse, {'attr': {'class': 'paramAttribute'}}) }}
                         </div>
-                        <div>
-                            <button type="submit"><i class="fa fa-save"></i></button>
-                        </div>
+                        <button type="submit" id="submit_param_{{ param_creation_form.vars.value.id }}" name="submit_param_{{ param_creation_form.vars.value.id }}"><i class="fa fa-save"></i></button>
                         {{ form_end(param_creation_form) }}
-                        {#{{ form_end(form, {'render_rest': false}) }}#}
                     </div>
 
                 {% endblock %}
@@ -95,31 +65,12 @@
                     {% block datatable %}
                         <div class="col-lg-1">
                             <button type="button" id="addRow"><i class="fa fa-plus"></i></button>
-                            <input type="submit" class="submit" value="Update Table">
+                            <a ><button type="button" id="addRow"><i class="fa fa-plus"></i></button></a>
                         </div>
                         <div class="col-lg-8">
                             <table id="param_datatable">
                                 <thead>
                                     <tr>
-                                        {#{% for param in params_list %}
-                                            {% if loop.first %}
-                                                <td></td>
-                                                <td>Analyse Id : {{ param.getAnalyse.getId }}</td>
-                                            {%  endif %}
-                                            <td>
-                                                <div>
-                                                <form method="post" action="/param/save/{{ param.getId }}">
-                                                    <a href="/param/delete/{{ param.getId }}"><button type="button"><i class="fa fa-trash"></i></button></a>
-                                                    <button type="submit"><i class="fa fa-save"></i></button>
-                                                    <input type="hidden" class="paramAttribute" index="paramId" value="{{ param.getId }}">
-                                                    <div><label class="paramAttrLabel">name</label><input type="text" id="name_param_{{ param.getId }}" name="name_param_{{ param.getId }}" class="paramAttribute" index="paramName" value="{{ param.getName }}"></div>
-                                                    <div><label class="paramAttrLabel">min</label><input type="text" id="minValue_param_{{ param.getId }}" name="minValue_param_{{ param.getId }}" class="paramAttribute" index="paramMinValue" value="{{ param.getMinvalue }}"></div>
-                                                    <div><label class="paramAttrLabel">max</label><input type="text" id="maxValue_param_{{ param.getId }}" name="maxValue_param_{{ param.getId }}" class="paramAttribute" index="paramMaxValue" value="{{ param.getMaxvalue }}"></div>
-                                                    <div><label class="paramAttrLabel">unit</label><input type="text" id="unit_param_{{ param.getId }}" name="unit_param_{{ param.getId }}" class="paramAttribute" index="paramUnit" value="{{ param.getUnit }}"></div>
-                                                </form>
-                                                </div>
-                                            </td>
-                                        {% endfor %}#}
                                         {% for form in param_creation_form_list %}
                                             {% if loop.first %}
                                                 <td></td>
@@ -128,41 +79,6 @@
                                             <td>
                                                 <div>
                                                     {{ form_start(form) }}
-                                                    {#<div>
-                                                        <input type="hidden" id="paramId" name="paramId" class="paramAttribute" index="paramId" value="{{ form.vars.value.id }}"/>
-                                                    </div>
-                                                    <div>
-                                                        <label class="paramAttrLabel">name</label>
-                                                        {{ form_widget(form.name, { 'id': 'name_param_' ~ form.vars.value.id, 'name': 'name_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramName' }} )}}
-                                                    </div>
-                                                    <div>
-                                                        <label class="paramAttrLabel">min</label>
-                                                        {{ form_widget(form.minvalue, { 'id': 'minValue_param_' ~ form.vars.value.id, 'name': 'minValue_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMinValue' }} )}}
-                                                    </div>
-                                                    <div>
-                                                        <label class="paramAttrLabel">max</label>
-                                                        {{ form_widget(form.maxvalue, { 'id': 'maxValue_param_' ~ form.vars.value.id, 'name': 'maxValue_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMaxValue' }} )}}
-                                                    </div>
-                                                    <div>
-                                                        <label class="paramAttrLabel">unit</label>
-                                                        {{ form_widget(form.unit, { 'id': 'unit_param_' ~ form.vars.value.id, 'name': 'unit_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramUnit' }} )}}
-                                                    </div>
-                                                    <div>
-                                                        <label class="paramAttrLabel">pond</label>
-                                                        {{ form_widget(form.ponderation, { 'id': 'ponderation_param_' ~ form.vars.value.id, 'name': 'ponderation_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramPonderation' }} )}}
-                                                    </div>
-                                                    <div>
-                                                        <label class="paramAttrLabel">type</label>
-                                                        {{ form_widget(form.type, { 'id': 'type_param_' ~ form.vars.value.id, 'name': 'type_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramType' }} )}}
-                                                    </div>
-                                                    <div style="display: none;">
-                                                        <label class="paramAttrLabel">analyse</label>
-                                                        {{ form_widget(form.analyse, {'attr': {'class': 'paramAttribute'}}) }}
-                                                    </div>
-                                                    <div>
-                                                        <button type="submit"><i class="fa fa-save"></i></button>
-                                                    </div>#}
-
                                                     <input type="hidden" id="paramId" name="paramId" class="paramAttribute" index="paramId" value="{{ form.vars.value.id }}"/>
                                                     <label class="paramAttrLabel">name</label>
                                                     {{ form_widget(form.name, { 'id': 'name_param_' ~ form.vars.value.id, 'name': 'name_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramName' }} )}}
@@ -180,9 +96,9 @@
                                                         <label class="paramAttrLabel">analyse</label>
                                                         {{ form_widget(form.analyse, {'attr': {'class': 'paramAttribute'}}) }}
                                                     </div>
-                                                    <button type="submit"><i class="fa fa-save"></i></button>
+                                                    <a href="{{ path('param_delete', {'paramId': form.vars.value.id}) }}"><button type="button"><i class="fa fa-trash"></i></button></a>
+                                                    <button type="submit" id="submit_param_{{ form.vars.value.id }}" name="submit_param_{{ form.vars.value.id }}"><i class="fa fa-save"></i></button>
                                                     {{ form_end(form) }}
-                                                    {#{{ form_end(form, {'render_rest': false}) }}#}
                                                 </div>
                                             </td>
                                         {% endfor %}

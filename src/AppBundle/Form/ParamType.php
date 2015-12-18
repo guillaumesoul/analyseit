@@ -24,17 +24,23 @@ class ParamType extends AbstractType
                 'class' => 'AppBundle:Analyse',
                 'property' => 'name',
                 'label' => 'Analyse',
-                //'choices' => $options['data']['paramTypeList'],
             ))
-            ->add('minvalue')
-            ->add('maxvalue')
-            ->add('ponderation')
-            ->add('unit')
+            ->add('minvalue', 'text', array(
+                'required' => false,
+            ))
+            ->add('maxvalue', 'text', array(
+                'required' => false
+            ))
+            ->add('ponderation', 'text', array(
+                'required' => false
+            ))
+            ->add('unit', 'text', array(
+                'required' => false
+            ))
             ->add('type', 'entity', array(
                 'class' => 'AppBundle:Typeparam',
                 'property' => 'name',
                 'label' => 'type',
-                //'choices' => $options['data']['paramTypeList'],
             ));
             //->add('save', 'submit', array('label' => 'Create Parameter'));
     }

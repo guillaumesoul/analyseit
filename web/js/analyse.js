@@ -75,7 +75,6 @@ $(document).ready(function() {
         var param = {};
         var serie = [];
         var paramsCells =  $('#param_datatable thead tr td div');
-        console.log(paramsCells);
         if ( paramsCells.length > 0) {
             paramsCells.each(function() {
                 var paramsAttr = $(this).find('.paramAttribute');
@@ -83,13 +82,11 @@ $(document).ready(function() {
                     paramsAttr.each(function(){
                         param[$(this).attr('index')] = $(this).val();
                     });
-                    console.log(param);
                     serie.push(param);
                     param = {};
                 }
             });
         }
-        console.log(serie);
         return serie;
     }
 
@@ -144,6 +141,9 @@ $(document).ready(function() {
         };
         var ctx = $("#myChart").get(0).getContext("2d");
         var myRadarChart = new Chart(ctx).Radar(data);
+
+        dataTable.draw(true);
+
     });
 
 
@@ -191,8 +191,6 @@ function getChartCalcValues(paramsAttr, rawDatatableData)
 {
     //transform ton paramsAttr array avec paramId qui fait l'index
     var paramsAttrByKeyId = transformParamAttrArray(paramsAttr);
-    console.log(paramsAttr);
-    console.log(rawDatatableData);
 
     var response = {};
     for (var i=0;  i<paramsAttr.length ; i++){
@@ -232,14 +230,11 @@ function getChartCalcValues(paramsAttr, rawDatatableData)
 
 function getDataChart(calcChartValues)
 {
-    var response = '';
-
     var datasets = [];
     for (var i=0 ; i<calcChartValues.length ; i++) {
         var serieName = calcChartValues[i][0];
         var serieData = calcChartValues[i];
         serieData.shift();
-
         var rgbaFill = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",0.2)";
         var rgbaStroke = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",1)";
 

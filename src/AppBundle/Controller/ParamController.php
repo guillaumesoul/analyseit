@@ -23,34 +23,10 @@ class ParamController extends Controller
         if (!$param) {
             throw $this->createNotFoundException('No param found');
         }else{
+            $analyseId = $param->getAnalyse()->getId();
             $em->remove($param);
             $em->flush();
-            return $this->redirect($this->generateUrl('analyse_edit', array('analyseId' => $param->getAnalyse()->getId())));
+            return $this->redirect($this->generateUrl('analyse_edit', array('analyseId' => $analyseId)));
         }
-    }
-
-    public function saveAction(Request $request, $paramId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $param = $em->getRepository('AppBundle:Param')->findOneById($paramId);
-        $post = $request->attributes();
-
-        if (!$param) {
-            throw $this->createNotFoundException('No param found');
-        }else{
-            //update param data...
-
-            $em->persist($param);
-            $em->flush();
-            return $this->redirect($this->generateUrl('analyse_edit', array('analyseId' => $param->getAnalyse()->getId())));
-        }
-    }
-
-    public function testAction()
-    {
-        $ezae = 'fsdf';
-        $ezae = 'fsdf';
-        $ezae = 'fsdf';
-        return $ezae;
     }
 }

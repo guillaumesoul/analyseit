@@ -29,14 +29,7 @@ analyse_edit:
     path:      /analyse/edit/{analyseId}
     defaults:  { _controller: AppBundle:Analyse:edit }
 
-param_test:
+param_delete:
     path:      /param/delete/{paramId}
-    defaults:  { _controller: AppBundle:Param:test }
+    defaults:  { _controller: AppBundle:Param:delete }
 
-param_save:
-    path:      /param/save/{paramId}
-    defaults:  { _controller: AppBundle:Param:save }
-
-param_test:
-    path:      /param/test/{paramId}
-    defaults:  { _controller: AppBundle:Param:test }
