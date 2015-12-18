@@ -12,48 +12,36 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ParamType extends AbstractType
+class ValueType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->setMethod('POST')
-            ->add('name')
-            ->add('analyse', 'entity', array(
-                'class' => 'AppBundle:Analyse',
+            ->add('dataserie', 'entity', array(
+                'class' => 'AppBundle:Dataserie',
                 'property' => 'name',
-                'label' => 'Analyse',
+                'label' => 'dataserie',
             ))
-            ->add('minvalue', 'text', array(
-                'required' => false,
-            ))
-            ->add('maxvalue', 'text', array(
-                'required' => false
-            ))
-            ->add('ponderation', 'text', array(
-                'required' => false
-            ))
-            ->add('unit', 'text', array(
-                'required' => false
-            ))
-            ->add('type', 'entity', array(
-                'class' => 'AppBundle:Typeparam',
+            ->add('param', 'entity', array(
+                'class' => 'AppBundle:Param',
                 'property' => 'name',
                 'label' => 'param'
-            ));
+            ))
+            ->add('value');
             //->add('save', 'submit', array('label' => 'Create Parameter'));
     }
 
     public function getName()
     {
-        return 'appbundle_paramtype';
+        return 'appbundle_valuetype';
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Param'
+            'data_class' => 'AppBundle\Entity\Value'
         ));
     }
 }

@@ -116,9 +116,9 @@
                                                 <td><button type="button" class="deleteRow"><i class="fa fa-trash"></i></button></td>
                                                 <td><input type="text" class="dataTableSerieName" index="serie_name" value="name_serie" data-validate="required"></td>
                                             {%  endif %}
-                                            <td><input type="text" class="dataTableParamValue" index="param_{{ param.getId }}" paramName="{{ param.getName }}" data-validate="number,minVal({{ param.getMinvalue }}),maxVal({{ param.getMaxvalue }})" value="10"/></td>
-                                            {#<td><form><input type="text" data-validate="number"></form></td>#}
+                                            <td><form><input type="text" class="dataTableParamValue" index="param_{{ param.getId }}" paramName="{{ param.getName }}" data-validate="number,minVal({{ param.getMinvalue }}),maxVal({{ param.getMaxvalue }})" value="10"/></form></td>
                                         {% endfor %}
+                                         </section>
                                     </tr>
                                 </tbody>
 

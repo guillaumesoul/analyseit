@@ -15,3 +15,7 @@ services:
         arguments: [ @doctrine.orm.entity_manager ]
     param_form:
         class: AppBundle\Form\ParamType
+    dataserie_form:
+        class: AppBundle\Form\DataserieType
+    value_form:
+        class: AppBundle\Form\ValueType
