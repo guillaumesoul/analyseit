@@ -49,7 +49,8 @@ $(document).ready(function() {
             tempAssociative[$(datatable_inputs[i]).attr('index')] = $(datatable_inputs[i]).val();
             temp[relativeIndex] = $(datatable_inputs[i]).val();
             if (i<inputNbrByRow) {
-                indexTab[i] = $(datatable_inputs[i]).attr('index');
+                //indexTab[i] = $(datatable_inputs[i]).attr('index');
+                indexTab[i] = $(datatable_inputs[i]).attr('paramName');
             }
             if (i%inputNbrByRow == inputNbrByRow-1) {
                 temp2Associative = tempAssociative;
@@ -86,7 +87,10 @@ $(document).ready(function() {
                 var paramsAttr = $(this).find('.paramAttribute');
                 if (paramsAttr.length > 0){
                     paramsAttr.each(function(){
-                        param[$(this).attr('index')] = $(this).val();
+                        if ($(this).attr('index') != undefined){
+                            param[$(this).attr('index')] = $(this).val();
+                        }
+
                     });
                     serie.push(param);
                     param = {};
@@ -146,7 +150,9 @@ $(document).ready(function() {
             datasets: datasets
         };
         var ctx = $("#myChart").get(0).getContext("2d");
-        var myRadarChart = new Chart(ctx).Radar(data);
+        var myRadarChart = new Chart(ctx).Radar(data, {
+            multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
+        });
 
         dataTable.draw(true);
 
@@ -157,15 +163,6 @@ $(document).ready(function() {
 
 
 });
-
-function getParamAttribute(paramId,paramsAttr)
-{
-    var response = 'response';
-    for (var i=0;  i<paramsAttr.length ; i++){
-        var paramId = paramsAttr[i].paramId;
-    }
-    return response;
-}
 
 function transformParamAttrArray(paramsAttr)
 {
@@ -179,12 +176,9 @@ function transformParamAttrArray(paramsAttr)
 
 function calcValueWithMinMax(value, paramAttr)
 {
-    console.log(paramAttr);
     var response = 0;
     var minValue = paramAttr.paramMinValue;
     var maxValue = paramAttr.paramMaxValue;
-    console.log(minValue);
-    console.log(maxValue);
 
     if (minValue != '' && maxValue != ''){
         if (minValue>maxValue){
@@ -206,7 +200,6 @@ function getChartCalcValues(paramsAttr, rawDatatableData)
     //transform ton paramsAttr array avec paramId qui fait l'index
     var paramsAttrByKeyId = transformParamAttrArray(paramsAttr);
 
-    var response = {};
     for (var i=0;  i<paramsAttr.length ; i++){
         var paramId = paramsAttr[i].paramId
     };
@@ -229,10 +222,8 @@ function getChartCalcValues(paramsAttr, rawDatatableData)
                 var paramId = key.replace(regex, "");
                 var paramAttr = paramsAttrByKeyId[paramId];
                 var calcValue = calcValueWithMinMax(value, paramAttr);
-                //rawDatatableData[i][Object.keys(serie)[j]] = calcValue;
                 tmpTab[j] = calcValue;
             }else{
-                //rawDatatableData[i][Object.keys(serie)[j]] = value;
                 tmpTab[j] = value;
             }
         }
