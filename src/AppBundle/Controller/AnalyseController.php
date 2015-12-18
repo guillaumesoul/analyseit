@@ -98,9 +98,12 @@ class AnalyseController extends Controller
             array_push($formTab,$form);
         }
 
+        $param = new Param();
+        $param->setAnalyse($analyse);
+
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
-            'param_creation_form' => $this->createForm(new ParamType(), new Param())->createView(),
+            'param_creation_form' => $this->createForm(new ParamType(), $param)->createView(),
             'param_creation_form_list' => $formTabView,
             'params_list' => $paramsList
         ));

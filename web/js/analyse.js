@@ -21,6 +21,12 @@ $(document).ready(function() {
         dataTable.row($(this).closest('tr')).remove().draw( false );
     } );
 
+    $('.moreParam').on('click', function(){
+        $('#section_' + this.id).toggle();
+        $(this).find('i').toggleClass('fa-minus fa-plus-circle');
+    });
+
+
     dataTable.getInputData = function(){
         //get the data from datatable
         var dtData = dataTable.data();
@@ -173,16 +179,24 @@ function transformParamAttrArray(paramsAttr)
 
 function calcValueWithMinMax(value, paramAttr)
 {
+    console.log(paramAttr);
     var response = 0;
     var minValue = paramAttr.paramMinValue;
     var maxValue = paramAttr.paramMaxValue;
-    if (minValue>maxValue){
-        var tmp = maxValue;
-        maxValue = minValue;
-        minValue = tmp;
-    }
-    if (!isNaN(value) && !isNaN(minValue) && !isNaN(maxValue)){
-        response = ((value) / (maxValue - minValue));
+    console.log(minValue);
+    console.log(maxValue);
+
+    if (minValue != '' && maxValue != ''){
+        if (minValue>maxValue){
+            var tmp = maxValue;
+            maxValue = minValue;
+            minValue = tmp;
+        }
+        if (!isNaN(value) && !isNaN(minValue) && !isNaN(maxValue)){
+            response = ((value) / (maxValue - minValue));
+        }
+    } else {
+        response = value;
     }
     return response;
 }

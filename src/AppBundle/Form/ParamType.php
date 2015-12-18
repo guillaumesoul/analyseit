@@ -40,7 +40,7 @@ class ParamType extends AbstractType
             ->add('type', 'entity', array(
                 'class' => 'AppBundle:Typeparam',
                 'property' => 'name',
-                'label' => 'type',
+                'label' => 'type'
             ));
             //->add('save', 'submit', array('label' => 'Create Parameter'));
     }
