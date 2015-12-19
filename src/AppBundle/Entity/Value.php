@@ -48,5 +48,70 @@ class Value
      * @ORM\Column(name="value_value", type="string", length=20)
      */
     protected $value;
-    
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return Dataserie
+     */
+    public function getDataserie()
+    {
+        return $this->dataserie;
+    }
+
+    /**
+     * @param Dataserie $dataserie
+     */
+    public function setDataserie($dataserie)
+    {
+        $this->dataserie = $dataserie;
+    }
+
+    /**
+     * @return Param
+     */
+    public function getParam()
+    {
+        return $this->param;
+    }
+
+    /**
+     * @param Param $param
+     */
+    public function setParam($param)
+    {
+        $this->param = $param;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+
 }

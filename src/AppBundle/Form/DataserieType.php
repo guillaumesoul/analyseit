@@ -8,9 +8,11 @@ namespace AppBundle\Form;
  * Time: 10:27
  */
 
+use Doctrine\DBAL\Types\ArrayType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class DataserieType extends AbstractType
 {
@@ -24,7 +26,12 @@ class DataserieType extends AbstractType
                 'class' => 'AppBundle:Analyse',
                 'property' => 'name',
                 'label' => 'Analyse',
-            ));
+            ))
+            ->add('values', 'collection', array(
+                'type' => new ValueType(),
+                'allow_add' => true
+            ))
+            ->add('save', 'submit', array('label' => 'Create Dataserie'));
     }
 
     public function getName()

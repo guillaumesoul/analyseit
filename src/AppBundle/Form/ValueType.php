@@ -30,7 +30,6 @@ class ValueType extends AbstractType
                 'label' => 'param'
             ))
             ->add('value');
-            //->add('save', 'submit', array('label' => 'Create Parameter'));
     }
 
     public function getName()

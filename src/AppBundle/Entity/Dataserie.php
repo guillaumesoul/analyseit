@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Analyse
@@ -38,6 +39,13 @@ class Dataserie
      * })
      */
     protected $analyse;
+
+    protected $values;
+
+    public function __construct()
+    {
+        $this->values = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -85,6 +93,14 @@ class Dataserie
     public function setAnalyse($analyse)
     {
         $this->analyse = $analyse;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValues()
+    {
+        return $this->values;
     }
 
 

@@ -12,8 +12,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Analyse;
 use AppBundle\Entity\Param;
-use AppBundle\Form\ParamForm;
 use AppBundle\Form\ParamType;
+use AppBundle\Entity\Value;
+use AppBundle\Form\ValueType;
+use AppBundle\Entity\Dataserie;
+use AppBundle\Form\DataserieType;
 
 class AnalyseController extends Controller
 {
@@ -68,22 +71,25 @@ class AnalyseController extends Controller
 
         if ($request->isMethod('POST')) {
             $paramIdForm = $request->get('paramId');
-            $paramToUpdate = $em->getRepository('AppBundle:Param')->find($paramIdForm);
-            if ($paramToUpdate instanceof Param && $paramToUpdate != null) {
-                $form = $this->createForm($this->get('param_form'), $paramToUpdate);
-            }else{
-                $form = $this->createForm(new ParamType(), new Param());
-            }
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $param = $form->getData();
-                if ($paramToUpdate == null) {
-                    $em->persist($param);
+            if ($paramIdForm != '' && $paramIdForm != null) {
+                $paramToUpdate = $em->getRepository('AppBundle:Param')->find($paramIdForm);
+                if ($paramToUpdate instanceof Param && $paramToUpdate != null) {
+                    $form = $this->createForm($this->get('param_form'), $paramToUpdate);
+                }else{
+                    $form = $this->createForm(new ParamType(), new Param());
                 }
-                $em->flush();
-                unset($param);
-                unset($form);
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $param = $form->getData();
+                    if ($paramToUpdate == null) {
+                        $em->persist($param);
+                    }
+                    $em->flush();
+                    unset($param);
+                    unset($form);
+                }
             }
+
         }
         //$paramsList = $em->getRepository('AppBundle:Param')->findByAnalyse($analyseId);
         //@TODO FAIRE UNE COLLECTION DE FORMULAIRE
@@ -101,11 +107,35 @@ class AnalyseController extends Controller
         $param = new Param();
         $param->setAnalyse($analyse);
 
+        $value = new Value();
+        $valueForm = $this->createForm($this->get('value_form'), $value);
+        $dataserie = new Dataserie();
+        $value->setValue('value1');
+        $value->setDataserie(1);
+        //$value->setParam(1);
+        $dataserie->getValues()->add($value);
+        $value2 = new Value();
+        $value2->setValue('value2');
+        $value2->setDataserie(1);
+        //$value2->setParam(1);
+        $dataserie->getValues()->add($value2);
+        $dataserieForm = $this->createForm($this->get('dataserie_form'), $dataserie);
+        $dataserieForm->handleRequest($request);
+        if ($dataserieForm->isSubmitted() && $dataserieForm->isValid()) {
+            $zaz = 'aze';
+            $dataserie = $dataserieForm->getData();
+            $em->persist($dataserie);
+            $em->flush();
+        }
+
+
+
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
             'param_creation_form' => $this->createForm(new ParamType(), $param)->createView(),
             'param_creation_form_list' => $formTabView,
-            'params_list' => $paramsList
+            'params_list' => $paramsList,
+            'test_form' => $dataserieForm->createView(),
         ));
     }
 
