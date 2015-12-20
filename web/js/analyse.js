@@ -32,7 +32,7 @@ $(document).ready(function() {
 
 
     function addTagForm($collectionHolder, $newLinkLi) {
-        
+
         // Get the data-prototype explained earlier
         var prototype = $collectionHolder.data('prototype');
 
@@ -59,14 +59,16 @@ $(document).ready(function() {
         "info" : false,
         "bLengthChange": false,
         "paging" : false,
-        "ordering": false
+        "ordering": false,
     });
+
+    $('.testInline, .firstCol').css('display', 'inline');
 
     $('#addRow').on('click', function() {
         dataTable.row.add(dataTable.rows(0).data()[0]).draw(true);
     });
     $('#param_datatable tbody').on( 'click', 'tr td:first-child ',function () {
-        dataTable.row($(this).closest('tr')).remove().draw( false );
+        //dataTable.row($(this).closest('tr')).remove().draw( false );
     } );
 
     $('.moreParam').on('click', function(){

@@ -21,7 +21,9 @@ class DataserieType extends AbstractType
     {
         $builder
             ->setMethod('POST')
-            ->add('name')
+            ->add('name', 'text', array(
+                'label' => false
+            ))
             ->add('analyse', 'entity', array(
                 'class' => 'AppBundle:Analyse',
                 'property' => 'name',
@@ -30,8 +32,8 @@ class DataserieType extends AbstractType
             ->add('values', 'collection', array(
                 'type' => new ValueType(),
                 'allow_add' => true
-            ))
-            ->add('save', 'submit', array('label' => 'Create Dataserie'));
+            ));
+            //->add('save', 'submit', array('label' => 'Create Dataserie'));
     }
 
     public function getName()

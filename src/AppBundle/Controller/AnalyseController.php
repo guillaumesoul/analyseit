@@ -96,13 +96,33 @@ class AnalyseController extends Controller
         $paramsList = $em->getRepository('AppBundle:Param')->getParamsByAnalyseId($analyseId);
         $formTab = array();
         $formTabView = array();
+        /*$dataserie = new Dataserie();
+        $dataserie->setAnalyse($analyse);*/
+
         for ($i=0 ; $i<count($paramsList) ; $i++){
             $param = $paramsList[$i];
             $form = $this->createForm($this->get('param_form'), $param);
             $formView = $form->createView();
             array_push($formTabView,$formView);
             array_push($formTab,$form);
+
+            //create a dataserie with embed values
+            /*$value = new Value();
+            $value->setParam($param);
+            $value->setDataserie($dataserie);
+            $dataserie->getValues()->add($value);*/
+
         }
+
+        //$dataserieForm = $this->createForm($this->get('dataserie_form'), $dataserie);
+        /*if ($request->isMethod('POST')) {
+            $dataserieForm->handleRequest($request);
+            if ($dataserieForm->isSubmitted() && $dataserieForm->isValid()) {
+                $dataserie = $dataserieForm->getData();
+                $em->persist($dataserie);
+                $em->flush();
+            }
+        }*/
 
         $param = new Param();
         $param->setAnalyse($analyse);
@@ -121,12 +141,11 @@ class AnalyseController extends Controller
         $dataserie->getValues()->add($value2);
         $dataserieForm = $this->createForm($this->get('dataserie_form'), $dataserie);
         $dataserieForm->handleRequest($request);
-        if ($dataserieForm->isSubmitted() && $dataserieForm->isValid()) {
-            $zaz = 'aze';
+        /*if ($dataserieForm->isSubmitted() && $dataserieForm->isValid()) {
             $dataserie = $dataserieForm->getData();
             $em->persist($dataserie);
             $em->flush();
-        }
+        }*/
 
 
 

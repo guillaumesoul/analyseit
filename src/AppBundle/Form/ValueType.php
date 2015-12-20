@@ -29,7 +29,9 @@ class ValueType extends AbstractType
                 'property' => 'name',
                 'label' => 'param'
             ))
-            ->add('value');
+            ->add('value', 'text', array(
+                'label' => false
+            ));
     }
 
     public function getName()
