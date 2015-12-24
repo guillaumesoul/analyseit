@@ -96,8 +96,8 @@ class AnalyseController extends Controller
         $paramsList = $em->getRepository('AppBundle:Param')->getParamsByAnalyseId($analyseId);
         $formTab = array();
         $formTabView = array();
-        /*$dataserie = new Dataserie();
-        $dataserie->setAnalyse($analyse);*/
+        $dataserie = new Dataserie();
+        $dataserie->setAnalyse($analyse);
 
         for ($i=0 ; $i<count($paramsList) ; $i++){
             $param = $paramsList[$i];
@@ -107,45 +107,27 @@ class AnalyseController extends Controller
             array_push($formTab,$form);
 
             //create a dataserie with embed values
-            /*$value = new Value();
+            $value = new Value();
+            $value->setDataserie($dataserie->getId());
             $value->setParam($param);
-            $value->setDataserie($dataserie);
-            $dataserie->getValues()->add($value);*/
-
+            $dataserie->getValues()->add($value);
         }
-
-        //$dataserieForm = $this->createForm($this->get('dataserie_form'), $dataserie);
-        /*if ($request->isMethod('POST')) {
-            $dataserieForm->handleRequest($request);
-            if ($dataserieForm->isSubmitted() && $dataserieForm->isValid()) {
-                $dataserie = $dataserieForm->getData();
-                $em->persist($dataserie);
-                $em->flush();
-            }
-        }*/
 
         $param = new Param();
         $param->setAnalyse($analyse);
 
-        $value = new Value();
-        $valueForm = $this->createForm($this->get('value_form'), $value);
-        $dataserie = new Dataserie();
-        $value->setValue('value1');
-        $value->setDataserie(1);
-        //$value->setParam(1);
-        $dataserie->getValues()->add($value);
-        $value2 = new Value();
-        $value2->setValue('value2');
-        $value2->setDataserie(1);
-        //$value2->setParam(1);
-        $dataserie->getValues()->add($value2);
         $dataserieForm = $this->createForm($this->get('dataserie_form'), $dataserie);
         $dataserieForm->handleRequest($request);
-        /*if ($dataserieForm->isSubmitted() && $dataserieForm->isValid()) {
+        if ($dataserieForm->isSubmitted() && $dataserieForm->isValid()) {
             $dataserie = $dataserieForm->getData();
             $em->persist($dataserie);
+            //@TODO utiliser la persistence en cascade pour les embed forms
+            $values = $dataserie->getValues();
+            foreach($values as $value){
+                $em->persist($value);
+            }
             $em->flush();
-        }*/
+        }
 
 
 

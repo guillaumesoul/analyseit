@@ -31,9 +31,17 @@ class DataserieType extends AbstractType
             ))
             ->add('values', 'collection', array(
                 'type' => new ValueType(),
-                'allow_add' => true
-            ));
-            //->add('save', 'submit', array('label' => 'Create Dataserie'));
+                /* @TODO utiliser parametres suivants pour persistence en cascade
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true,
+                'by_reference' => false,
+                'cascade_validation' => true,
+                'options'      => array(
+                    'data_class'   => 'AppBundle\Entity\Value',
+                ),*/
+            ))
+            ->add('save', 'submit', array('label' => 'Create Dataserie'));
     }
 
     public function getName()

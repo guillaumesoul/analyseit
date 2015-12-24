@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: db511939852.db.1and1.com
+    database_port: '3306'
+    database_name: db511939852
+    database_user: db511939852
+    database_password: db511939852
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: bc64989dadc5278108b9106d583db7a2d5

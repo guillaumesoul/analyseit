@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+
 /**
  * Analyse
  *
@@ -40,6 +41,9 @@ class Dataserie
      */
     protected $analyse;
 
+    /*
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Value", mappedBy="dataserie", cascade={"persist"})
+     * */
     protected $values;
 
     public function __construct()
@@ -95,12 +99,28 @@ class Dataserie
         $this->analyse = $analyse;
     }
 
+    public function setValues(ArrayCollection $values)
+    {
+        foreach ($values as $v){
+            if (is_null($v->getDataserie())) {
+                $v->setDataserie($this);
+            }
+        }
+        $this->values = $values;
+    }
+
     /**
-     * @return mixed
+     * @return Doctrine\Common\Collections\ArrayCollection;
      */
     public function getValues()
     {
         return $this->values;
+    }
+
+    public function addValue(Value $value) {
+        $value->setDataserie($this);
+        $this->values->add($value);
+        return $this;
     }
 
 

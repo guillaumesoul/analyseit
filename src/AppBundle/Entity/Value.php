@@ -25,7 +25,7 @@ class Value
     /**
      * @var \AppBundle\Entity\Dataserie
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dataserie")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dataserie", inversedBy="dataserie")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="dataserie_id ", referencedColumnName="dataserie_id")
      * })
@@ -112,6 +112,5 @@ class Value
     {
         $this->value = $value;
     }
-
 
 }

@@ -161,7 +161,7 @@
                 </div>
 
 
-                {#<div>
+                <div>
                     {{ form_start(test_form) }}
                     {{ form_row(test_form.name) }}
                     <span style="display: none;">
@@ -169,26 +169,22 @@
                     </span>
                     <h3>Values</h3>
                     <div>
-
-                        &#123;&#35;<ul class="tags" data-prototype="{{ form_widget(test_form.values.vars.prototype)|e }}">&#35;&#125;
+                        {#<ul class="tags" data-prototype="{{ form_widget(test_form.values.vars.prototype)|e }}">#}
                         <ul class="tags">
                         {% for value in test_form.values %}
                             <li>
                             {{ form_row(value.value) }}
                             {{ form_row(value.dataserie) }}
                             {{ form_row(value.param) }}
-                                {{ form_start(value) }}
-                                {{ form_widget(value) }}
-                                {{ form_end(value) }}
                             </li>
                         {% endfor %}
                         </ul>
                     </div>
-                    &#123;&#35;{{ form_row(test_form.save) }}&#35;&#125;
+                    {{ form_row(test_form.save) }}
                     {{ form_end(test_form) }}
-                </div>#}
+                </div>
 
-                <table>
+                {#<table>
                     <thead>
                         <tr>
                             <td>name</td>
@@ -207,37 +203,16 @@
                             </td>
                             {% for value in test_form.values %}
                                 <td>
-                                    {#{{ form_row(value.value) }}
-                                    {{ form_row(value.dataserie) }}
-                                    {{ form_row(value.param) }}#}
                                     {{ form_start(value) }}
                                     {{ form_widget(value) }}
                                     {{ form_end(value) }}
                                 </td>
                             {% endfor %}
-
-                            <div>
-
-                                {#<ul class="tags" data-prototype="{{ form_widget(test_form.values.vars.prototype)|e }}">#}
-                                {#<ul class="tags">
-                                    {% for value in test_form.values %}
-                                        <li>
-                                            {{ form_row(value.value) }}
-                                            {{ form_row(value.dataserie) }}
-                                            {{ form_row(value.param) }}
-                                            {{ form_start(value) }}
-                                            {{ form_widget(value) }}
-                                            {{ form_end(value) }}
-                                        </li>
-                                    {% endfor %}
-                                </ul>#}
-                            </div>
-                            {#{{ form_row(test_form.save) }}#}
                             {{ form_end(test_form) }}
                             </form>
                         </tr>
                     </tbody>
-                </table>
+                </table>#}
 
                 <hr>
                 {% block datatable_work %}
