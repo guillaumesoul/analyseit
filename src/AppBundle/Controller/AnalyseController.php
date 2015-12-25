@@ -17,6 +17,7 @@ use AppBundle\Entity\Value;
 use AppBundle\Form\ValueType;
 use AppBundle\Entity\Dataserie;
 use AppBundle\Form\DataserieType;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class AnalyseController extends Controller
 {
@@ -68,6 +69,7 @@ class AnalyseController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $analyse = $em->getRepository('AppBundle:Analyse')->findOneById($analyseId);
+        $analyse->setParams(new ArrayCollection); //@TODO FOIREUX POURQUOI DOCTRINE N'INITIALISE PAS UN ARRAYCOLLECTION
 
         if ($request->isMethod('POST')) {
             $paramIdForm = $request->get('paramId');
@@ -94,10 +96,13 @@ class AnalyseController extends Controller
         //$paramsList = $em->getRepository('AppBundle:Param')->findByAnalyse($analyseId);
         //@TODO FAIRE UNE COLLECTION DE FORMULAIRE
         $paramsList = $em->getRepository('AppBundle:Param')->getParamsByAnalyseId($analyseId);
+
         $formTab = array();
         $formTabView = array();
         $dataserie = new Dataserie();
         $dataserie->setAnalyse($analyse);
+
+        $dataserieTest = $em->getRepository('AppBundle:Dataserie')->findOneById(1);
 
         for ($i=0 ; $i<count($paramsList) ; $i++){
             $param = $paramsList[$i];
@@ -111,6 +116,9 @@ class AnalyseController extends Controller
             $value->setDataserie($dataserie->getId());
             $value->setParam($param);
             $dataserie->getValues()->add($value);
+
+            //get params from analyse to make analyse form with embed param form
+            $analyse->getParams()->add($param);
         }
 
         $param = new Param();
@@ -129,7 +137,7 @@ class AnalyseController extends Controller
             $em->flush();
         }
 
-
+        $analyseForm = $this->createForm($this->get('analyse_form'), $analyse);
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
@@ -137,6 +145,7 @@ class AnalyseController extends Controller
             'param_creation_form_list' => $formTabView,
             'params_list' => $paramsList,
             'test_form' => $dataserieForm->createView(),
+            'analyse_form' => $analyseForm->createView(),
         ));
     }
 

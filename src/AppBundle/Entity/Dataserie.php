@@ -99,6 +99,14 @@ class Dataserie
         $this->analyse = $analyse;
     }
 
+    /**
+     * @return Doctrine\Common\Collections\ArrayCollection;
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
+
     public function setValues(ArrayCollection $values)
     {
         foreach ($values as $v){
@@ -107,14 +115,6 @@ class Dataserie
             }
         }
         $this->values = $values;
-    }
-
-    /**
-     * @return Doctrine\Common\Collections\ArrayCollection;
-     */
-    public function getValues()
-    {
-        return $this->values;
     }
 
     public function addValue(Value $value) {

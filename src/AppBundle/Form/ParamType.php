@@ -20,11 +20,11 @@ class ParamType extends AbstractType
         $builder
             ->setMethod('POST')
             ->add('name')
-            ->add('analyse', 'entity', array(
-                'class' => 'AppBundle:Analyse',
-                'property' => 'name',
-                'label' => 'Analyse',
-            ))
+                ->add('analyse', 'entity', array(
+                    'class' => 'AppBundle:Analyse',
+                    'property' => 'name',
+                    'label' => 'Analyse',
+                ))
             ->add('minvalue', 'text', array(
                 'required' => false,
             ))

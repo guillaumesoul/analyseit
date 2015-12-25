@@ -33,7 +33,7 @@ class Param
     /**
      * @var \AppBundle\Entity\Analyse
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Analyse")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Analyse", inversedBy="analyse")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="analyse_id", referencedColumnName="analyse_id")
      * })
@@ -115,19 +115,6 @@ class Param
     }
 
     /**
-     * Set analyse
-     *
-     * @param integer $analyse
-     * @return Param
-     */
-    public function setAnalyse($analyse)
-    {
-        $this->analyse = $analyse;
-
-        return $this;
-    }
-
-    /**
      * Get analyse
      *
      * @return Analyse
@@ -135,6 +122,16 @@ class Param
     public function getAnalyse()
     {
         return $this->analyse;
+    }
+
+    /**
+     * @param Analyse $analyse
+     */
+    public function setAnalyse($analyse)
+    {
+        $this->analyse = $analyse;
+
+        return $this;
     }
 
     /**

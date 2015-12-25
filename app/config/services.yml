@@ -13,6 +13,8 @@ services:
     datatable_service:
         class: AppBundle\Services\DatatableService
         arguments: [ @doctrine.orm.entity_manager ]
+    analyse_form:
+        class: AppBundle\Form\AnalyseType
     param_form:
         class: AppBundle\Form\ParamType
     dataserie_form:
