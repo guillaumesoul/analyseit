@@ -179,4 +179,27 @@ class Analyse
     {
         return $this->params;
     }
+
+    /**
+     * Add params
+     *
+     * @param \AppBundle\Entity\Param $params
+     * @return Analyse
+     */
+    public function addParam(\AppBundle\Entity\Param $params)
+    {
+        $this->params[] = $params;
+
+        return $this;
+    }
+
+    /**
+     * Remove params
+     *
+     * @param \AppBundle\Entity\Param $params
+     */
+    public function removeParam(\AppBundle\Entity\Param $params)
+    {
+        $this->params->removeElement($params);
+    }
 }

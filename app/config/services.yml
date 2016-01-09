@@ -19,7 +19,11 @@ services:
             class: AppBundle\Form\Analyse1Type
     param_form:
         class: AppBundle\Form\ParamType
+    param1_form:
+            class: AppBundle\Form\Param1Type
     dataserie_form:
         class: AppBundle\Form\DataserieType
+    dataserie1_form:
+            class: AppBundle\Form\Dataserie1Type
     value_form:
         class: AppBundle\Form\ValueType

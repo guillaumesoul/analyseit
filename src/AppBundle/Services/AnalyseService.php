@@ -18,6 +18,7 @@ class AnalyseService
     }
     public function getUserAnalyses($user)
     {
-        return $this->em->getRepository('AppBundle:Analyse')->findByUserid($user);
+        //return $this->em->getRepository('AppBundle:Analyse')->findByUserid($user);
+        return $this->em->getRepository('AppBundle:Analyse1')->findByUserid($user);
     }
 }

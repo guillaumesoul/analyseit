@@ -12,4 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class Param1Repository extends EntityRepository
 {
+    public function getParamsByAnalyseId($analyseId)
+    {
+        return $this->_em->getRepository('AppBundle:Param1')->findByAnalyse1($analyseId);
+    }
 }

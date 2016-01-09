@@ -83,29 +83,6 @@ class Dataserie1
     }
 
     /**
-     * Set analyse
-     *
-     * @param \AppBundle\Entity\Analyse1 $analyse
-     * @return Dataserie1
-     */
-    public function setAnalyse(\AppBundle\Entity\Analyse1 $analyse = null)
-    {
-        $this->analyse = $analyse;
-
-        return $this;
-    }
-
-    /**
-     * Get analyse
-     *
-     * @return \AppBundle\Entity\Analyse1 
-     */
-    public function getAnalyse()
-    {
-        return $this->analyse;
-    }
-
-    /**
      * Set analyse1
      *
      * @param \AppBundle\Entity\Analyse1 $analyse1

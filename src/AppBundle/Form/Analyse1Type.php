@@ -29,7 +29,7 @@ class Analyse1Type extends AbstractType
             ->add('created', 'date', array(
                 'data' => new \DateTime()
             ))
-            ->add('params', 'collection', array(
+            ->add('params1', 'collection', array(
                 'type' => new Param1Type(),
                 'by_reference' => false,
                 'allow_add'    => true,

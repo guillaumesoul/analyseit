@@ -36,6 +36,16 @@ class Value1
      */
     private $dataserie1;
 
+    /**
+     * @var \AppBundle\Entity\Param1
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Param1")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="param1_id ", referencedColumnName="id")
+     * })
+     */
+    protected $param;
+
 
     /**
      * Get id
@@ -91,5 +101,28 @@ class Value1
     public function getDataserie1()
     {
         return $this->dataserie1;
+    }
+
+    /**
+     * Set param
+     *
+     * @param \AppBundle\Entity\Param1 $param
+     * @return Value1
+     */
+    public function setParam(\AppBundle\Entity\Param1 $param = null)
+    {
+        $this->param = $param;
+
+        return $this;
+    }
+
+    /**
+     * Get param
+     *
+     * @return \AppBundle\Entity\Param1 
+     */
+    public function getParam()
+    {
+        return $this->param;
     }
 }
