@@ -45,9 +45,9 @@ class Analyse
      */
     protected $created;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Param", mappedBy="analyse", cascade={"persist"})
-     */
+    /*
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Param", mappedBy="analyse", cascade={"persist"})
+     * */
     protected $params;
 
     public function __construct()
@@ -112,94 +112,27 @@ class Analyse
     }
 
     /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Analyse
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime 
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set userid
-     *
-     * @param \AppBundle\Entity\User $userid
-     * @return Analyse
-     */
-    public function setUserid(\AppBundle\Entity\User $userid = null)
-    {
-        $this->userid = $userid;
-
-        return $this;
-    }
-
-    /**
-     * Add 	params
-     *
-     * @param \AppBundle\Entity\Param $params
-     * @return Analyse
-     */
-    public function addParams(\AppBundle\Entity\Param $params)
-    {
-        $this->	params[] = $params;
-
-        return $this;
-    }
-
-    /**
-     * Remove 	params
-     *
-     * @param \AppBundle\Entity\Param $params
-     */
-    public function removeParams(\AppBundle\Entity\Param $params)
-    {
-        $this->params->removeElement($params);
-    }
-
-    /**
-     * Get 	params
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Doctrine\Common\Collections\ArrayCollection;
      */
     public function getParams()
     {
         return $this->params;
     }
 
-    /**
-     * Add params
-     *
-     * @param \AppBundle\Entity\Param $params
-     * @return Analyse
-     */
-    public function addParam(\AppBundle\Entity\Param $params)
+    public function setParams(ArrayCollection $params)
     {
-        $this->params[] = $params;
-
-        return $this;
+        foreach ($params as $param){
+            if (is_null($param->getAnalyse())) {
+                $param->setAnalyse($this);
+            }
+        }
+        $this->params = $params;
     }
 
-    /**
-     * Remove params
-     *
-     * @param \AppBundle\Entity\Param $params
-     */
-    public function removeParam(\AppBundle\Entity\Param $params)
+    public function addParam(Param $param)
     {
-        $this->params->removeElement($params);
+        $param->setAnalyse($this);
+        $this->params->add($param);
+        return $this;
     }
 }

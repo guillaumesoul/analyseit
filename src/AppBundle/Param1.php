@@ -1,85 +1,66 @@
 <?php
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Param
+ * Param1
  *
- * @ORM\Table(name="param", indexes={@ORM\Index(name="analyse_id", columns={"analyse_id"})})
- * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\ParamRepository")
+ * @ORM\Table()
+ * @ORM\Entity
  */
-
-class Param
+class Param1
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="param_id", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="param_name", type="string", length=30)
-     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    protected $name;
-
-    /**
-     * @var \AppBundle\Entity\Analyse
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Analyse", inversedBy="params")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="analyse_id", referencedColumnName="analyse_id")
-     * })
-     */
-    protected $analyse;
-
-
-    /**
-     * @var \AppBundle\Entity\Typeparam
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Typeparam")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="typeparam_id", referencedColumnName="typeparam_id")
-     * })
-     */
-    protected $type;
+    private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="param_minvalue", type="string", length=20)
+     * @ORM\Column(name="minvalue", type="string", length=255)
      */
-    protected $minvalue;
+    private $minvalue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="param_maxvalue", type="string", length=20)
+     * @ORM\Column(name="maxvalue", type="string", length=255)
      */
-    protected $maxvalue;
+    private $maxvalue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="param_ponderation", type="string", length=20)
+     * @ORM\Column(name="ponderation", type="string", length=255)
      */
-    protected $ponderation;
-
+    private $ponderation;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="param_unit", type="string", length=50)
+     * @ORM\Column(name="unit", type="string", length=255)
      */
-    protected $unit;
+    private $unit;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Analyse1", inversedBy="params1")
+     * @ORM\JoinColumn(name="analyse1_id", referencedColumnName="id")
+     */
+    protected $analyse1;
 
     /**
      * Get id
@@ -95,7 +76,7 @@ class Param
      * Set name
      *
      * @param string $name
-     * @return Param
+     * @return Param1
      */
     public function setName($name)
     {
@@ -115,46 +96,10 @@ class Param
     }
 
     /**
-     * Get analyse
-     *
-     * @return Analyse
-     */
-    public function getAnalyse()
-    {
-        return $this->analyse;
-    }
-
-    /**
-     * @param Analyse $analyse
-     */
-    public function setAnalyse($analyse)
-    {
-        $this->analyse = $analyse;
-
-        return $this;
-    }
-
-    /**
-     * @return Typeparam
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param Typeparam $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
      * Set minvalue
      *
      * @param string $minvalue
-     * @return Param
+     * @return Param1
      */
     public function setMinvalue($minvalue)
     {
@@ -177,7 +122,7 @@ class Param
      * Set maxvalue
      *
      * @param string $maxvalue
-     * @return Param
+     * @return Param1
      */
     public function setMaxvalue($maxvalue)
     {
@@ -200,7 +145,7 @@ class Param
      * Set ponderation
      *
      * @param string $ponderation
-     * @return Param
+     * @return Param1
      */
     public function setPonderation($ponderation)
     {
@@ -223,7 +168,7 @@ class Param
      * Set unit
      *
      * @param string $unit
-     * @return Param
+     * @return Param1
      */
     public function setUnit($unit)
     {
@@ -240,5 +185,28 @@ class Param
     public function getUnit()
     {
         return $this->unit;
+    }
+
+    /**
+     * Set analyse1
+     *
+     * @param \AppBundle\Entity\Analyse1 $analyse1
+     * @return Param1
+     */
+    public function setAnalyse1(\AppBundle\Entity\Analyse1 $analyse1 = null)
+    {
+        $this->analyse1 = $analyse1;
+
+        return $this;
+    }
+
+    /**
+     * Get analyse1
+     *
+     * @return \AppBundle\Entity\Analyse1 
+     */
+    public function getAnalyse1()
+    {
+        return $this->analyse1;
     }
 }

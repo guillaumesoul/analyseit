@@ -1,0 +1,63 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Param2
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Param2
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Analyse2", inversedBy="params2")
+     * @ORM\JoinColumn(name="analyse2_id", referencedColumnName="id")
+     */
+    protected $analyse2;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set analyse2
+     *
+     * @param \AppBundle\Entity\Analyse2 $analyse2
+     * @return Param2
+     */
+    public function setAnalyse2(\AppBundle\Entity\Analyse2 $analyse2 = null)
+    {
+        $this->analyse2 = $analyse2;
+
+        return $this;
+    }
+
+    /**
+     * Get analyse2
+     *
+     * @return \AppBundle\Entity\Analyse2 
+     */
+    public function getAnalyse2()
+    {
+        return $this->analyse2;
+    }
+}

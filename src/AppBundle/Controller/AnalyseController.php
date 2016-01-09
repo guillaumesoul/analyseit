@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Analyse;
+use AppBundle\Entity\Analyse1;
 use AppBundle\Entity\Param;
 use AppBundle\Form\ParamType;
 use AppBundle\Entity\Value;
@@ -27,7 +28,7 @@ class AnalyseController extends Controller
         return $this->render('analyse/index.html.twig');
     }
 
-    public function createAction(Request $request)
+    /*public function createAction(Request $request)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
@@ -44,6 +45,34 @@ class AnalyseController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $analyse->setUser($user);
+            $em->persist($analyse);
+            $em->flush();
+            return $this->redirectToRoute('analyse');
+        }
+
+        return $this->render('analyse/create.html.twig', array(
+            'analyse_creation_form' => $form->createView(),
+        ));
+    }*/
+
+    public function createAction(Request $request)
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        //Analyse form management
+        $analyse = new Analyse1();
+        $form = $this->createFormBuilder($analyse)
+            ->setAction($this->generateUrl('analyse_create'))
+            ->setMethod('POST')
+            ->add('name', 'text')
+            ->add('save', 'submit', array('label' => 'Create Analyse1'))
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $analyse->setUserid($user);
+            $analyse->setCreated(new \DateTime());
             $em->persist($analyse);
             $em->flush();
             return $this->redirectToRoute('analyse');
@@ -69,7 +98,7 @@ class AnalyseController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $analyse = $em->getRepository('AppBundle:Analyse')->findOneById($analyseId);
-        $analyse->setParams(new ArrayCollection); //@TODO FOIREUX POURQUOI DOCTRINE N'INITIALISE PAS UN ARRAYCOLLECTION
+        //$analyse->setParams(new ArrayCollection); //@TODO FOIREUX POURQUOI DOCTRINE N'INITIALISE PAS UN ARRAYCOLLECTION
 
         if ($request->isMethod('POST')) {
             $paramIdForm = $request->get('paramId');

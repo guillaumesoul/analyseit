@@ -1,0 +1,109 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Analyse2
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Analyse2
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Param2", mappedBy="analyse2")
+     */
+    protected $params2;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Analyse2
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->params2 = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add params2
+     *
+     * @param \AppBundle\Entity\Param2 $params2
+     * @return Analyse2
+     */
+    public function addParams2(\AppBundle\Entity\Param2 $params2)
+    {
+        $this->params2[] = $params2;
+
+        return $this;
+    }
+
+    /**
+     * Remove params2
+     *
+     * @param \AppBundle\Entity\Param2 $params2
+     */
+    public function removeParams2(\AppBundle\Entity\Param2 $params2)
+    {
+        $this->params2->removeElement($params2);
+    }
+
+    /**
+     * Get params2
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParams2()
+    {
+        return $this->params2;
+    }
+}

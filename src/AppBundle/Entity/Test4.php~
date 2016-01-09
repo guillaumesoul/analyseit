@@ -1,0 +1,93 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Test4
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Test4
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Test3", inversedBy="tests4")
+     * @ORM\JoinColumn(name="test3_id", referencedColumnName="id")
+     */
+    protected $test3;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Test4
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set test3
+     *
+     * @param \AppBundle\Entity\Test3 $test3
+     * @return Test4
+     */
+    public function setTest3(\AppBundle\Entity\Test3 $test3 = null)
+    {
+        $this->test3 = $test3;
+
+        return $this;
+    }
+
+    /**
+     * Get test3
+     *
+     * @return \AppBundle\Entity\Test3 
+     */
+    public function getTest3()
+    {
+        return $this->test3;
+    }
+}

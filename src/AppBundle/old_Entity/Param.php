@@ -33,7 +33,7 @@ class Param
     /**
      * @var \AppBundle\Entity\Analyse
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Analyse", inversedBy="params")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Analyse")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="analyse_id", referencedColumnName="analyse_id")
      * })

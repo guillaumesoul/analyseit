@@ -154,24 +154,4 @@ class Typeparam
     }
 
 
-
-    /**
-     * Get sens
-     *
-     * @return boolean 
-     */
-    public function getSens()
-    {
-        return $this->sens;
-    }
-
-    /**
-     * Get discret
-     *
-     * @return boolean 
-     */
-    public function getDiscret()
-    {
-        return $this->discret;
-    }
 }

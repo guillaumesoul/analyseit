@@ -13,7 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AnalyseType extends AbstractType
+class Analyse1Type extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -26,26 +26,26 @@ class AnalyseType extends AbstractType
                 'property' => 'id',
                 'label' => 'user',
             ))*/
-            /*->add('created', 'date', array(
+            ->add('created', 'date', array(
                 'data' => new \DateTime()
-            ))*/
+            ))
             ->add('params', 'collection', array(
-                'type' => new ParamType(),
+                'type' => new Param1Type(),
                 'by_reference' => false,
                 'allow_add'    => true,
             ))
-            ->add('save', 'submit', array('label' => 'Create Analyse'));
+            ->add('save', 'submit', array('label' => 'Create Analyse1'));
     }
 
     public function getName()
     {
-        return 'appbundle_analysetype';
+        return 'appbundle_analyse1type';
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Analyse'
+            'data_class' => 'AppBundle\Entity\Analyse1'
         ));
     }
 }
