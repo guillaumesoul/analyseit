@@ -29,7 +29,7 @@ class Dataserie1Type extends AbstractType
                 'property' => 'name',
                 'label' => 'Analyse',
             ))
-            ->add('values', 'collection', array(
+            ->add('values1', 'collection', array(
                 'type' => new Value1Type(),
                 /* @TODO utiliser parametres suivants pour persistence en cascade
                 'allow_add' => true,

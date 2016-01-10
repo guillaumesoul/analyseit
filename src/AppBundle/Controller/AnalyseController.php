@@ -15,7 +15,7 @@ use AppBundle\Entity\Analyse1;
 use AppBundle\Entity\Param;
 use AppBundle\Entity\Param1;
 use AppBundle\Form\ParamType;
-use AppBundle\Form\ParamType1;
+use AppBundle\Form\Param1Type;
 use AppBundle\Entity\Value;
 use AppBundle\Entity\Value1;
 use AppBundle\Form\ValueType;
@@ -190,25 +190,26 @@ class AnalyseController extends Controller
 
         if ($request->isMethod('POST')) {
             $paramIdForm = $request->get('paramId');
+            $paramToUpdate = null;
             if ($paramIdForm != '' && $paramIdForm != null) {
                 $paramToUpdate = $em->getRepository('AppBundle:Param1')->find($paramIdForm);
                 if ($paramToUpdate instanceof Param && $paramToUpdate != null) {
                     $form = $this->createForm($this->get('param1_form'), $paramToUpdate);
-                }else{
-                    $form = $this->createForm(new ParamType(), new Param());
                 }
-                $form->handleRequest($request);
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $param = $form->getData();
-                    if ($paramToUpdate == null) {
-                        $em->persist($param);
-                    }
-                    $em->flush();
-                    unset($param);
-                    unset($form);
-                }
+            } else{
+                $form = $this->createForm(new Param1Type(), new Param1());
             }
-
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+            //if ($form->isSubmitted() ) {
+                $param = $form->getData();
+                if ($paramToUpdate == null) {
+                    $em->persist($param);
+                }
+                $em->flush();
+                unset($param);
+                unset($form);
+            }
         }
         //$paramsList = $em->getRepository('AppBundle:Param')->findByAnalyse($analyseId);
         //@TODO FAIRE UNE COLLECTION DE FORMULAIRE
@@ -232,14 +233,19 @@ class AnalyseController extends Controller
             $value = new Value1();
             $value->setDataserie1($dataserie->getId());
             $value->setParam($param);
-            $dataserie->getValues()->add($value);
+            //$dataserie->getValues()->add($value);
+            //$dataserie->getValues1()->add($value);
+            $dataserie->addValues1($value);
 
             //get params from analyse to make analyse form with embed param form
-            $analyse->getParams()->add($param);
+            //$analyse->getParams()->add($param);
+            $analyse->addParams1($param);
         }
 
-        $param = new Param();
-        $param->setAnalyse($analyse);
+        //$param = new Param();
+        $param = new Param1();
+        //$param->setAnalyse($analyse);
+        $param->setAnalyse1($analyse);
 
         $dataserieForm = $this->createForm($this->get('dataserie1_form'), $dataserie);
         $dataserieForm->handleRequest($request);
@@ -258,7 +264,8 @@ class AnalyseController extends Controller
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
-            'param_creation_form' => $this->createForm(new ParamType(), $param)->createView(),
+            //'param_creation_form' => $this->createForm(new ParamType(), $param)->createView(),
+            'param_creation_form' => $this->createForm(new Param1Type(), $param)->createView(),
             'param_creation_form_list' => $formTabView,
             'params_list' => $paramsList,
             'test_form' => $dataserieForm->createView(),

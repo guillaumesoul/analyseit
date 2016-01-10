@@ -20,15 +20,15 @@ class Param1Type extends AbstractType
         $builder
             ->setMethod('POST')
             ->add('name')
-                ->add('analyse', 'entity', array(
-                    'class' => 'AppBundle:Analyse',
+                ->add('analyse1', 'entity', array(
+                    'class' => 'AppBundle:Analyse1',
                     'property' => 'name',
                     'label' => 'Analyse',
                 ))
-            ->add('minvalue', 'text', array(
+            ->add('min', 'text', array(
                 'required' => false,
             ))
-            ->add('maxvalue', 'text', array(
+            ->add('max', 'text', array(
                 'required' => false
             ))
             ->add('ponderation', 'text', array(
@@ -41,8 +41,8 @@ class Param1Type extends AbstractType
                 'class' => 'AppBundle:Typeparam1',
                 'property' => 'name',
                 'label' => 'param'
-            ));
-            //->add('save', 'submit', array('label' => 'Create Parameter'));
+            ))
+            ->add('save', 'submit', array('label' => 'Create Parameter1'));
     }
 
     public function getName()

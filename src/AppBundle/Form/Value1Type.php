@@ -19,7 +19,7 @@ class Value1Type extends AbstractType
     {
         $builder
             ->setMethod('POST')
-            ->add('dataserie', 'entity', array(
+            ->add('dataserie1', 'entity', array(
                 'class' => 'AppBundle:Dataserie1',
                 'property' => 'name',
                 'label' => 'dataserie',
