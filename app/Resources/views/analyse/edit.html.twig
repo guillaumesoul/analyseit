@@ -193,7 +193,9 @@
                     {{ form_end(form) }}
                 </div>#}
 
-                <div id="formTest">
+
+
+                {#<div id="formTest">
                     {{ form_start(test_form) }}
                     {{ form_row(test_form.save) }}
                     {{ form_row(test_form.name) }}
@@ -214,22 +216,36 @@
                         </ul>
                     </div>
                     {{ form_end(test_form) }}
-                </div>
+                </div>#}
 
                 <div id="headTest">
                     {{ form_start(analyse_form) }}
                     {{ form_widget(analyse_form) }}
-                    {{ form_end(analyse_form) }}
+                    {#<ul class="tags">
+                        {% for param in analyse_form.params1 %}
+                            <li>
+                                {{ form_row(param.name) }}
+                                <span style="display: none;">
+                                    {{ form_row(param.name) }}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>#}
+                    {#{{ form_end(analyse_form) }}#}
+                    {{ form_end(analyse_form, {'render_rest': false}) }}
                 </div>
 
                 <hr>
-                {% block datatable_work %}
+                {{ form_start(test1_form) }}
+                {{ form_widget(test1_form) }}
+                {{ form_end(test1_form) }}
+                {#{% block datatable_work %}
                     <div>
                         <table id="example">
 
                         </table>
                     </div>
-                {% endblock %}
+                {% endblock %}#}
             </div>
         </div>
     {% endblock %}

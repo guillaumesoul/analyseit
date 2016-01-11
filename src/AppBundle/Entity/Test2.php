@@ -69,4 +69,27 @@ class Test2
     {
         return $this->name;
     }
+
+    /**
+     * Set test1
+     *
+     * @param \AppBundle\Entity\Test1 $test1
+     * @return Test2
+     */
+    public function setTest1(\AppBundle\Entity\Test1 $test1 = null)
+    {
+        $this->test1 = $test1;
+
+        return $this;
+    }
+
+    /**
+     * Get test1
+     *
+     * @return \AppBundle\Entity\Test1 
+     */
+    public function getTest1()
+    {
+        return $this->test1;
+    }
 }

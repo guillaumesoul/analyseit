@@ -13,7 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Analyse1Type extends AbstractType
+class Test2Type extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -21,31 +21,28 @@ class Analyse1Type extends AbstractType
         $builder
             ->setMethod('POST')
             ->add('name', 'text')
-            /*->add('userid', 'entity', array(
-                'class' => 'AppBundle:User',
-                'property' => 'id',
-                'label' => 'user',
+            /*->add('test1', 'collection', array(
+                'type' => new Test1Type(),
+                'by_reference' => false,
+                'allow_add'    => true,
             ))*/
-            ->add('created', 'date', array(
-                'data' => new \DateTime()
+            ->add('test1', 'entity', array(
+                'class' => 'AppBundle:Test2',
+                'property' => 'id',
+                'label' => 'test1',
             ))
-            ->add('params1', 'collection', array(
-                'type' => new Param1Type(),
-                /*'by_reference' => false,
-                'allow_add'    => true,*/
-            ))
-            ->add('save', 'submit', array('label' => 'Create Analyse1'));
+            ->add('save', 'submit', array('label' => 'Create test2'));
     }
 
     public function getName()
     {
-        return 'appbundle_analyse1type';
+        return 'appbundle_test1type';
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Analyse1'
+            'data_class' => 'AppBundle\Entity\Test2'
         ));
     }
 }

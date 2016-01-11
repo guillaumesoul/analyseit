@@ -8,6 +8,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Test1;
+use AppBundle\Entity\Test2;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Analyse;
@@ -186,7 +188,6 @@ class AnalyseController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $analyse = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
-        //$analyse->setParams(new ArrayCollection); //@TODO FOIREUX POURQUOI DOCTRINE N'INITIALISE PAS UN ARRAYCOLLECTION
 
         if ($request->isMethod('POST')) {
             $paramIdForm = $request->get('paramId');
@@ -201,7 +202,6 @@ class AnalyseController extends Controller
             }
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-            //if ($form->isSubmitted() ) {
                 $param = $form->getData();
                 if ($paramToUpdate == null) {
                     $em->persist($param);
@@ -211,8 +211,6 @@ class AnalyseController extends Controller
                 unset($form);
             }
         }
-        //$paramsList = $em->getRepository('AppBundle:Param')->findByAnalyse($analyseId);
-        //@TODO FAIRE UNE COLLECTION DE FORMULAIRE
         $paramsList = $em->getRepository('AppBundle:Param1')->getParamsByAnalyseId($analyseId);
 
         $formTab = array();
@@ -234,12 +232,11 @@ class AnalyseController extends Controller
             $value->setDataserie1($dataserie->getId());
             $value->setParam($param);
             //$dataserie->getValues()->add($value);
-            //$dataserie->getValues1()->add($value);
             $dataserie->addValues1($value);
 
             //get params from analyse to make analyse form with embed param form
             //$analyse->getParams()->add($param);
-            $analyse->addParams1($param);
+            //$analyse->addParams1($param);
         }
 
         //$param = new Param();
@@ -262,14 +259,24 @@ class AnalyseController extends Controller
 
         $analyseForm = $this->createForm($this->get('analyse1_form'), $analyse);
 
+        $test1 = new Test1();
+        $test1 = $em->getRepository('AppBundle:Test1')->findOneById(1);
+
+        $test2 = $em->getRepository('AppBundle:Test2')->findOneById(1);
+        //$test2 = $test2list[0];
+        //$test2 = new Test2();
+        //$test1->addTests2($test2);
+        $testForm = $this->createForm($this->get('test_form'), $test1);
+
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
             //'param_creation_form' => $this->createForm(new ParamType(), $param)->createView(),
             'param_creation_form' => $this->createForm(new Param1Type(), $param)->createView(),
             'param_creation_form_list' => $formTabView,
             'params_list' => $paramsList,
-            'test_form' => $dataserieForm->createView(),
+            //'test_form' => $dataserieForm->createView(),
             'analyse_form' => $analyseForm->createView(),
+            'test1_form' => $testForm->createView(),
         ));
     }
 
