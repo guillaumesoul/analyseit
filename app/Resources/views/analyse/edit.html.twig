@@ -7,6 +7,8 @@
     <link href="{{ asset('css/analyse.css') }}" rel="stylesheet" />
 {% endblock %}
 
+
+
 {% block appWindow %}
     {% block analyse_params %}
         <div class="col-lg-12 panel">
@@ -28,31 +30,6 @@
                         {{ form_start(param_creation_form) }}
                         {{ form_widget(param_creation_form) }}
                         {{ form_end(param_creation_form) }}
-
-                        {#{{ form_start(param_creation_form) }}
-                        <input type="hidden" id="paramId" name="paramId" class="" index="paramId" value="{{ param_creation_form.vars.value.id }}"/>
-                        <label class="paramAttrLabel">name</label>
-                        {{ form_widget(param_creation_form.name, { 'id': 'name_param_' ~ param_creation_form.vars.value.id, 'name': 'name_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramName' }} )}}
-                        &#123;&#35;<section id="section_moreParam_{{ param_creation_form.vars.value.id }}" name="section_moreParam_{{ param_creation_form.vars.value.id }}" style="display: none;">&#35;&#125;
-                        <section id="section_moreParam_{{ param_creation_form.vars.value.id }}" name="section_moreParam_{{ param_creation_form.vars.value.id }}">
-                            <label class="paramAttrLabel">min</label>
-                            {{ form_widget(param_creation_form.minvalue, { 'id': 'minValue_param_' ~ param_creation_form.vars.value.id, 'name': 'minValue_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMinValue', 'data-validate':'number' }} )}}
-                            <label class="paramAttrLabel">max</label>
-                            {{ form_widget(param_creation_form.maxvalue, { 'id': 'maxValue_param_' ~ param_creation_form.vars.value.id, 'name': 'maxValue_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMaxValue', 'data-validate':'number' }} )}}
-                            <label class="paramAttrLabel">unit</label>
-                            {{ form_widget(param_creation_form.unit, { 'id': 'unit_param_' ~ param_creation_form.vars.value.id, 'name': 'unit_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramUnit' }} )}}
-                            <label class="paramAttrLabel">pond</label>
-                            {{ form_widget(param_creation_form.ponderation, { 'id': 'ponderation_param_' ~ param_creation_form.vars.value.id, 'name': 'ponderation_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramPonderation', 'data-validate':'number' }} )}}
-                            <label class="paramAttrLabel">type</label>
-                            {{ form_widget(param_creation_form.type, { 'id': 'type_param_' ~ param_creation_form.vars.value.id, 'name': 'type_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramType' }} )}}
-                        </section>
-                        <button type="button" class="moreParam" id="moreParam_{{ param_creation_form.vars.value.id }}" name="moreParam_{{ param_creation_form.vars.value.id }}"><i class="fa fa-plus-circle"></i></button><br>
-                        <div style="display: none;">
-                            <label class="paramAttrLabel">analyse</label>
-                            {{ form_widget(param_creation_form.analyse, { 'id': 'analyse_param_' ~ param_creation_form.vars.value.id, 'name': 'analyse_param_' ~ param_creation_form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramAnalyse' }} )}}
-                        </div>
-                        <button type="submit" id="submit_param_{{ param_creation_form.vars.value.id }}" name="submit_param_{{ param_creation_form.vars.value.id }}"><i class="fa fa-save"></i></button>
-                        {{ form_end(param_creation_form) }}#}
                     </div>
 
                 {% endblock %}
@@ -124,36 +101,6 @@
                                             <td><form><input type="text" class="dataTableParamValue" index="param_{{ param.getId }}" paramName="{{ param.getName }}" data-validate="number,minVal({{ param.getMin }}),maxVal({{ param.getMax }})" value="10"/></form></td>
                                         {% endfor %}
                                     </tr>
-
-
-                                     {#<tr>
-                                         {{ form_start(test_form) }}
-                                         <td class="firstCol" style="width: 50px;">
-                                             <button type="button" class="deleteRow"><i class="fa fa-trash"></i></button>
-                                             <button type="submit" id="submit_dataserie_{{ test_form.vars.value.id }}" name="submit_dataserie_{{ test_form.vars.value.id }}"><i class="fa fa-save"></i></button>
-                                         </td>
-                                         <td>{{ form_row(test_form.name) }}</td>
-                                         <span style="display: none;">
-                                         {{ form_row(test_form.analyse) }}
-                                         </span>
-                                         &#123;&#35;<span data-prototype="{{ form_widget(test_form.values.vars.prototype)|e }}">&#35;&#125;
-                                             {% for value in test_form.values %}
-                                                 <td>
-                                                     {{ form_start(value.value) }}
-                                                     {{ form_row(value.value) }}
-                                                     <span style="display: none;">
-                                                     {{ form_row(value.dataserie) }}
-                                                     </span>
-                                                     <span style="display: none;">
-                                                     {{ form_row(value.param) }}
-                                                     {{ form_end(value.value) }}
-                                                     </span>
-                                                 </td>
-                                             {% endfor %}
-                                         &#123;&#35;</span>&#35;&#125;
-                                         &#123;&#35;{{ form_row(test_form.save) }}&#35;&#125;
-                                         {{ form_end(test_form) }}
-                                     </tr>#}
                                 </tbody>
 
                             </table>
@@ -166,90 +113,34 @@
                 </div>
 
 
-                {#<div class="paramHead">
-                    {{ form_start(form) }}
-                    <input type="hidden" id="paramId" name="paramId" class="paramAttribute" index="paramId" value="{{ form.vars.value.id }}"/>
-                    <label class="paramAttrLabel">name</label>
-                    {{ form_widget(form.name, { 'id': 'name_param_' ~ form.vars.value.id, 'name': 'name_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramName' }} )}}
-                    <section id="section_moreParam_{{ form.vars.value.id }}" name="section_moreParam_{{ form.vars.value.id }}" style="display: none;">
-                        <label class="paramAttrLabel">min</label>
-                        {{ form_widget(form.minvalue, { 'id': 'minValue_param_' ~ form.vars.value.id, 'name': 'minValue_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMinValue', 'data-validate':'number' }} )}}
-                        <label class="paramAttrLabel">max</label>
-                        {{ form_widget(form.maxvalue, { 'id': 'maxValue_param_' ~ form.vars.value.id, 'name': 'maxValue_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramMaxValue', 'data-validate':'number' }} )}}
-                        <label class="paramAttrLabel">unit</label>
-                        {{ form_widget(form.unit, { 'id': 'unit_param_' ~ form.vars.value.id, 'name': 'unit_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramUnit' }} )}}
-                        <label class="paramAttrLabel">pond</label>
-                        {{ form_widget(form.ponderation, { 'id': 'ponderation_param_' ~ form.vars.value.id, 'name': 'ponderation_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramPonderation', 'data-validate':'number' }} )}}
-                        <label class="paramAttrLabel">type</label>
-                        {{ form_widget(form.type, { 'id': 'type_param_' ~ form.vars.value.id, 'name': 'type_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramType' }} )}}
-                    </section>
-                    <button type="button" class="moreParam" id="moreParam_{{ form.vars.value.id }}" name="moreParam_{{ form.vars.value.id }}"><i class="fa fa-plus-circle"></i></button><br>
-                        <span style="display: none;">
-                            <label class="paramAttrLabel">analyse</label>
-                            {{ form_widget(form.analyse, { 'id': 'analyse_param_' ~ form.vars.value.id, 'name': 'analyse_param_' ~ form.vars.value.id,  'attr': { 'class' : 'paramAttribute', 'index' : 'paramAnalyse' }} )}}
-                        </span>
-                    <a href="{{ path('param_delete', {'paramId': form.vars.value.id}) }}"><button type="button"><i class="fa fa-trash"></i></button></a>
-                    <button type="submit" id="submit_param_{{ form.vars.value.id }}" name="submit_param_{{ form.vars.value.id }}"><i class="fa fa-save"></i></button>
-                    {{ form_end(form) }}
-                </div>#}
 
-
-
-                {#<div id="formTest">
-                    {{ form_start(test_form) }}
-                    {{ form_row(test_form.save) }}
-                    {{ form_row(test_form.name) }}
-                    <span style="display: none;">
-                    {{ form_row(test_form.analyse1) }}
-                    </span>
-                    <div>
-                        <ul class="tags">
-                        {% for value in test_form.values1 %}
-                            <li>
-                            {{ form_row(value.value) }}
-                                <span style="display: none;">
-                                    {{ form_row(value.dataserie1) }}
-                                    {{ form_row(value.param) }}
-                                </span>
-                            </li>
-                        {% endfor %}
-                        </ul>
-                    </div>
-                    {{ form_end(test_form) }}
-                </div>#}
+                {% form_theme analyse_form 'form/fields.html.twig' %}
 
                 <div id="headTest">
                     {{ form_start(analyse_form) }}
-                    {{ form_widget(analyse_form) }}
-                    {#<ul class="tags">
-                        {% for param in analyse_form.params1 %}
-                            <li>
-                                {{ form_row(param.name) }}
-                                <span style="display: none;">
-                                    {{ form_row(param.name) }}
-                                </span>
-                            </li>
-                        {% endfor %}
-                    </ul>#}
-                    {#{{ form_end(analyse_form) }}#}
-                    {{ form_end(analyse_form, {'render_rest': false}) }}
+                    {#{{ form_widget(analyse_form) }}#}`
+
+                    {{ form_label(analyse_form.name) }}
+                    {{ form_widget(analyse_form.name) }}
+                    {{ form_errors(analyse_form.name) }}
+                    {{ form_label(analyse_form.created) }}
+                    {{ form_widget(analyse_form.created) }}
+                    {{ form_errors(analyse_form.created) }}
+
+                    {% for param in analyse_form.params1 %}
+                        {{ form_label(param.name) }}
+                        {{ form_widget(param.name) }}
+                        {{ form_errors(param.name) }}
+                    {% endfor %}
+
+
+                    {{ form_end(analyse_form) }}
                 </div>
-
-                <hr>
-                {{ form_start(test1_form) }}
-                {{ form_widget(test1_form) }}
-                {{ form_end(test1_form) }}
-                {#{% block datatable_work %}
-                    <div>
-                        <table id="example">
-
-                        </table>
-                    </div>
-                {% endblock %}#}
             </div>
         </div>
     {% endblock %}
 {% endblock %}
+
 
 {% block javascripts %}
     {{ parent() }}
