@@ -127,13 +127,50 @@
                     {{ form_widget(analyse_form.created) }}
                     {{ form_errors(analyse_form.created) }}
 
-                    {% for param in analyse_form.params1 %}
-                        {{ form_label(param.name) }}
-                        {{ form_widget(param.name) }}
-                        {{ form_errors(param.name) }}
-                    {% endfor %}
 
 
+                    <ul>
+                        {% for param in analyse_form.params1 %}
+                            {% form_theme param 'form/fieldsParam.html.twig' %}
+                            <li class="analyse_param">
+                                <ul class="params_params">
+                                    <li class="hidden">
+                                        {{ form_label(param.analyse1) }}
+                                        {{ form_widget(param.analyse1) }}
+                                    </li>
+                                    <li>
+                                        {{ form_label(param.name) }}
+                                        {{ form_widget(param.name) }}
+                                    </li>
+                                    <li>
+                                        {{ form_label(param.min) }}
+                                        {{ form_widget(param.min) }}
+                                    </li>
+                                    <li>
+                                        {{ form_label(param.max) }}
+                                        {{ form_widget(param.max) }}
+                                    </li>
+                                    <li>
+                                        {{ form_label(param.ponderation) }}
+                                        {{ form_widget(param.ponderation) }}
+                                    </li>
+                                    <li>
+                                        {{ form_label(param.unit) }}
+                                        {{ form_widget(param.unit) }}
+                                    </li>
+                                    <li>
+                                        {{ form_label(param.type) }}
+                                        {{ form_widget(param.type) }}
+                                    </li>
+                                    <li>
+                                        {{ form_label(param.save) }}
+                                        {{ form_widget(param.save) }}
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {{ form_widget(analyse_form.save) }}
                     {{ form_end(analyse_form) }}
                 </div>
             </div>

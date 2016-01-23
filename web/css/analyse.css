@@ -37,3 +37,11 @@
 .paramAttribute{
     width: 45%;
 }
+
+.analyse_param{
+    display: inline-block;
+}
+
+.params_params{
+    list-style-type: none;
+}

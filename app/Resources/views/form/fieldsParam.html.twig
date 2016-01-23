@@ -1,6 +1,6 @@
 {% block form_widget_simple %}
     {% set type = type|default('text') %}
-    <input class="analyse_input" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <input class="params_input" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {% endblock form_widget_simple %}
 
 {% block form_label %}
@@ -21,7 +21,7 @@
                 {% set label = name|humanize %}
             {% endif %}
         {% endif %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %} style="color:red;">{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %} style="color:blue;">{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
     {% endif %}
 {% endblock form_label %}
 
@@ -36,5 +36,5 @@
             {% set label = name|humanize %}
         {% endif %}
     {% endif %}
-    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}><i class="fa fa-save">analyse</i></button>
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}><i class="fa fa-save">param</i></button>
 {% endblock button_widget %}
