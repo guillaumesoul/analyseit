@@ -38,6 +38,9 @@
     width: 45%;
 }
 
+.analyse_metadata{
+    display: inline-block;
+}
 .analyse_param{
     display: inline-block;
 }
