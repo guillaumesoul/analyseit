@@ -69,4 +69,44 @@ class Test1
     {
         return $this->name;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tests2 = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add tests2
+     *
+     * @param \AppBundle\Entity\Test2 $tests2
+     * @return Test1
+     */
+    public function addTests2(\AppBundle\Entity\Test2 $tests2)
+    {
+        $this->tests2[] = $tests2;
+
+        return $this;
+    }
+
+    /**
+     * Remove tests2
+     *
+     * @param \AppBundle\Entity\Test2 $tests2
+     */
+    public function removeTests2(\AppBundle\Entity\Test2 $tests2)
+    {
+        $this->tests2->removeElement($tests2);
+    }
+
+    /**
+     * Get tests2
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTests2()
+    {
+        return $this->tests2;
+    }
 }

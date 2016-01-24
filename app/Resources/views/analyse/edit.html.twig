@@ -112,6 +112,14 @@
                         </section>
                     {% endblock %}
 
+                    {% block dataseries %}
+                        <div>
+                            {{ form_start(dataserie_form) }}
+                            {{ form_widget(dataserie_form) }}
+                            {{ form_end(dataserie_form) }}
+                        </div>
+                    {% endblock %}
+
                     {% block analyse_chart %}
                         <canvas id="myChart" width="400" height="400"></canvas>
                     {% endblock %}

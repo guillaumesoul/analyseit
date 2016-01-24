@@ -67,7 +67,7 @@ class Param1
     /**
      * @var \AppBundle\Entity\Typeparam1
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Typeparam1")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Typeparam1")
      * @ORM\JoinColumn(name="typeparam1_id", referencedColumnName="id")
      */
     private $type;

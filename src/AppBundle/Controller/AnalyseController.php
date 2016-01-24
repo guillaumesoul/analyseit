@@ -82,6 +82,18 @@ class AnalyseController extends Controller
         $param->setAnalyse1($analyse);  //param1_form
         $paramForm = $this->createForm($this->get('param1_form'), $param);
 
+        $analyseParams = $analyse->getParams1();
+        $atest = count($analyseParams);
+        $dataserie = new Dataserie1();
+        $em->persist($dataserie);
+        $em->flush();
+        for($i=0 ; $i<count($analyseParams) ; $i++) {
+            $value = new Value1();
+            $value->setDataserie1($dataserie);
+            $dataserie->addValues1($value);
+        }
+        $dataserieForm = $this->createForm($this->get('dataserie1_form'), $dataserie);
+
         if ($request->isMethod('POST')) {
             //determiner si requete vient de form param ou analyse
             $formType = $request->request->keys()[0];
@@ -92,35 +104,25 @@ class AnalyseController extends Controller
                 case 'appbundle_analyse1type':
                     $form = $analyseForm;
                     break;
+                case 'appbundle_dataserie1type':
+                    $form = $analyseForm;
+                    break;
             }
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $object = $form->getData();
-                if($request->request->keys()[0] == 'appbundle_param1type'){
-                    //@todo persist($object) doesn't work pb with type
-                    $newParam = new Param1();
-                    $newParam->setName($object->getName());
-                    $newParam->setMin($object->getMin());
-                    $newParam->setMax($object->getMax());
-                    $newParam->setPonderation($object->getPonderation());
-                    $newParam->setUnit($object->getUnit());
-                    $typeparam = $object->getType();
-                    $newParam->setType($typeparam);
-                    $em->persist($newParam);
-                }
-
+                if($request->request->keys()[0] == 'appbundle_param1type')  $em->persist($object);
                 $em->flush();
                 unset($object);
-                unset($typeparam);
                 unset($form);
             }
-
         }
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
             'param_creation_form' => $paramForm->createView(),
             'analyse_form' => $analyseForm->createView(),
+            'dataserie_form' => $dataserieForm->createView(),
         ));
     }
 

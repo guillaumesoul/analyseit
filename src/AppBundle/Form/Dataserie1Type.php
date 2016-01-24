@@ -31,15 +31,6 @@ class Dataserie1Type extends AbstractType
             ))
             ->add('values1', 'collection', array(
                 'type' => new Value1Type(),
-                /* @TODO utiliser parametres suivants pour persistence en cascade
-                'allow_add' => true,
-                'allow_delete' => true,
-                'prototype' => true,
-                'by_reference' => false,
-                'cascade_validation' => true,
-                'options'      => array(
-                    'data_class'   => 'AppBundle\Entity\Value',
-                ),*/
             ))
             ->add('save', 'submit', array('label' => 'Create Dataserie1'));
     }
