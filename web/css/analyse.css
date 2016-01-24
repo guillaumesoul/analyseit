@@ -48,3 +48,7 @@
 .params_params{
     list-style-type: none;
 }
+
+.param_label{
+    width: 80px;
+}

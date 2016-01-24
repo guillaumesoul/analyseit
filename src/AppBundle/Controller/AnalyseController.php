@@ -34,33 +34,6 @@ class AnalyseController extends Controller
         return $this->render('analyse/index.html.twig');
     }
 
-    /*public function createAction(Request $request)
-    {
-        $user = $this->container->get('security.context')->getToken()->getUser();
-
-        //Analyse form management
-        $analyse = new Analyse();
-        $form = $this->createFormBuilder($analyse)
-            ->setAction($this->generateUrl('analyse_create'))
-            ->setMethod('POST')
-            ->add('name', 'text')
-            ->add('save', 'submit', array('label' => 'Create Analyze'))
-            ->getForm();
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $analyse->setUser($user);
-            $em->persist($analyse);
-            $em->flush();
-            return $this->redirectToRoute('analyse');
-        }
-
-        return $this->render('analyse/create.html.twig', array(
-            'analyse_creation_form' => $form->createView(),
-        ));
-    }*/
-
     public function createAction(Request $request)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -100,157 +73,53 @@ class AnalyseController extends Controller
         ));
     }
 
-    /*public function editAction(Request $request, $analyseId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $analyse = $em->getRepository('AppBundle:Analyse')->findOneById($analyseId);
-        //$analyse->setParams(new ArrayCollection); //@TODO FOIREUX POURQUOI DOCTRINE N'INITIALISE PAS UN ARRAYCOLLECTION
-
-        if ($request->isMethod('POST')) {
-            $paramIdForm = $request->get('paramId');
-            if ($paramIdForm != '' && $paramIdForm != null) {
-                $paramToUpdate = $em->getRepository('AppBundle:Param')->find($paramIdForm);
-                if ($paramToUpdate instanceof Param && $paramToUpdate != null) {
-                    $form = $this->createForm($this->get('param_form'), $paramToUpdate);
-                }else{
-                    $form = $this->createForm(new ParamType(), new Param());
-                }
-                $form->handleRequest($request);
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $param = $form->getData();
-                    if ($paramToUpdate == null) {
-                        $em->persist($param);
-                    }
-                    $em->flush();
-                    unset($param);
-                    unset($form);
-                }
-            }
-
-        }
-        //$paramsList = $em->getRepository('AppBundle:Param')->findByAnalyse($analyseId);
-        //@TODO FAIRE UNE COLLECTION DE FORMULAIRE
-        $paramsList = $em->getRepository('AppBundle:Param')->getParamsByAnalyseId($analyseId);
-
-        $formTab = array();
-        $formTabView = array();
-        $dataserie = new Dataserie();
-        $dataserie->setAnalyse($analyse);
-
-        $dataserieTest = $em->getRepository('AppBundle:Dataserie')->findOneById(1);
-
-        for ($i=0 ; $i<count($paramsList) ; $i++){
-            $param = $paramsList[$i];
-            $form = $this->createForm($this->get('param_form'), $param);
-            $formView = $form->createView();
-            array_push($formTabView,$formView);
-            array_push($formTab,$form);
-
-            //create a dataserie with embed values
-            $value = new Value();
-            $value->setDataserie($dataserie->getId());
-            $value->setParam($param);
-            $dataserie->getValues()->add($value);
-
-            //get params from analyse to make analyse form with embed param form
-            $analyse->getParams()->add($param);
-        }
-
-        $param = new Param();
-        $param->setAnalyse($analyse);
-
-        $dataserieForm = $this->createForm($this->get('dataserie_form'), $dataserie);
-        $dataserieForm->handleRequest($request);
-        if ($dataserieForm->isSubmitted() && $dataserieForm->isValid()) {
-            $dataserie = $dataserieForm->getData();
-            $em->persist($dataserie);
-            //@TODO utiliser la persistence en cascade pour les embed forms
-            $values = $dataserie->getValues();
-            foreach($values as $value){
-                $em->persist($value);
-            }
-            $em->flush();
-        }
-
-        $analyseForm = $this->createForm($this->get('analyse_form'), $analyse);
-
-        return $this->render('analyse/edit.html.twig', array(
-            'analyse' => $analyse,
-            'param_creation_form' => $this->createForm(new ParamType(), $param)->createView(),
-            'param_creation_form_list' => $formTabView,
-            'params_list' => $paramsList,
-            'test_form' => $dataserieForm->createView(),
-            'analyse_form' => $analyseForm->createView(),
-        ));
-    }*/
-
-
-
     public function editAction(Request $request, $analyseId)
     {
         $em = $this->getDoctrine()->getManager();
         $analyse = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
         $analyseForm = $this->createForm($this->get('analyse1_form'), $analyse);
+        $param = new Param1();
+        $param->setAnalyse1($analyse);  //param1_form
+        $paramForm = $this->createForm($this->get('param1_form'), $param);
 
         if ($request->isMethod('POST')) {
-            $analyseForm->handleRequest($request);
-            if ($analyseForm->isSubmitted() && $analyseForm->isValid()) {
-                $analyse = $analyseForm->getData();
-                //$em->persist($analyse);
+            //determiner si requete vient de form param ou analyse
+            $formType = $request->request->keys()[0];
+            switch($formType){
+                case 'appbundle_param1type':
+                    $form = $paramForm;
+                    break;
+                case 'appbundle_analyse1type':
+                    $form = $analyseForm;
+                    break;
+            }
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $object = $form->getData();
+                if($request->request->keys()[0] == 'appbundle_param1type'){
+                    //@todo persist($object) doesn't work pb with type
+                    $newParam = new Param1();
+                    $newParam->setName($object->getName());
+                    $newParam->setMin($object->getMin());
+                    $newParam->setMax($object->getMax());
+                    $newParam->setPonderation($object->getPonderation());
+                    $newParam->setUnit($object->getUnit());
+                    $typeparam = $object->getType();
+                    $newParam->setType($typeparam);
+                    $em->persist($newParam);
+                }
+
                 $em->flush();
-                unset($param);
+                unset($object);
+                unset($typeparam);
                 unset($form);
             }
 
         }
 
-
-        $paramsList = $em->getRepository('AppBundle:Param1')->getParamsByAnalyseId($analyseId);
-
-        $formTab = array();
-        $formTabView = array();
-        $dataserie = new Dataserie1();
-        $dataserie->setAnalyse1($analyse);
-
-        $dataserieTest = $em->getRepository('AppBundle:Dataserie1')->findOneById(1);
-
-        for ($i=0 ; $i<count($paramsList) ; $i++){
-            $param = $paramsList[$i];
-            $form = $this->createForm($this->get('param1_form'), $param);
-            $formView = $form->createView();
-            array_push($formTabView,$formView);
-            array_push($formTab,$form);
-
-            //create a dataserie with embed values
-            $value = new Value1();
-            $value->setDataserie1($dataserie->getId());
-            $value->setParam($param);
-            $dataserie->addValues1($value);
-        }
-
-        //$param = new Param();
-        $param = new Param1();
-        //$param->setAnalyse($analyse);
-        $param->setAnalyse1($analyse);
-
-        $dataserieForm = $this->createForm($this->get('dataserie1_form'), $dataserie);
-        $dataserieForm->handleRequest($request);
-        if ($dataserieForm->isSubmitted() && $dataserieForm->isValid()) {
-            $dataserie = $dataserieForm->getData();
-            $em->persist($dataserie);
-            //@TODO utiliser la persistence en cascade pour les embed forms
-            $values = $dataserie->getValues();
-            foreach($values as $value){
-                $em->persist($value);
-            }
-            $em->flush();
-        }
-
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
-            'param_creation_form' => $this->createForm(new Param1Type(), $param)->createView(),
-            'param_creation_form_list' => $formTabView,
-            'params_list' => $paramsList,
+            'param_creation_form' => $paramForm->createView(),
             'analyse_form' => $analyseForm->createView(),
         ));
     }
