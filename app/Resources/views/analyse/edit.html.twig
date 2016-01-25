@@ -115,7 +115,20 @@
                     {% block dataseries %}
                         <div>
                             {{ form_start(dataserie_form) }}
-                            {{ form_widget(dataserie_form) }}
+                            {{ form_label(dataserie_form.name) }}
+                            {{ form_widget(dataserie_form.name) }}
+                            <div class="hidden">
+                                {{ form_widget(dataserie_form.analyse1) }}
+                            </div>
+                            {% for value in dataserie_form.values1 %}
+                                <span class="hidden">{{ form_label(value.value) }}</span>
+                                {{ form_widget(value.value) }}
+                                <div class="hidden">
+                                    {{ form_widget(value.dataserie1) }}
+                                    {{ form_widget(value.param) }}
+                                </div>
+                            {% endfor %}
+                            {{ form_widget(dataserie_form.save) }}
                             {{ form_end(dataserie_form) }}
                         </div>
                     {% endblock %}

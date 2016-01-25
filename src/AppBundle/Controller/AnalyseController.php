@@ -93,33 +93,22 @@ class AnalyseController extends Controller
 
         if(count($dataserieValues) < count($analyseParams)){
             foreach($analyseParams as $param){
-                for($i=0 ; $i<count($dataserieValues) ; $i++){
-                    $atest1 = $param;
-                    $atest2 = $dataserieValues[$i]->getParam();
-                    if(!($param == $dataserieValues[$i]->getParam())){
-                        $value = new Value1();
-                        $value->setDataserie1($dataserie);
-                        $dataserie->addValues1($value);
+                $valueExist = false;
+                for($i=0 ; $i<count($analyseParams) ; $i++){
+                    if(isset($dataserieValues[$i])){
+                        if($param == $dataserieValues[$i]->getParam()){
+                            $valueExist = true;
+                        }
                     }
+
+                }
+                if(!$valueExist){
+                    $value = new Value1();
+                    $value->setDataserie1($dataserie);
+                    $dataserie->addValues1($value);
                 }
             }
         }
-
-        /*for($i=0 ; $i<count($analyseParams) ; $i++) {
-            $valueExist = false;
-            if(count($dataserieValues) > 0){
-                foreach($dataserieValues as $value){
-                    if ($value->getParam() == $analyseParams[$i]){
-                        $valueExist = true;
-                    }
-                }
-            }
-            if(!$valueExist){
-                $value = new Value1();
-                $value->setDataserie1($dataserie);
-                $dataserie->addValues1($value);
-            }
-        }*/
         $dataserieForm = $this->createForm($this->get('dataserie1_form'), $dataserie);
 
         if ($request->isMethod('POST')) {
@@ -133,7 +122,7 @@ class AnalyseController extends Controller
                     $form = $analyseForm;
                     break;
                 case 'appbundle_dataserie1type':
-                    $form = $analyseForm;
+                    $form = $dataserieForm;
                     break;
             }
             $form->handleRequest($request);
