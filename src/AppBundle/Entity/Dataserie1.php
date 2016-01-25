@@ -32,12 +32,12 @@ class Dataserie1
      * @var \AppBundle\Entity\Analyse1
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Analyse1", inversedBy="dataseries1")
-     * @ORM\JoinColumn(name="dataserie1_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="analyse1_id", referencedColumnName="id")
      */
     private $analyse1;
 
     /**
-     * @ORM\OneToMany(targetEntity="Value1", mappedBy="dataserie1")
+     * @ORM\OneToMany(targetEntity="Value1", mappedBy="dataserie1",cascade={"persist"})
      */
     private $values1;
 

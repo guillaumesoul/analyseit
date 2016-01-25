@@ -52,6 +52,10 @@ class AnalyseController extends Controller
             $em = $this->getDoctrine()->getManager();
             $analyse->setUserid($user);
             $analyse->setCreated(new \DateTime());
+            $dataserie = new Dataserie1();
+            $dataserie->setAnalyse1($analyse);
+            $dataserie->setName('serie 1');
+            $em->persist($dataserie);
             $em->persist($analyse);
             $em->flush();
             return $this->redirectToRoute('analyse');
@@ -83,15 +87,39 @@ class AnalyseController extends Controller
         $paramForm = $this->createForm($this->get('param1_form'), $param);
 
         $analyseParams = $analyse->getParams1();
-        $atest = count($analyseParams);
-        $dataserie = new Dataserie1();
-        $em->persist($dataserie);
-        $em->flush();
-        for($i=0 ; $i<count($analyseParams) ; $i++) {
-            $value = new Value1();
-            $value->setDataserie1($dataserie);
-            $dataserie->addValues1($value);
+        $dataserie = $em->getRepository('AppBundle:Dataserie1')->findOneByAnalyse1($analyse);
+        //$dataserieValues = $em->getRepository('AppBundle:Value1')->findByDataserie1($dataserie);
+        $dataserieValues = $dataserie->getValues1();
+
+        if(count($dataserieValues) < count($analyseParams)){
+            foreach($analyseParams as $param){
+                for($i=0 ; $i<count($dataserieValues) ; $i++){
+                    $atest1 = $param;
+                    $atest2 = $dataserieValues[$i]->getParam();
+                    if(!($param == $dataserieValues[$i]->getParam())){
+                        $value = new Value1();
+                        $value->setDataserie1($dataserie);
+                        $dataserie->addValues1($value);
+                    }
+                }
+            }
         }
+
+        /*for($i=0 ; $i<count($analyseParams) ; $i++) {
+            $valueExist = false;
+            if(count($dataserieValues) > 0){
+                foreach($dataserieValues as $value){
+                    if ($value->getParam() == $analyseParams[$i]){
+                        $valueExist = true;
+                    }
+                }
+            }
+            if(!$valueExist){
+                $value = new Value1();
+                $value->setDataserie1($dataserie);
+                $dataserie->addValues1($value);
+            }
+        }*/
         $dataserieForm = $this->createForm($this->get('dataserie1_form'), $dataserie);
 
         if ($request->isMethod('POST')) {
