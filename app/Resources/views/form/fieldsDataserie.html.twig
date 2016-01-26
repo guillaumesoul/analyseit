@@ -1,0 +1,18 @@
+{% block form_widget_simple %}
+    {% set type = type|default('text') %}
+    <input class="dataserie_input" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endblock form_widget_simple %}
+
+{% block button_widget %}
+    {% if label is empty %}
+        {% if label_format is not empty %}
+            {% set label = label_format|replace({
+            '%name%': name,
+            '%id%': id,
+            }) %}
+        {% else %}
+            {% set label = name|humanize %}
+        {% endif %}
+    {% endif %}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}><i class="fa fa-save"></i></button>
+{% endblock button_widget %}

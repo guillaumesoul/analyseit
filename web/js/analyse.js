@@ -72,8 +72,11 @@ $(document).ready(function() {
     } );
 
     $('.moreParam').on('click', function(){
-        $('#section_' + this.id).toggle();
-        $(this).find('i').toggleClass('fa-minus fa-plus-circle');
+        $('.moreParamSection').toggle();
+        $('.moreParamIcon').toggleClass('fa-minus fa-plus-circle');
+        //individual param toggle
+        /*$('#section_' + this.id).toggle();
+        $(this).find('i').toggleClass('fa-minus fa-plus-circle');*/
     });
 
 

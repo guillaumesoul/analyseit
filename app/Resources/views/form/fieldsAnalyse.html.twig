@@ -21,7 +21,7 @@
                 {% set label = name|humanize %}
             {% endif %}
         {% endif %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %} style="color:red;">{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %} >{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
     {% endif %}
 {% endblock form_label %}
 
@@ -36,7 +36,7 @@
             {% set label = name|humanize %}
         {% endif %}
     {% endif %}
-    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}><i class="fa fa-save">analyse</i></button>
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}><i class="fa fa-save"></i></button>
 {% endblock button_widget %}
 
 {% block datetime_widget %}

@@ -49,23 +49,41 @@
                 <div class="row">
                     {% block datatable %}
                         <section id="headTest">
+                            {% form_theme analyse_form 'form/fieldsAnalyse.html.twig' %}
                             {{ form_start(analyse_form) }}
                             <ul>
                                 <li class="analyse_metadata">
                                     {{ form_label(analyse_form.name) }}
                                     {{ form_widget(analyse_form.name) }}
                                 </li>
-                                <li class="analyse_metadata">
+                                <li class="analyse_metadata hidden" >
                                     {{ form_label(analyse_form.created) }}
                                     {{ form_widget(analyse_form.created) }}
                                 </li>
+                                <li class="analyse_metadata">{{ form_widget(analyse_form.save) }}</li>
                                 <li class="analyse_metadata">
-                                    {{ form_widget(analyse_form.save) }}
+                                    <a href="{{ path('analyse_add_dataserie', {'analyseId': analyse.getId}) }}" class="btn btn-primary" role="button">
+                                        <i class="fa fa-plus-square"></i><i class="fa fa-table iconAnalyse"></i>
+                                    </a>
                                 </li>
                             </ul>
                             <hr>
                             <ul>
                                 {% for param in analyse_form.params1 %}
+                                    {%  if loop.index == 1 %}
+                                        <li class="analyse_param" style="width:152px;">
+                                            <ul class="params_params">
+                                                <li>{{ form_label(param.name) }}</li>
+                                                <section class="moreParamSection" style="display: none;">
+                                                    <li>{{ form_label(param.min) }}</li>
+                                                    <li>{{ form_label(param.max) }}</li>
+                                                    <li>{{ form_label(param.ponderation) }}</li>
+                                                    <li>{{ form_label(param.unit) }}</li>
+                                                    <li>{{ form_label(param.type) }}</li>
+                                                </section>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
                                     <li class="analyse_param">
                                         {% form_theme param 'form/fieldsParam.html.twig' %}
                                         <ul class="params_params">
@@ -75,34 +93,16 @@
                                             </li>
                                             <li>
                                                 <button type="button" class="moreParam" id="moreParam_{{ param.vars.value.id }}" name="moreParam_{{ param.vars.value.id }}"><i class="fa fa-plus-circle"></i></button>
-                                                <a href="{{ path('param_delete', {'paramId': param.vars.value.id}) }}"><button type="button"><i class="fa fa-trash"></i></button></a>
+                                                <a href="{{ path('param_delete', {'paramId': param.vars.value.id}) }}"><button type="button"><i class="fa fa-trash moreParamIcon"></i></button></a>
                                                 {{ form_widget(param.save) }}
                                             </li>
-                                            <li>
-                                                {%  if loop.index == 1 %} {{ form_label(param.name) }} {% endif %}
-                                                {{ form_widget(param.name) }}
-                                            </li>
-                                            <section id="section_moreParam_{{ param.vars.value.id }}" name="section_moreParam_{{ param.vars.value.id }}" style="display: none;">
-                                                <li>
-                                                    {%  if loop.index == 1 %} {{ form_label(param.min) }} {% endif %}
-                                                    {{ form_widget(param.min) }}
-                                                </li>
-                                                <li>
-                                                    {%  if loop.index == 1 %} {{ form_label(param.max) }} {% endif %}
-                                                    {{ form_widget(param.max) }}
-                                                </li>
-                                                <li>
-                                                    {%  if loop.index == 1 %} {{ form_label(param.ponderation) }} {% endif %}
-                                                    {{ form_widget(param.ponderation) }}
-                                                </li>
-                                                <li>
-                                                    {%  if loop.index == 1 %} {{ form_label(param.unit) }} {% endif %}
-                                                    {{ form_widget(param.unit) }}
-                                                </li>
-                                                <li>
-                                                    {%  if loop.index == 1 %} {{ form_label(param.type) }} {% endif %}
-                                                    {{ form_widget(param.type) }}
-                                                </li>
+                                            <li>{{ form_widget(param.name) }}</li>
+                                            <section class="moreParamSection" id="section_moreParam_{{ param.vars.value.id }}" name="section_moreParam_{{ param.vars.value.id }}" style="display: none;">
+                                                <li>{{ form_widget(param.min) }}</li>
+                                                <li>{{ form_widget(param.max) }}</li>
+                                                <li>{{ form_widget(param.ponderation) }}</li>
+                                                <li>{{ form_widget(param.unit) }}</li>
+                                                <li>{{ form_widget(param.type) }}</li>
                                             </section>
                                         </ul>
                                     </li>
@@ -114,6 +114,7 @@
 
                     {% block dataseries %}
                         <div>
+                            {% form_theme dataserie_form 'form/fieldsDataserie.html.twig' %}
                             {{ form_start(dataserie_form) }}
                             {{ form_label(dataserie_form.name) }}
                             {{ form_widget(dataserie_form.name) }}

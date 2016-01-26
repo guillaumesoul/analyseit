@@ -2,8 +2,12 @@
     background-color: lightblue;
 }
 
+#headTest ul{
+    padding: 0px;
+}
+
 /* datatables */
-#param_datatable thead{
+/*#param_datatable thead{
     text-align: center;
 }
 
@@ -36,7 +40,7 @@
 
 .paramAttribute{
     width: 45%;
-}
+}*/
 
 .analyse_metadata{
     display: inline-block;
@@ -52,3 +56,8 @@
 .param_label{
     width: 80px;
 }
+
+.iconAnalyse{
+    margin-left: 7px;
+}
+

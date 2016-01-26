@@ -143,4 +143,9 @@ class AnalyseController extends Controller
         ));
     }
 
+    public function adddataserie(Request $request, $analyseId)
+    {
+        return $this->redirect($this->generateUrl("analyse_edit"));
+    }
+
 }

@@ -31,9 +31,10 @@ class Analyse1Type extends AbstractType
             ))
             ->add('params1', 'collection', array(
                 'type' => new Param1Type(),
-                /*'by_reference' => false,
-                'allow_add'    => true,*/
             ))
+            /*->add('dataseries1', 'collection', array(
+                'type' => new Dataserie1Type(),
+            ))*/
             ->add('save', 'submit', array('label' => 'Create Analyse1'));
     }
 
