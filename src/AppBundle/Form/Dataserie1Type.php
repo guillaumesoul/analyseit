@@ -21,6 +21,7 @@ class Dataserie1Type extends AbstractType
     {
         $builder
             ->setMethod('POST')
+            ->setAttribute('zaza','zaza')
             ->add('name', 'text', array(
                 'label' => false
             ))
