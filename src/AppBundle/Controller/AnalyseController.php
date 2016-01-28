@@ -82,40 +82,18 @@ class AnalyseController extends Controller
         $em = $this->getDoctrine()->getManager();
         $analyse = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
         $analyseForm = $this->createForm($this->get('analyse1_form'), $analyse);
+
+        //new param form
         $param = new Param1();
         $param->setAnalyse1($analyse);  //param1_form
         $paramForm = $this->createForm($this->get('param1_form'), $param);
 
-        $analyseParams = $analyse->getParams1();
+        //dataseries Form generation
         $dataseries = $em->getRepository('AppBundle:Dataserie1')->findByAnalyse1($analyse);
-        //$dataserieValues = $em->getRepository('AppBundle:Value1')->findByDataserie1($dataserie);
         $dataseriesFormViewList = [];
         $dataseriesFormList = [];
-        //@todo moved this to add dataserie method
         if(count($dataseries)>0){
-            for($i=0 ; $i<count($dataseries) ; $i++){
-                $dataserie = $dataseries[$i];
-                $dataserieValues = $dataserie->getValues1();
-                //add n value for n paramters to dataserie
-                /*if(count($dataserieValues) < count($analyseParams)){
-                    foreach($analyseParams as $param){
-                        $valueExist = false;
-                        for($i=0 ; $i<count($analyseParams) ; $i++){
-                            if(isset($dataserieValues[$i])){
-                                if($param == $dataserieValues[$i]->getParam()){
-                                    $valueExist = true;
-                                }
-                            }
-                        }
-                        if(!$valueExist){
-                            $value = new Value1();
-                            $value->setDataserie1($dataserie);
-                            $value->setParam($param);
-                            $dataserie->addValues1($value);
-                        }
-                    }
-                    $em->flush(); //persist dataserie to persist values added
-                }*/
+            foreach($dataseries as $dataserie){
                 $dataserieForm = $this->createForm($this->get('dataserie1_form'), $dataserie);
                 $dataseriesFormList[$dataserie->getId()] = $dataserieForm;
                 array_push($dataseriesFormViewList,$dataserieForm->createView());
@@ -133,8 +111,8 @@ class AnalyseController extends Controller
                     $form = $analyseForm;
                     break;
                 case 'appbundle_dataserie1type':
-                    //@todo améliorer cette merde
-                    //get dataserieId
+                    //@todo améliorer cette merde dans l'ideal il faudrait que l'id soit dans le form directement
+                    //get dataserieId : if dataserie form submitted, dataserieId in $_POST
                     foreach($_POST as $k => $v){
                         if ( preg_match('/^dataserie/',$k) ) {
                             $dataserieId = $_POST[$k];

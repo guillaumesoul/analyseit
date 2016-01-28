@@ -80,6 +80,9 @@ $(document).ready(function() {
     });
 
 
+
+
+
     dataTable.getInputData = function(){
         //get the data from datatable
         var dtData = dataTable.data();
