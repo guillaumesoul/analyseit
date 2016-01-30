@@ -5,6 +5,9 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+//serialization
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * Analyse1
  *
@@ -26,6 +29,7 @@ class Analyse1
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $name;
 
@@ -48,6 +52,7 @@ class Analyse1
 
     /**
      * @ORM\OneToMany(targetEntity="Param1", mappedBy="analyse1")
+     * @Groups({"chart"})
      */
     private $params1;
 

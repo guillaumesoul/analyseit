@@ -10,10 +10,21 @@
 
 
 {% block appWindow %}
+    <script type="text/javascript">
+        console.log('coucou');
+        var analyseTest = 'tsrn';
+        console.log('1');
+        var test = {};
+        console.log('2');
+        test = {{ test }};
+        console.log('3');
+    </script>
     {% block analyse_params %}
         <div class="col-lg-12 panel">
             <div class="panel-heading">
-                <h1 class="panel-title">Edit your analyse</h1>
+                <h1 class="panel-title">Edit your analyse </h1>
+                {#<h5>{{ test }}</h5>#}
+                {{ dump(test) }}
             </div>
             <div class="col-lg-2">
                 {% block analyse_resume %}

@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Test1;
 use AppBundle\Entity\Test2;
+use AppBundle\Entity\Typeparam;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Analyse;
@@ -25,6 +26,19 @@ use AppBundle\Entity\Dataserie;
 use AppBundle\Entity\Dataserie1;
 use AppBundle\Form\DataserieType;
 use Doctrine\Common\Collections\ArrayCollection;
+
+
+//serialiser
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+//serialize with annotation group
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 
 class AnalyseController extends Controller
 {
@@ -136,11 +150,50 @@ class AnalyseController extends Controller
 
         }
 
+        //TEST ENVOI PHP OBJECT EN JSON POUR OBTENTION DATA DANS JAVASCRIPT
+        //ce qui serait formidable serait de json encode mon analyse pour alimenter un objet javascript
+        //probleme de reference circulaire avec mon modèle analyse->param->analyse
+
+        $normalizer = new ObjectNormalizer();
+        $typeParam = new Typeparam();
+        $typeParam->setName('bépo');
+        $typeParam->setParam1(12);
+        $typeParam->setParam2(22);
+        $result = $normalizer->normalize($typeParam);
+        $eiu = json_encode($result);
+
+        //$entity = new Analyse1();
+        //$obj->setId($analyse->getId());
+        //$entity->setName($analyse->getName());
+        //$entity->setCreated($analyse->getCreated());
+        //$result = $normalizer->normalize($obj); //Cannot normalize attribute "params1" because injected serializer is not a normalizer
+        //$eiu = json_encode($obj);    //empty
+        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
+        JsonEncoder()));
+        //$json = $serializer->serialize($entity, 'json');  //circular reference problem with a fully defined analyse
+
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $normalizer = new PropertyNormalizer($classMetadataFactory);
+        $serializer = new Serializer([$normalizer]);
+
+        $fds = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
+        $eiu = $serializer->normalize($fds, null, ['groups' => ['chart']]);
+        $json = json_encode($eiu);
+
+
+
+
+        $za ='zzad';
+
+
+
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
             'param_creation_form' => $paramForm->createView(),
             'analyse_form' => $analyseForm->createView(),
             'dataseries_form' => $dataseriesFormViewList,
+            'test' => $json,
+            //'test' => $jsonContent,
         ));
     }
 

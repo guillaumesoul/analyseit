@@ -4,6 +4,9 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+//serialization
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * Param1
  *
@@ -25,6 +28,7 @@ class Param1
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $name;
 
