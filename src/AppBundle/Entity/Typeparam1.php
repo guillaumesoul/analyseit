@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Typeparam1
@@ -25,6 +26,7 @@ class Typeparam1
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $name;
 
@@ -32,6 +34,7 @@ class Typeparam1
      * @var string
      *
      * @ORM\Column(name="param1", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $param1;
 
@@ -39,6 +42,7 @@ class Typeparam1
      * @var string
      *
      * @ORM\Column(name="param2", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $param2;
 
@@ -46,6 +50,7 @@ class Typeparam1
      * @var string
      *
      * @ORM\Column(name="sens", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $sens;
 
@@ -53,6 +58,7 @@ class Typeparam1
      * @var string
      *
      * @ORM\Column(name="discret", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $discret;
 

@@ -3,8 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
-//serialization
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -36,6 +34,7 @@ class Param1
      * @var string
      *
      * @ORM\Column(name="min", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $min;
 
@@ -43,6 +42,7 @@ class Param1
      * @var string
      *
      * @ORM\Column(name="max", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $max;
 
@@ -50,6 +50,7 @@ class Param1
      * @var string
      *
      * @ORM\Column(name="ponderation", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $ponderation;
 
@@ -57,6 +58,7 @@ class Param1
      * @var string
      *
      * @ORM\Column(name="unit", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $unit;
 
@@ -73,6 +75,7 @@ class Param1
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Typeparam1")
      * @ORM\JoinColumn(name="typeparam1_id", referencedColumnName="id")
+     * @Groups({"chart"})
      */
     private $type;
 

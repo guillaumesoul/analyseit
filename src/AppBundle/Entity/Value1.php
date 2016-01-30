@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Value1
@@ -25,6 +26,7 @@ class Value1
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $value;
 

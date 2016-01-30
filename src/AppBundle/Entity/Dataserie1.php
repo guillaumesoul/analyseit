@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Dataserie1
@@ -25,6 +26,7 @@ class Dataserie1
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"chart"})
      */
     private $name;
 
@@ -38,6 +40,7 @@ class Dataserie1
 
     /**
      * @ORM\OneToMany(targetEntity="Value1", mappedBy="dataserie1",cascade={"persist"})
+     * @Groups({"chart"})
      */
     private $values1;
 
