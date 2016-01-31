@@ -27,20 +27,6 @@ use AppBundle\Entity\Dataserie1;
 use AppBundle\Form\DataserieType;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use AppBundle\Classes\RadarChart;
-
-//serialiser
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-//serialize with annotation group
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
-
 class AnalyseController extends Controller
 {
 
@@ -103,7 +89,6 @@ class AnalyseController extends Controller
         $param->setAnalyse1($analyse);  //param1_form
         $paramForm = $this->createForm($this->get('param1_form'), $param);
 
-        //dataseries Form generation
         $dataseries = $em->getRepository('AppBundle:Dataserie1')->findByAnalyse1($analyse);
         $dataseriesFormViewList = [];
         $dataseriesFormList = [];
@@ -151,64 +136,18 @@ class AnalyseController extends Controller
             }
 
         }
+        $analyseService = $this->get('analyse_service');
+        $json = $analyseService->toJSON($analyse);
 
-        //json encode mon analyse pour alimenter un objet javascript
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-        $normalizer = new PropertyNormalizer($classMetadataFactory);
-        $serializer = new Serializer([$normalizer]);
-        $analyseSerialized = $serializer->normalize($analyse, null, ['groups' => ['chart']]);
-        $json = json_encode($analyseSerialized);
-
-        //JE VEUX ENVOYER MES DATA POUR LE CHART
-        // creation d'un object Chart et affectation de ses parametres : labels, dataserie, etc...
-        //serialization de cet object pour envoi en json
-
-
-
-        $chart = new RadarChart();
-        //get labels -> name of params
-        $analyseParams = $analyse->getParams1();
-        $labels = array();
-        foreach($analyseParams as $param){
-            array_push($labels,$param->getName());
-        }
-        $chart->setLabels($labels);
-        //get datasets -> value of dataserie
-        $analyseDataseries = $analyse->getDataseries1();
-        $datasets = array();
-        foreach($analyseDataseries as $dataserie){
-            $tmp = array();
-            $tmp['label'] = $dataserie->getName();
-            $tmp['fillColor'] = "rgba(220,220,220,0.2)";
-            $tmp['strokeColor'] = "rgba(220,220,220,1)";
-            $tmp['pointColor'] = "rgba(220,220,220,1)";
-            $tmp['pointStrokeColor'] = "#fff";
-            $tmp['pointHighlightFill'] = "#fff";
-            $tmp['pointHighlightStroke'] = "rgba(220,220,220,1)";
-
-            $dataserieValues = $dataserie->getValues1();
-            $tmpData = array();
-            foreach($dataserieValues as $value){
-                array_push($tmpData,$value->getValue());
-            }
-            $tmp['data'] = $tmpData;
-            array_push($datasets,$tmp);
-        }
-        $chart->setDatasets($datasets);
-        $chartData = ['data'=>$chart];
-        $test = $serializer->normalize($chart);
-        $jsonChartData = json_encode($chart);
-        $jsonChartData2 = json_encode($test);
-        $allez = json_encode($labels);
-        $fdq = 'fxq';
+        $chartService = $this->get('chart_service');
+        $jsonChartData = $chartService->getRadarData($analyse);
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
             'param_creation_form' => $paramForm->createView(),
             'analyse_form' => $analyseForm->createView(),
             'dataseries_form' => $dataseriesFormViewList,
-            'test' => $json,
-            'jsonChartData' => $jsonChartData2,
+            'jsonChartData' => $jsonChartData,
         ));
     }
 

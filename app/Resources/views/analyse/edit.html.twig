@@ -11,19 +11,13 @@
 
 {% block appWindow %}
     <script type="text/javascript">
-        var test = '{{ test }}';
-        //var jsonChartData = '{{ jsonChartData }}';
         var jsonChartData = '{{ jsonChartData | raw }}';
-
-        //console.log(test);
-        //console.log('get jsonchart data');
-        //console.log(jsonChartData);
     </script>
     {% block analyse_params %}
         <div class="col-lg-12 panel">
             <div class="panel-heading">
                 <h1 class="panel-title">Edit your analyse </h1>
-                {{ dump(jsonChartData) }}
+                {#{{ dump(jsonChartData) }}#}
             </div>
             <div class="col-lg-2">
                 {% block analyse_resume %}
