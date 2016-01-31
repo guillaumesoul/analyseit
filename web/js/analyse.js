@@ -2,23 +2,20 @@
  * Created by guillaumesoullard on 09/12/15.
  */
 
-
-
-
-
 $(document).ready(function() {
-
-    /*$('.moreParam').on('click', function(){
-        $('#section_' + this.id).toggle();
-        $(this).find('i').toggleClass('fa-minus fa-plus-circle');
-    });*/
-    //moreParamSection
-
-
-
     $('.moreParam').on('click', function() {
         $('.moreParamSection').toggle();
     });
+
+    var data = jsonChartData;
+    var chartData = $.parseJSON(jsonChartData);
+
+    var ctx = $("#myChart").get(0).getContext("2d");
+    var myRadarChart = new Chart(ctx).Radar(chartData, {
+        multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
+    });
+
+
 
 
     // je veux faire mon graphique

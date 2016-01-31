@@ -27,6 +27,7 @@ use AppBundle\Entity\Dataserie1;
 use AppBundle\Form\DataserieType;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use AppBundle\Classes\RadarChart;
 
 //serialiser
 use Symfony\Component\Serializer\Serializer;
@@ -116,7 +117,8 @@ class AnalyseController extends Controller
 
         if ($request->isMethod('POST')) {
             //determiner si requete vient de analyseForm, paramForm, dataserieForm
-            $formType = $request->request->keys()[1];
+            //$formType = $request->request->keys()[1];
+            $formType = $request->request->keys();
             switch($formType){
                 case 'appbundle_param1type':
                     $form = $paramForm;
@@ -150,42 +152,55 @@ class AnalyseController extends Controller
 
         }
 
-        //TEST ENVOI PHP OBJECT EN JSON POUR OBTENTION DATA DANS JAVASCRIPT
-        //ce qui serait formidable serait de json encode mon analyse pour alimenter un objet javascript
-        //probleme de reference circulaire avec mon modèle analyse->param->analyse
-
-        $normalizer = new ObjectNormalizer();
-        $typeParam = new Typeparam();
-        $typeParam->setName('bépo');
-        $typeParam->setParam1(12);
-        $typeParam->setParam2(22);
-        $result = $normalizer->normalize($typeParam);
-        $eiu = json_encode($result);
-
-        //$entity = new Analyse1();
-        //$obj->setId($analyse->getId());
-        //$entity->setName($analyse->getName());
-        //$entity->setCreated($analyse->getCreated());
-        //$result = $normalizer->normalize($obj); //Cannot normalize attribute "params1" because injected serializer is not a normalizer
-        //$eiu = json_encode($obj);    //empty
-        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
-        JsonEncoder()));
-        //$json = $serializer->serialize($entity, 'json');  //circular reference problem with a fully defined analyse
-
+        //json encode mon analyse pour alimenter un objet javascript
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $normalizer = new PropertyNormalizer($classMetadataFactory);
         $serializer = new Serializer([$normalizer]);
+        $analyseSerialized = $serializer->normalize($analyse, null, ['groups' => ['chart']]);
+        $json = json_encode($analyseSerialized);
 
-        $fds = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
-        $eiu = $serializer->normalize($fds, null, ['groups' => ['chart']]);
-        $json = json_encode($eiu);
-
-
-
-
-        $za ='zzad';
+        //JE VEUX ENVOYER MES DATA POUR LE CHART
+        // creation d'un object Chart et affectation de ses parametres : labels, dataserie, etc...
+        //serialization de cet object pour envoi en json
 
 
+
+        $chart = new RadarChart();
+        //get labels -> name of params
+        $analyseParams = $analyse->getParams1();
+        $labels = array();
+        foreach($analyseParams as $param){
+            array_push($labels,$param->getName());
+        }
+        $chart->setLabels($labels);
+        //get datasets -> value of dataserie
+        $analyseDataseries = $analyse->getDataseries1();
+        $datasets = array();
+        foreach($analyseDataseries as $dataserie){
+            $tmp = array();
+            $tmp['label'] = $dataserie->getName();
+            $tmp['fillColor'] = "rgba(220,220,220,0.2)";
+            $tmp['strokeColor'] = "rgba(220,220,220,1)";
+            $tmp['pointColor'] = "rgba(220,220,220,1)";
+            $tmp['pointStrokeColor'] = "#fff";
+            $tmp['pointHighlightFill'] = "#fff";
+            $tmp['pointHighlightStroke'] = "rgba(220,220,220,1)";
+
+            $dataserieValues = $dataserie->getValues1();
+            $tmpData = array();
+            foreach($dataserieValues as $value){
+                array_push($tmpData,$value->getValue());
+            }
+            $tmp['data'] = $tmpData;
+            array_push($datasets,$tmp);
+        }
+        $chart->setDatasets($datasets);
+        $chartData = ['data'=>$chart];
+        $test = $serializer->normalize($chart);
+        $jsonChartData = json_encode($chart);
+        $jsonChartData2 = json_encode($test);
+        $allez = json_encode($labels);
+        $fdq = 'fxq';
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
@@ -193,7 +208,7 @@ class AnalyseController extends Controller
             'analyse_form' => $analyseForm->createView(),
             'dataseries_form' => $dataseriesFormViewList,
             'test' => $json,
-            //'test' => $jsonContent,
+            'jsonChartData' => $jsonChartData2,
         ));
     }
 

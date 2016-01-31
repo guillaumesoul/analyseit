@@ -45,6 +45,7 @@ class Value1
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="param1_id ", referencedColumnName="id")
      * })
+     * @Groups({"chart"})
      */
     protected $param;
 
