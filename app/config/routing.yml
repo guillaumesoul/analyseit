@@ -33,6 +33,10 @@ analyse_addparam:
     path:      /analyse/{analyseId}/addParam
     defaults:  { _controller: AppBundle:Param:add }
 
+analyse_dataserielist:
+    path:      /analyse/{analyseId}/dataserielist
+    defaults:  { _controller: AppBundle:Dataserie:list }
+
 analyse_add_dataserie:
     path:      /analyse/adddataserie/{analyseId}
     defaults:  { _controller: AppBundle:Analyse:adddataserie }

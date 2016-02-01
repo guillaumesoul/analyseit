@@ -30,13 +30,7 @@
                     </div>
                 {% endblock %}
                 {% block param_creation %}
-                    {#<div>
-                        {{ form_start(param_creation_form) }}
-                        {{ form_widget(param_creation_form) }}
-                        {{ form_end(param_creation_form) }}
-                    </div>#}
                     {{ render(controller('AppBundle:Param:add', {'analyseId': analyse.getId})) }}
-
                 {% endblock %}
             </div>
 
@@ -118,28 +112,7 @@
                     {% endblock %}
 
                     {% block dataseries %}
-                        {% for dataserie_form in dataseries_form %}
-                            <div>
-                                {% form_theme dataserie_form 'form/fieldsDataserie.html.twig' %}
-                                {{ form_start(dataserie_form) }}
-                                <input type="hidden" id="dataserie{{ dataserie_form.vars.value.id }}" name="dataserie{{ dataserie_form.vars.value.id }}" value="{{ dataserie_form.vars.value.id }}"/>
-                                {{ form_label(dataserie_form.name) }}
-                                {{ form_widget(dataserie_form.name) }}
-                                <div class="hidden">
-                                    {{ form_widget(dataserie_form.analyse1) }}
-                                </div>
-                                {% for value in dataserie_form.values1 %}
-                                    <span class="hidden">{{ form_label(value.value) }}</span>
-                                    {{ form_widget(value.value) }}
-                                    <div class="hidden">
-                                        {{ form_widget(value.dataserie1) }}
-                                        {{ form_widget(value.param) }}
-                                    </div>
-                                {% endfor %}
-                                {{ form_widget(dataserie_form.save) }}
-                                {{ form_end(dataserie_form) }}
-                            </div>
-                        {% endfor %}
+                        {{ render(controller('AppBundle:Dataserie:list', {'analyseId' : analyse.getId})) }}
                     {% endblock %}
 
                     {% block analyse_chart %}

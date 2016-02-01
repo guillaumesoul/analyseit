@@ -91,44 +91,13 @@ class AnalyseController extends Controller
         $analyse = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
         $analyseForm = $this->createForm($this->get('analyse1_form'), $analyse);
 
-        //new param form
-        /*$param = new Param1();
-        $param->setAnalyse1($analyse);  //param1_form
-        $paramForm = $this->createForm($this->get('param1_form'), $param);*/
-
-        $dataseries = $em->getRepository('AppBundle:Dataserie1')->findByAnalyse1($analyse);
-        $dataseriesFormViewList = [];
-        $dataseriesFormList = [];
-        if(count($dataseries)>0){
-            foreach($dataseries as $dataserie){
-                $dataserieForm = $this->createForm($this->get('dataserie1_form'), $dataserie);
-                $dataseriesFormList[$dataserie->getId()] = $dataserieForm;
-                array_push($dataseriesFormViewList,$dataserieForm->createView());
-            }
-        }
-
         if ($request->isMethod('POST')) {
             //determiner si requete vient de analyseForm, paramForm, dataserieForm
             //@todo trouver une maniere plus elegante de recupere l'id du form
             $formType = $request->request->keys()[0];
             switch($formType){
-                /*case 'appbundle_param1type':
-                    $form = $paramForm;
-                    break;*/
                 case 'appbundle_analyse1type':
                     $form = $analyseForm;
-                    break;
-                case 'appbundle_dataserie1type':
-                    //@todo améliorer cette merde dans l'ideal il faudrait que l'id soit dans le form directement
-                    //get dataserieId : if dataserie form submitted, dataserieId in $_POST
-                    foreach($_POST as $k => $v){
-                        if ( preg_match('/^dataserie/',$k) ) {
-                            $dataserieId = $_POST[$k];
-                        }
-                    }
-                    if(isset($dataserieId)){
-                        $form = $dataseriesFormList[$dataserieId];
-                    }
                     break;
             }
             if(isset($form)){
@@ -151,9 +120,8 @@ class AnalyseController extends Controller
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
-            //'param_creation_form' => $paramForm->createView(),
             'analyse_form' => $analyseForm->createView(),
-            'dataseries_form' => $dataseriesFormViewList,
+            //'dataseries_form' => $dataseriesFormViewList,
             'jsonChartData' => $jsonChartData,
         ));
     }
