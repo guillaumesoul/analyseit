@@ -92,9 +92,9 @@ class AnalyseController extends Controller
         $analyseForm = $this->createForm($this->get('analyse1_form'), $analyse);
 
         //new param form
-        $param = new Param1();
+        /*$param = new Param1();
         $param->setAnalyse1($analyse);  //param1_form
-        $paramForm = $this->createForm($this->get('param1_form'), $param);
+        $paramForm = $this->createForm($this->get('param1_form'), $param);*/
 
         $dataseries = $em->getRepository('AppBundle:Dataserie1')->findByAnalyse1($analyse);
         $dataseriesFormViewList = [];
@@ -112,9 +112,9 @@ class AnalyseController extends Controller
             //@todo trouver une maniere plus elegante de recupere l'id du form
             $formType = $request->request->keys()[0];
             switch($formType){
-                case 'appbundle_param1type':
+                /*case 'appbundle_param1type':
                     $form = $paramForm;
-                    break;
+                    break;*/
                 case 'appbundle_analyse1type':
                     $form = $analyseForm;
                     break;
@@ -151,7 +151,7 @@ class AnalyseController extends Controller
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
-            'param_creation_form' => $paramForm->createView(),
+            //'param_creation_form' => $paramForm->createView(),
             'analyse_form' => $analyseForm->createView(),
             'dataseries_form' => $dataseriesFormViewList,
             'jsonChartData' => $jsonChartData,

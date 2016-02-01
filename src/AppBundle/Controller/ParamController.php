@@ -26,7 +26,9 @@ class ParamController extends Controller
         $analyse = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
         $param = new Param1();
         $param->setAnalyse1($analyse);  //param1_form
-        $paramForm = $this->createForm($this->get('param1_form'), $param);
+        $paramForm = $this->createForm($this->get('param1_form'), $param, array(
+            'action' => $this->generateUrl('analyse_addparam',array('analyseId' => $analyseId))
+        ));
 
         if ($request->isMethod('POST')) {
             $paramForm->handleRequest($request);
@@ -34,7 +36,8 @@ class ParamController extends Controller
                 $param = $paramForm->getData();
                 $em->persist($param);
                 $em->flush();
-                unset($paramForm);
+                //unset($paramForm);
+                return $this->redirect($this->generateUrl("analyse_edit", array('analyseId' => $analyseId)));
             }
 
         }

@@ -29,6 +29,10 @@ analyse_edit:
     path:      /analyse/edit/{analyseId}
     defaults:  { _controller: AppBundle:Analyse:edit }
 
+analyse_addparam:
+    path:      /analyse/{analyseId}/addParam
+    defaults:  { _controller: AppBundle:Param:add }
+
 analyse_add_dataserie:
     path:      /analyse/adddataserie/{analyseId}
     defaults:  { _controller: AppBundle:Analyse:adddataserie }
