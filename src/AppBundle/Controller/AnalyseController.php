@@ -78,13 +78,6 @@ class AnalyseController extends Controller
         ));
     }
 
-
-    //@todo probleme1 : quand ajout de param dataserie non mis a jour
-    //1- solution sale : refaire la liste des dataserie form quand ajout de param
-
-    //2- solution un peu mieux faire une action spécifique dans un controller pour l'ajout de param et utiliser dans template $this->render
-    //
-
     public function editAction(Request $request, $analyseId)
     {
         $em = $this->getDoctrine()->getManager();
@@ -121,36 +114,10 @@ class AnalyseController extends Controller
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
             'analyse_form' => $analyseForm->createView(),
-            //'dataseries_form' => $dataseriesFormViewList,
             'jsonChartData' => $jsonChartData,
         ));
     }
 
-    /*
-     * add a dataserie to the analyse
-     *
-     * @param $analyseId
-     * return array of dataseries_form for the analyse
-     * */
-    public function adddataserieAction(Request $request, $analyseId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $analyse = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
 
-        $dataserie = new Dataserie1();
-        $dataserie->setAnalyse1($analyse);
-        $dataserie->setName('new serie');
-
-        $analyseParams = $analyse->getParams1();
-        foreach($analyseParams as $param){
-            $value = new Value1();
-            $value->setDataserie1($dataserie);
-            $value->setParam($param);
-            $dataserie->addValues1($value);
-        }
-        $em->persist($dataserie);
-        $em->flush();
-        return $this->redirect($this->generateUrl("analyse_edit", array('analyseId' => $analyseId)));
-    }
 
 }

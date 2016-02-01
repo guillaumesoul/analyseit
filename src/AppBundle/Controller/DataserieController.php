@@ -10,7 +10,8 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\Param1;
+use AppBundle\Entity\Dataserie1;
+use AppBundle\Entity\Value1;
 
 class DataserieController extends Controller
 {
@@ -62,16 +63,45 @@ class DataserieController extends Controller
         ));
     }
 
-    public function deleteAction(Request $request, $paramId)
+    /*
+     * add a dataserie to the analyse
+     * @param $analyseId
+     * return array of dataseries_form for the analyse
+     * */
+    public function addAction(Request $request, $analyseId)
     {
         $em = $this->getDoctrine()->getManager();
-        $param = $em->getRepository('AppBundle:Param')->findOneById($paramId);
+        $analyse = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
 
-        if (!$param) {
-            throw $this->createNotFoundException('No param found');
+        $dataserie = new Dataserie1();
+        $dataserie->setAnalyse1($analyse);
+        $dataserie->setName('new serie');
+
+        $analyseParams = $analyse->getParams1();
+        foreach($analyseParams as $param){
+            $value = new Value1();
+            $value->setDataserie1($dataserie);
+            $value->setParam($param);
+            $dataserie->addValues1($value);
+        }
+        $em->persist($dataserie);
+        $em->flush();
+        return $this->redirect($this->generateUrl("analyse_edit", array('analyseId' => $analyseId)));
+    }
+
+    //@todo adapt for dataserie
+    //error integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`datatalk`.`value1`, CONSTRAINT `FK_A2756C5A877B2D96` FOREIGN KEY (`dataserie1_id`) REFERENCES `dataserie1` (`id`))
+    //pb vient pour la suppression des values -> drop cascade
+    public function deleteAction(Request $request, $dataserieId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dataserie = $em->getRepository('AppBundle:Dataserie1')->findOneById($dataserieId);
+
+        if (!$dataserie) {
+            throw $this->createNotFoundException('No dataserie found');
         }else{
-            $analyseId = $param->getAnalyse()->getId();
-            $em->remove($param);
+            $analyseId = $dataserie->getAnalyse1()->getId();
+            $em->remove($dataserie);
             $em->flush();
             return $this->redirect($this->generateUrl('analyse_edit', array('analyseId' => $analyseId)));
         }

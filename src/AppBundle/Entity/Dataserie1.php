@@ -39,7 +39,7 @@ class Dataserie1
     private $analyse1;
 
     /**
-     * @ORM\OneToMany(targetEntity="Value1", mappedBy="dataserie1",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Value1", mappedBy="dataserie1",cascade={"persist","remove"})
      * @Groups({"chart"})
      */
     private $values1;

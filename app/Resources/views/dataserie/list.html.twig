@@ -19,6 +19,7 @@
             {% endfor %}
             {{ form_widget(dataserie_form.save) }}
             {{ form_end(dataserie_form) }}
+            <a href="{{ path('dataserie_delete', {'dataserieId' : dataserie_form.vars.value.id }) }}"><button class="btn"><i class="fa fa-trash"></i></button></a>
         </div>
     {% endfor %}
 {% endblock %}

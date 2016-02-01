@@ -38,8 +38,12 @@ analyse_dataserielist:
     defaults:  { _controller: AppBundle:Dataserie:list }
 
 analyse_add_dataserie:
-    path:      /analyse/adddataserie/{analyseId}
-    defaults:  { _controller: AppBundle:Analyse:adddataserie }
+    path:      /analyse/{analyseId}/adddataserie
+    defaults:  { _controller: AppBundle:Dataserie:add }
+
+dataserie_delete:
+    path:      /dataserie/{dataserieId}/delete
+    defaults:  { _controller: AppBundle:Dataserie:delete }
 
 param_delete:
     path:      /param/delete/{paramId}
