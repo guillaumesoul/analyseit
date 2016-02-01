@@ -78,6 +78,13 @@ class AnalyseController extends Controller
         ));
     }
 
+
+    //@todo probleme1 : quand ajout de param dataserie non mis a jour
+    //1- solution sale : refaire la liste des dataserie form quand ajout de param
+
+    //2- solution un peu mieux faire une action spécifique dans un controller pour l'ajout de param et utiliser dans template $this->render
+    //
+
     public function editAction(Request $request, $analyseId)
     {
         $em = $this->getDoctrine()->getManager();
@@ -102,8 +109,8 @@ class AnalyseController extends Controller
 
         if ($request->isMethod('POST')) {
             //determiner si requete vient de analyseForm, paramForm, dataserieForm
-            //$formType = $request->request->keys()[1];
-            $formType = $request->request->keys();
+            //@todo trouver une maniere plus elegante de recupere l'id du form
+            $formType = $request->request->keys()[0];
             switch($formType){
                 case 'appbundle_param1type':
                     $form = $paramForm;
