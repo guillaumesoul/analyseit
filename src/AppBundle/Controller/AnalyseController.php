@@ -26,6 +26,7 @@ use AppBundle\Entity\Dataserie;
 use AppBundle\Entity\Dataserie1;
 use AppBundle\Form\DataserieType;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 class AnalyseController extends Controller
 {
@@ -80,6 +81,12 @@ class AnalyseController extends Controller
 
     public function editAction(Request $request, $analyseId)
     {
+
+        $stopwatch = new Stopwatch();
+// Start event named 'eventName'
+        $stopwatch->start('eventName');
+
+
         $em = $this->getDoctrine()->getManager();
         $analyse = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
         $analyseForm = $this->createForm($this->get('analyse1_form'), $analyse);
@@ -105,11 +112,16 @@ class AnalyseController extends Controller
             }
 
         }
-        $analyseService = $this->get('analyse_service');
-        $json = $analyseService->toJSON($analyse);
+        //$analyseService = $this->get('analyse_service');
+        //$json = $analyseService->toJSON($analyse);
 
         $chartService = $this->get('chart_service');
         $jsonChartData = $chartService->getRadarData($analyse);
+
+        // ... some code goes here
+        $event = $stopwatch->stop('eventName');
+
+        $zaz = 'dsqd';
 
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
