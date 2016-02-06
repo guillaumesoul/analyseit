@@ -4,6 +4,8 @@ parameters:
 #    parameter_name: value
 
 services:
+    fos_user.doctrine_registry:
+        alias: doctrine
     analyse_service:
         class: AppBundle\Services\AnalyseService
         arguments: [ @doctrine.orm.entity_manager ]
