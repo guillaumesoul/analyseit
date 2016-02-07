@@ -1,5 +1,10 @@
 {% extends 'layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/analyse.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block appWindow %}
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -17,47 +22,35 @@
         <div class="panel-body">
             {% block analyse_datatable %}
                 <div>
-                    <div>
-                        <label>Name:</label>
-                        <input type="text" ng-model="yourName" placeholder="Enter a name here">
-                        <hr>
-                        <h1>Hello {{ '{{yourName}}' }}</h1>
-                        <input type="hidden" id="toto" name="toto" value="">
-                    </div>
 
-
-
-
-                    {#{% verbatim %}
-                        <div ng-controller="TodoListController as todoList">
-                          <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
-                          [ <a href="" ng-click="todoList.archive()">archive</a> ]
-                          <ul class="unstyled">
-                            <li ng-repeat="todo in todoList.todos">
-                              <input type="checkbox" ng-model="todo.done">
-                              <span class="done-{{todo.done}}">{{todo.text}}</span>
-                            </li>
-                          </ul>
-                          <form ng-submit="todoList.addTodo()">
-                            <input type="text" ng-model="todoList.todoText"  size="30"
-                                   placeholder="add new todo here">
-                            <input class="btn-primary" type="submit" value="add">
-                          </form>
-                        </div>
-                    {% endverbatim %}#}
 
                     {% verbatim %}
-                        <div ng-controller="ParamListController as paramList">
-                          <ul class="unstyled">
-                            <li ng-repeat="param in paramList.params">
-                              <span>{{param.name}}</span>
-                            </li>
-                          </ul>
+                        <div ng-controller="AnalyseController as analyse">
+
+                          <!-- params section -->
                           <form ng-submit="paramList.addParam()">
                             <input type="text" ng-model="paramList.paramName"  size="30"
                                    placeholder="add param">
                             <input class="btn-primary" type="submit" value="add">
                           </form>
+                          <ul class="list-inline">
+                            <li></li>
+                            <li ng-repeat="param in analyse.params">
+                              <input type="text" class="paramName" value="{{param.name}}">
+                            </li>
+                          </ul>
+
+                          <!-- dataseries section -->
+                          <ul class="dataserieList">
+                            <li ng-repeat="dataserie in analyse.dataseries">
+                                <ul class="list-inline">
+                                    <li><input type="text" class="serieName"></li>
+                                    <li ng-repeat="value in dataserie.values">
+                                        <input type="text" class="dataserieValue">
+                                    </li>
+                                </ul>
+                            </li>
+                          </ul>
                         </div>
                     {% endverbatim %}
 

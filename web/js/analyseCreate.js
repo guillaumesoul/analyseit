@@ -8,64 +8,44 @@
 * ANGULAR TEST
 * */
 
-/*angular.module('datatalkApp', [])
-    .controller('TodoListController', function() {
-        var todoList = this;
-        todoList.todos = [
-            {text:'learn angular', done:true},
-            {text:'build an angular app', done:false}];
 
-        todoList.addTodo = function() {
-            todoList.todos.push({text:todoList.todoText, done:false});
-            todoList.todoText = '';
-        };
+var analyseInit = initAnalyse(3);
 
-        todoList.remaining = function() {
-            var count = 0;
-            angular.forEach(todoList.todos, function(todo) {
-                count += todo.done ? 0 : 1;
-            });
-            return count;
-        };
-
-        todoList.archive = function() {
-            var oldTodos = todoList.todos;
-            todoList.todos = [];
-            angular.forEach(oldTodos, function(todo) {
-                if (!todo.done) todoList.todos.push(todo);
-            });
-        };
-    });*/
-
-angular.module('datatalkApp', [])
-    .controller('ParamListController', function() {
+/*angular.module('datatalkApp', []).controller('ParamListController', function() {
         var paramList = this;
-        paramList.params = [
-            {name:'param1', value:'80'},
-            {name:'param2', value:'66'}];
+        paramList.params = analyse.paramList;
 
         paramList.addParam = function() {
-            paramList.params.push({name:paramList.paramName, value:'37'});
+            paramList.params.push(new Param(paramList.paramName));
             paramList.paramName = '';
         };
-
-        /*paramList.remaining = function() {
+        /!*paramList.remaining = function() {
             var count = 0;
             angular.forEach(todoList.todos, function(todo) {
                 count += todo.done ? 0 : 1;
             });
             return count;
         };
-
         paramList.archive = function() {
             var oldTodos = todoList.todos;
             todoList.todos = [];
             angular.forEach(oldTodos, function(todo) {
                 if (!todo.done) todoList.todos.push(todo);
             });
-        };*/
-    });
+        };*!/
+    });*/
 
+angular.module('datatalkApp', []).controller('AnalyseController', function() {
+    //var paramList = this;
+    var analyse = this;
+    analyse.params = analyseInit.paramList;
+    analyse.dataseries = analyseInit.dataseries;
+
+    analyse.addParam = function() {
+        analyse.params.push(new Param(analyse.paramName));
+        analyse.paramName = '';
+    };
+});
 
 
 
@@ -104,6 +84,15 @@ function Param () {
     this.type = '';
 }
 
+function Param (name) {
+    this.name = name;
+    this.minVal = '';
+    this.maxVal = '';
+    this.ponderation = '';
+    this.unit = '';
+    this.type = '';
+}
+
 //constructeur avec param
 function Param (name, minValue, maxValue, ponderation, unit, type) {
     this.name = name;
@@ -117,13 +106,14 @@ function Param (name, minValue, maxValue, ponderation, unit, type) {
 //constructeur dataserie
 function Dataserie (name) {
     this.name = name;
+    this.values = [];
 }
 
 //constructeur sans param
 function Value () {
     this.dataserie = '';
     this.param = '';
-    this.value = '';
+    this.value = '0';
 }
 
 
@@ -142,23 +132,35 @@ function initAnalyse(nbParam)
 {
     //on intialise avec 3 parametre et 1 serie de données
     var analyse = new Analyse();
-    var paramList = {};
-    var dataserie = {};
+    var params = [];
+    var dataseries = [];
+
     if(typeof nbParam == 'number')
     {
+        var dataserie = new Dataserie('new dataset');
+        var dataserieValues = [];
+
         for(var i= 0; i<parseInt(nbParam) ; i++){
+            //params
             var newParam = new Param();
             newParam.name = 'param'+i;
-            paramList[i] = newParam;
+            params.push(newParam);
+
+            //dataserie
             var newValue = new Value();
             newValue.param = newParam.name;
-            dataserie[i] = newValue;
+            dataserieValues.push(newValue);
         }
+        dataserie.values = dataserieValues;
+        dataseries.push(dataserie);
     }
-    var analyse = new Analyse();
+
+
+
+    //var analyse = new Analyse();
     //console.log(analyse);
-    analyse.paramList = paramList;
-    analyse.dataserie= dataserie;
+    analyse.paramList = params;
+    analyse.dataseries= dataseries;
     analyse.name= 'new analyse';
     analyse.description= 'description';
     return analyse;
