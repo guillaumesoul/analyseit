@@ -2,7 +2,13 @@
     list-style-type:none;
     padding:0px;
 }
+.col1{
+    width: 150px;
+}
 
+#analyseToolbar{
+    margin-bottom: 15px;
+}
 
 
 /*.thumbnail_active {

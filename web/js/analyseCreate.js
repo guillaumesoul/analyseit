@@ -4,39 +4,9 @@
 
 
 
-/*
-* ANGULAR TEST
-* */
-
-
 var analyseInit = initAnalyse(3);
 
-/*angular.module('datatalkApp', []).controller('ParamListController', function() {
-        var paramList = this;
-        paramList.params = analyse.paramList;
-
-        paramList.addParam = function() {
-            paramList.params.push(new Param(paramList.paramName));
-            paramList.paramName = '';
-        };
-        /!*paramList.remaining = function() {
-            var count = 0;
-            angular.forEach(todoList.todos, function(todo) {
-                count += todo.done ? 0 : 1;
-            });
-            return count;
-        };
-        paramList.archive = function() {
-            var oldTodos = todoList.todos;
-            todoList.todos = [];
-            angular.forEach(oldTodos, function(todo) {
-                if (!todo.done) todoList.todos.push(todo);
-            });
-        };*!/
-    });*/
-
 angular.module('datatalkApp', []).controller('AnalyseController', function() {
-    //var paramList = this;
     var analyse = this;
     analyse.params = analyseInit.paramList;
     analyse.dataseries = analyseInit.dataseries;
@@ -45,45 +15,20 @@ angular.module('datatalkApp', []).controller('AnalyseController', function() {
         analyse.params.push(new Param(analyse.paramName));
         analyse.paramName = '';
     };
+
+    analyse.addDataserie = function(){
+        analyse.dataseries.push(new Dataserie(analyse.dataserieName,analyse.params.length));
+    }
 });
 
 
-
-
-
-
-/*var analyse = initAnalyse(3);
-console.log(analyse);*/
-
-//FONCTION INIT pour initialiser l'analyse avec 3 parametres et une dataserie
-//je veux construire object js de type array de 3 param
-
-//constructeur sans param
+/* CONSTRUCTEUR */
 function Analyse () {
     this.name = 'nouvelle analyse';
     this.description = 'description';
     this.paramList = {};
     this.dataserie = {};
 }
-
-//constructeur avec param
-function Analyse (name, description, paramList, dataserie) {
-    this.name = name;
-    this.description = description;
-    this.paramList = paramList;
-    this.dataserie = dataserie;
-}
-
-//constructeur sans param
-function Param () {
-    this.name = '';
-    this.minVal = '';
-    this.maxVal = '';
-    this.ponderation = '';
-    this.unit = '';
-    this.type = '';
-}
-
 function Param (name) {
     this.name = name;
     this.minVal = '';
@@ -92,36 +37,21 @@ function Param (name) {
     this.unit = '';
     this.type = '';
 }
-
-//constructeur avec param
-function Param (name, minValue, maxValue, ponderation, unit, type) {
-    this.name = name;
-    this.minVal = minValue;
-    this.maxVal = maxValue;
-    this.ponderation = ponderation;
-    this.unit = unit;
-    this.type = type;
-}
-
-//constructeur dataserie
-function Dataserie (name) {
+function Dataserie (name, nbvalues) {
     this.name = name;
     this.values = [];
-}
+    if(nbvalues === parseInt(nbvalues, 10)){
+        for(var i=0; i<nbvalues; i++){
+            var newValue = new Value();
+            this.values.push(newValue);
+        }
+    }
 
-//constructeur sans param
+}
 function Value () {
     this.dataserie = '';
     this.param = '';
     this.value = '0';
-}
-
-
-//constructeur avec param
-function Value (dataserie, param, value) {
-    this.dataserie = dataserie;
-    this.param = param;
-    this.value = value;
 }
 
 /*
@@ -130,40 +60,21 @@ function Value (dataserie, param, value) {
 * */
 function initAnalyse(nbParam)
 {
-    //on intialise avec 3 parametre et 1 serie de données
     var analyse = new Analyse();
     var params = [];
     var dataseries = [];
-
-    if(typeof nbParam == 'number')
-    {
-        var dataserie = new Dataserie('new dataset');
-        var dataserieValues = [];
-
+    if(nbParam === parseInt(nbParam, 10)){
+        var dataserie = new Dataserie('new dataset',nbParam);
+        dataseries.push(dataserie);
         for(var i= 0; i<parseInt(nbParam) ; i++){
             //params
-            var newParam = new Param();
-            newParam.name = 'param'+i;
+            var newParam = new Param('param'+i);
             params.push(newParam);
-
-            //dataserie
-            var newValue = new Value();
-            newValue.param = newParam.name;
-            dataserieValues.push(newValue);
         }
-        dataserie.values = dataserieValues;
-        dataseries.push(dataserie);
     }
-
-
-
-    //var analyse = new Analyse();
-    //console.log(analyse);
     analyse.paramList = params;
     analyse.dataseries= dataseries;
     analyse.name= 'new analyse';
     analyse.description= 'description';
     return analyse;
 }
-
-//et une dataserie avec ces 3 params

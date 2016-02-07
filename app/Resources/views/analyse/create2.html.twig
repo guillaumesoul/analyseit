@@ -24,42 +24,47 @@
                 <div>
 
 
-                    {% verbatim %}
-                        <div ng-controller="AnalyseController as analyse">
+{% verbatim %}
+    <div ng-controller="AnalyseController as analyse">
 
-                          <!-- params section -->
-                          <form ng-submit="paramList.addParam()">
-                            <input type="text" ng-model="paramList.paramName"  size="30"
-                                   placeholder="add param">
-                            <input class="btn-primary" type="submit" value="add">
-                          </form>
-                          <ul class="list-inline">
-                            <li></li>
-                            <li ng-repeat="param in analyse.params">
-                              <input type="text" class="paramName" value="{{param.name}}">
-                            </li>
-                          </ul>
+        <!-- toolbar section -->
+        <div id="analyseToolbar" name="analyseToolbar">
+            <form ng-submit="analyse.addParam()">
+                <input type="text" ng-model="analyse.paramName"  size="30" placeholder="add param">
+                <input class="btn-primary" type="submit" value="add">
+            </form>
+            <form ng-submit="analyse.addDataserie()">
+                <input type="text" ng-model="analyse.dataserieName"  size="30" placeholder="add dataserie">
+                <input class="btn-primary" type="submit" value="add">
+            </form>
+        </div>
 
-                          <!-- dataseries section -->
-                          <ul class="dataserieList">
-                            <li ng-repeat="dataserie in analyse.dataseries">
-                                <ul class="list-inline">
-                                    <li><input type="text" class="serieName"></li>
-                                    <li ng-repeat="value in dataserie.values">
-                                        <input type="text" class="dataserieValue">
-                                    </li>
-                                </ul>
-                            </li>
-                          </ul>
-                        </div>
-                    {% endverbatim %}
+        <!-- params section -->
+        <ul class="list-inline">
+            <li class="col1"></li>
+            <li ng-repeat="param in analyse.params">
+                <input type="text" class="paramName" value="{{param.name}}">
+            </li>
+        </ul>
+
+        <!-- dataseries section -->
+        <ul class="dataserieList">
+            <li ng-repeat="dataserie in analyse.dataseries">
+                <ul class="list-inline">
+                    <li class="col1"><input type="text" class="serieName"></li>
+                    <li ng-repeat="value in dataserie.values">
+                        <input type="text" class="dataserieValue">
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+{% endverbatim %}
 
 
 
 
                 </div>
-                <hr>
-                <div>Section série de données</div>
             {% endblock %}
         </div>
     </div>
