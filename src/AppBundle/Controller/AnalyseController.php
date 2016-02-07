@@ -36,7 +36,7 @@ class AnalyseController extends Controller
         return $this->render('analyse/index.html.twig');
     }
 
-    public function createAction(Request $request)
+    /*public function createAction(Request $request)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
@@ -66,6 +66,13 @@ class AnalyseController extends Controller
         return $this->render('analyse/create.html.twig', array(
             'analyse_creation_form' => $form->createView(),
         ));
+    }*/
+
+
+
+    public function createAction(Request $request)
+    {
+        return $this->render('analyse/create2.html.twig');
     }
 
     public function getUserAnalysesListAction()

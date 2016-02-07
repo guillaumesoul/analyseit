@@ -1,0 +1,36 @@
+{% extends 'layout.html.twig' %}
+
+{% block appWindow %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Your analyse</div>
+        <div class="panel-body">
+            <div class="col-lg-6">
+                {% block analyse_metadata %}
+                    <div class="form-group">
+                        <label>name</label>
+                        <input type="text" id="analyseName" name="analyseName" />
+                    </div>
+                {% endblock %}
+            </div>
+            <div class="col-lg-6">
+                {% block analyse_toolbar %}
+                    Boutons d'actions pour l'analyse
+                    <button type="btn btn-default"><i class="fa fa-save"></i></button>
+                    <button type="btn btn-default"><i class="fa fa-bar-chart"></i></button>
+                    <button type="btn btn-default"><i class="fa fa-save"></i></button>
+                    <button type="btn btn-default"><i class="fa fa-bar-chart"></i></button>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Dataseries</div>
+        <div class="panel-body">
+            {% block analyse_datatable %}
+                <div>Section des paramètres</div>
+                <div>Section série de données</div>
+            {% endblock %}
+        </div>
+    </div>
+
+{% endblock %}

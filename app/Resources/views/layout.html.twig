@@ -48,14 +48,8 @@
     </div>
 
     <div class="container-fluid">
-        {% if app.user %}
-            {% block appWindow %}
-            {% endblock %}
-        {% else %}
-            Bienvenue dans mon application, identifiez-vous
-            {% block fos_user_content %}
-            {% endblock %}
-        {% endif %}
+        {% block appWindow %}
+        {% endblock %}
     </div>
 </body>
 </html>
