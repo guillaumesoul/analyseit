@@ -2,35 +2,83 @@
 
 {% block appWindow %}
     <div class="panel panel-default">
-        <div class="panel-heading">Your analyse</div>
-        <div class="panel-body">
-            <div class="col-lg-6">
-                {% block analyse_metadata %}
-                    <div class="form-group">
-                        <label>name</label>
-                        <input type="text" id="analyseName" name="analyseName" />
-                    </div>
-                {% endblock %}
-            </div>
-            <div class="col-lg-6">
-                {% block analyse_toolbar %}
-                    Boutons d'actions pour l'analyse
-                    <button type="btn btn-default"><i class="fa fa-save"></i></button>
-                    <button type="btn btn-default"><i class="fa fa-bar-chart"></i></button>
-                    <button type="btn btn-default"><i class="fa fa-save"></i></button>
-                    <button type="btn btn-default"><i class="fa fa-bar-chart"></i></button>
-                {% endblock %}
-            </div>
+        <div class="panel-heading">
+            {% block analyse_metadata %}
+                    <label>name</label>
+                    <input type="text" id="analyseName" name="analyseName" />
+            {% endblock %}
+            {% block analyse_toolbar %}
+                <button type="button" class="btn btn-default"><i class="fa fa-3x fa-save"></i></button>
+                <button type="button" class="btn btn-default"><i class="fa fa-3x fa-bar-chart"></i></button>
+                <button type="button" class="btn btn-default"><i class="fa fa-3x fa-refresh"></i></button>
+                <button type="button" class="btn btn-default"><i class="fa fa-3x fa-recycle"></i></button>
+            {% endblock %}
         </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">Dataseries</div>
         <div class="panel-body">
             {% block analyse_datatable %}
-                <div>Section des paramètres</div>
+                <div>
+                    <div>
+                        <label>Name:</label>
+                        <input type="text" ng-model="yourName" placeholder="Enter a name here">
+                        <hr>
+                        <h1>Hello {{ '{{yourName}}' }}</h1>
+                        <input type="hidden" id="toto" name="toto" value="">
+                    </div>
+
+
+
+
+                    {#{% verbatim %}
+                        <div ng-controller="TodoListController as todoList">
+                          <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
+                          [ <a href="" ng-click="todoList.archive()">archive</a> ]
+                          <ul class="unstyled">
+                            <li ng-repeat="todo in todoList.todos">
+                              <input type="checkbox" ng-model="todo.done">
+                              <span class="done-{{todo.done}}">{{todo.text}}</span>
+                            </li>
+                          </ul>
+                          <form ng-submit="todoList.addTodo()">
+                            <input type="text" ng-model="todoList.todoText"  size="30"
+                                   placeholder="add new todo here">
+                            <input class="btn-primary" type="submit" value="add">
+                          </form>
+                        </div>
+                    {% endverbatim %}#}
+
+                    {% verbatim %}
+                        <div ng-controller="ParamListController as paramList">
+                          <ul class="unstyled">
+                            <li ng-repeat="param in paramList.params">
+                              <span>{{param.name}}</span>
+                            </li>
+                          </ul>
+                          <form ng-submit="paramList.addParam()">
+                            <input type="text" ng-model="paramList.paramName"  size="30"
+                                   placeholder="add param">
+                            <input class="btn-primary" type="submit" value="add">
+                          </form>
+                        </div>
+                    {% endverbatim %}
+
+
+
+
+                </div>
+                <hr>
                 <div>Section série de données</div>
             {% endblock %}
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 'additionnal_javascript' %}
+    <script src="{{ asset('js/analyseCreate.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        //var analyse = initAnalyse(3);
+    </script>
+    {% endjavascripts %}
 {% endblock %}
