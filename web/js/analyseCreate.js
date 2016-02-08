@@ -53,12 +53,11 @@ angular.module('datatalkApp', []).controller('AnalyseController', function($scop
         for(indiceParam in analyse.params){
             labels.push(analyse.params[indiceParam].name);
         }
-        console.log(labels);
-
         var datasets = [];
         var dataset = {};
         var datasetData = [];
         for(indiceDataserie in analyse.dataseries){
+            datasetData = [];
             dataset = {
                 fillColor: "rgba(220,220,220,0.2)",
                 strokeColor: "rgba(220,220,220,1)",
@@ -68,111 +67,22 @@ angular.module('datatalkApp', []).controller('AnalyseController', function($scop
                 pointHighlightStroke: "rgba(220,220,220,1)",
             };
             dataset.label = analyse.dataseries[indiceDataserie].name;
-            dataset.data = analyse.dataseries[indiceDataserie].values;
             for(indiceValue in analyse.dataseries[indiceDataserie].values){
-                datasetData = [];
-                console.log(analyse.dataseries[indiceDataserie].values[indiceValue].value);
-                datasetData.push(analyse.dataseries[indiceDataserie].values[indiceValue].value);
+                if(!isNaN(parseFloat(analyse.dataseries[indiceDataserie].values[indiceValue].value)))
+                    datasetData.push(parseFloat(analyse.dataseries[indiceDataserie].values[indiceValue].value));
             }
-            console.log(datasetData);
+            dataset.data = datasetData;
             datasets.push(dataset);
         }
-        var data2 = {};
-        data2.labels = labels;
-        data2.datasets = datasets;
-
-        /*console.log(data);
-
-        var ctx = document.getElementById("myChart").getContext("2d");
-        console.log(ctx);
-        new Chart(ctx).Radar(data);*/
-
-        var data = {
-            //labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-            labels: data2.labels,
-            datasets: data2.datasets
+        var chartData = {
+            labels: labels,
+            datasets: datasets
         };
-
-        console.log(data);
-        console.log(data2);
-
         var ctx = document.getElementById("myChart").getContext("2d");
-        //var myRadarChart = new Chart(ctx).Radar(data);
+        new Chart(ctx).Radar(chartData);
     }
 
 });
-
-//je veux recuperer mes donnes de mes differentes dataserie
-//quel format json pour intialiser le graphe chart.js
-
-//get labels
-/*$('.fa-bar-chart').on('click', function(){
-    console.log('graph ! ');
-
-    //get labels
-    var labels = [];
-    console.log(analyse);
-
-    var data = {
-        labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-        datasets: [
-            {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: [65, 59, 90, 81, 56, 55, 40]
-            },
-            {
-                label: "My Second dataset",
-                fillColor: "rgba(151,187,205,0.2)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [28, 48, 40, 19, 96, 27, 100]
-            }
-        ]
-    };
-
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var myRadarChart = new Chart(ctx).Radar(data);
-});*/
-
-
-
-
-/*var data = {
-    labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 90, 81, 56, 55, 40]
-        },
-        {
-            label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 96, 27, 100]
-        }
-    ]
-};*/
-
-
 //fonction permettant d'ajuster la width de id="panelAnalyseEdition" en fonction du nombre de param
 function adjustAnalysePanelWidth(nbParam)
 {

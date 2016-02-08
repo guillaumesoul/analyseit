@@ -59,7 +59,8 @@
                                     <i class="fa fa-2x fa-remove" ng-click="removeParam(param)"></i>
                                 </div>
                                 <ul class="paramInfo">
-                                    <li><input type="text" class="paramName text-center" value="{{param.name}}"></li>
+                                    <!--<li><input type="text" class="paramName text-center" value="{{param.name}}"></li>-->
+                                    <li><input type="text" class="paramName" name="paramName" ng-model="param.name" ng-model-options="{ getterSetter: true }" /></li>
                                     <section class="extendedParamInfo" ng-show = "IsVisible">
                                         <li><input type="text" class="paramMinValue text-center" value="{{param.minVal}}"></li>
                                         <li><input type="text" class="paramMaxValue text-center" value="{{param.maxVal}}"></li>
@@ -77,7 +78,8 @@
                                 <ul class="list-inline">
                                     <li class="col1"><i class="fa fa-2x fa-remove" ng-click="removeDataserie(dataserie)"></i><input type="text" class="dataserieName text-center" value="{{dataserie.name}}"></li>
                                     <li ng-repeat="value in dataserie.values">
-                                        <input type="text" class="dataserieValue text-center" value="{{value.value}}">
+                                        <!--<input type="text" class="dataserieValue text-center" value="{{value.value}}">-->
+                                        <input type="text" name="dataserieValue" ng-model="value.value" ng-model-options="{ getterSetter: true }" />
                                     </li>
                                 </ul>
                             </li>
