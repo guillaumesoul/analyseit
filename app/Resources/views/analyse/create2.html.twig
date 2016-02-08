@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block appWindow %}
-    <div class="panel panel-default">
+    <div class="panel panel-default" id="panelAnalyseEdition" name="panelAnalyseEdition">
         <div class="panel-heading">
             {% block analyse_metadata %}
                     <label>name</label>
@@ -39,12 +39,35 @@
 
                         <!-- params section -->
                         <ul class="list-inline">
-                            <li class="col1"></li>
+                            <li class="col1">
+                                <div class="paramToolbar text-center">
+                                    <i class="fa fa-2x fa-caret-square-o-down" ng-click="ShowHide()"></i>
+                                </div>
+                                <ul class="paramInfo" id="paramInfoLabels" name="paramInfoLabels">
+                                    <li><label>Name</label></li>
+                                    <section class="extendedParamInfo" ng-show = "IsVisible">
+                                        <li><label>Min Value</label></li>
+                                        <li><label>Max Value</label></li>
+                                        <li><label>Ponderation</label></li>
+                                        <li><label>Unit</label></li>
+                                        <li><label>Type</label></li>
+                                    </section>
+                                </ul>
+                            </li>
                             <li ng-repeat="param in analyse.params">
                                 <div class="paramToolbar text-center">
-                                    <i class="fa fa-2x fa-remove" ng-click="remove(param)"></i>
+                                    <i class="fa fa-2x fa-remove" ng-click="removeParam(param)"></i>
                                 </div>
-                                <input type="text" class="paramName" value="{{param.name}}">
+                                <ul class="paramInfo">
+                                    <li><input type="text" class="paramName" value="{{param.name}}"></li>
+                                    <section class="extendedParamInfo" ng-show = "IsVisible">
+                                        <li><input type="text" class="paramMinValue" value="{{param.minVal}}"></li>
+                                        <li><input type="text" class="paramMaxValue" value="{{param.maxVal}}"></li>
+                                        <li><input type="text" class="paramPonderation" value="{{param.ponderation}}"></li>
+                                        <li><input type="text" class="paramUnit" value="{{param.unit}}"></li>
+                                        <li><input type="text" class="paramType" value="{{param.type}}"></li>
+                                    </section>
+                                </ul>
                             </li>
                         </ul>
 
@@ -52,7 +75,7 @@
                         <ul class="dataserieList">
                             <li ng-repeat="dataserie in analyse.dataseries">
                                 <ul class="list-inline">
-                                    <li class="col1"><i class="fa fa-2x fa-remove"></i><input type="text" class="serieName" value="{{dataserie.name}}"></li>
+                                    <li class="col1"><i class="fa fa-2x fa-remove" ng-click="removeDataserie(dataserie)"></i><input type="text" class="dataserieName" value="{{dataserie.name}}"></li>
                                     <li ng-repeat="value in dataserie.values">
                                         <input type="text" class="dataserieValue" value="{{value.value}}">
                                     </li>

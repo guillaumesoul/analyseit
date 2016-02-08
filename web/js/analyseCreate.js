@@ -4,7 +4,7 @@
 
 
 
-var analyseInit = initAnalyse(3);
+var analyseInit = initAnalyse(5);
 
 angular.module('datatalkApp', []).controller('AnalyseController', function($scope) {
     var analyse = this;
@@ -18,26 +18,40 @@ angular.module('datatalkApp', []).controller('AnalyseController', function($scop
         for(index in analyse.dataseries){
             analyse.dataseries[index].values.push(new Value());
         }
+        adjustAnalysePanelWidth(analyse.params.length);
     };
 
-    $scope.remove = function(item) {
+    $scope.removeParam = function(item) {
         var index = analyse.params.indexOf(item);
         analyse.params.splice(index, 1);
-        for(index in analyse.dataseries){
-            //@todo remove the right column instead of the last for the moment
-            analyse.dataseries[index].values.pop();
+        for(indice in analyse.dataseries){
+            analyse.dataseries[indice].values.splice(index, 1);
         }
+        adjustAnalysePanelWidth(analyse.params.length);
     }
 
-    /*analyse.removeParam = function(){
+    $scope.removeDataserie = function(item) {
+        var index = analyse.dataseries.indexOf(item);
+        analyse.dataseries.splice(index, 1);
+    }
 
-    }*/
+    //toggle display extendedParamInfo
+    $scope.IsVisible = false;
+    $scope.ShowHide = function () {
+        $scope.IsVisible = $scope.IsVisible ? false : true;
+    }
 
     analyse.addDataserie = function(){
         analyse.dataseries.push(new Dataserie(analyse.dataserieName,analyse.params.length));
     }
 });
 
+
+//fonction permettant d'ajuster la width de id="panelAnalyseEdition" en fonction du nombre de param
+function adjustAnalysePanelWidth(nbParam)
+{
+    ($('.paramInfo li').width()*nbParam < window.screen.width) ? $('#panelAnalyseEdition').width(window.screen.width) : $('#panelAnalyseEdition').width($('.paramInfo li').width()*nbParam+100);
+}
 
 /* CONSTRUCTEUR */
 function Analyse () {
@@ -83,8 +97,7 @@ function initAnalyse(nbParam)
     if(nbParam === parseInt(nbParam, 10)){
         var dataserie = new Dataserie('new dataset',nbParam);
         dataseries.push(dataserie);
-        for(var i= 0; i<parseInt(nbParam) ; i++){
-            //params
+        for(var i= 1; i<=parseInt(nbParam) ; i++){
             var newParam = new Param('param'+i);
             params.push(newParam);
         }

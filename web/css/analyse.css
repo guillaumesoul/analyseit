@@ -14,7 +14,20 @@
     margin-bottom: 15px;
 }
 
+.paramInfo{
+    list-style-type: none;
+    padding: 0px;
+}
 
+#paramInfoLabels{
+    text-align: center;
+}
+
+
+
+
+
+/* PREVIOUS VERSION WITH SYMFONY FORMS*/
 /*.thumbnail_active {
     background-color: lightblue;
 }
