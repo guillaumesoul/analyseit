@@ -22,48 +22,45 @@
         <div class="panel-body">
             {% block analyse_datatable %}
                 <div>
+                {% verbatim %}
+                    <div ng-controller="AnalyseController as analyse">
 
+                        <!-- toolbar section -->
+                        <div id="analyseToolbar" name="analyseToolbar">
+                            <form ng-submit="analyse.addParam()" class="inline">
+                                <input type="text" ng-model="analyse.paramName"  size="30" placeholder="add param">
+                                <input class="btn-primary" type="submit" value="add">
+                            </form>
+                            <form ng-submit="analyse.addDataserie()" class="inline">
+                                <input type="text" ng-model="analyse.dataserieName"  size="30" placeholder="add dataserie">
+                                <input class="btn-primary" type="submit" value="add">
+                            </form>
+                        </div>
 
-{% verbatim %}
-    <div ng-controller="AnalyseController as analyse">
+                        <!-- params section -->
+                        <ul class="list-inline">
+                            <li class="col1"></li>
+                            <li ng-repeat="param in analyse.params">
+                                <div class="paramToolbar text-center">
+                                    <i class="fa fa-2x fa-remove" ng-click="remove(param)"></i>
+                                </div>
+                                <input type="text" class="paramName" value="{{param.name}}">
+                            </li>
+                        </ul>
 
-        <!-- toolbar section -->
-        <div id="analyseToolbar" name="analyseToolbar">
-            <form ng-submit="analyse.addParam()">
-                <input type="text" ng-model="analyse.paramName"  size="30" placeholder="add param">
-                <input class="btn-primary" type="submit" value="add">
-            </form>
-            <form ng-submit="analyse.addDataserie()">
-                <input type="text" ng-model="analyse.dataserieName"  size="30" placeholder="add dataserie">
-                <input class="btn-primary" type="submit" value="add">
-            </form>
-        </div>
-
-        <!-- params section -->
-        <ul class="list-inline">
-            <li class="col1"></li>
-            <li ng-repeat="param in analyse.params">
-                <input type="text" class="paramName" value="{{param.name}}">
-            </li>
-        </ul>
-
-        <!-- dataseries section -->
-        <ul class="dataserieList">
-            <li ng-repeat="dataserie in analyse.dataseries">
-                <ul class="list-inline">
-                    <li class="col1"><input type="text" class="serieName"></li>
-                    <li ng-repeat="value in dataserie.values">
-                        <input type="text" class="dataserieValue">
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-{% endverbatim %}
-
-
-
-
+                        <!-- dataseries section -->
+                        <ul class="dataserieList">
+                            <li ng-repeat="dataserie in analyse.dataseries">
+                                <ul class="list-inline">
+                                    <li class="col1"><i class="fa fa-2x fa-remove"></i><input type="text" class="serieName" value="{{dataserie.name}}"></li>
+                                    <li ng-repeat="value in dataserie.values">
+                                        <input type="text" class="dataserieValue" value="{{value.value}}">
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                {% endverbatim %}
                 </div>
             {% endblock %}
         </div>

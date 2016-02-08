@@ -6,7 +6,7 @@
 
 var analyseInit = initAnalyse(3);
 
-angular.module('datatalkApp', []).controller('AnalyseController', function() {
+angular.module('datatalkApp', []).controller('AnalyseController', function($scope) {
     var analyse = this;
     analyse.params = analyseInit.paramList;
     analyse.dataseries = analyseInit.dataseries;
@@ -14,7 +14,24 @@ angular.module('datatalkApp', []).controller('AnalyseController', function() {
     analyse.addParam = function() {
         analyse.params.push(new Param(analyse.paramName));
         analyse.paramName = '';
+        //update dataserie
+        for(index in analyse.dataseries){
+            analyse.dataseries[index].values.push(new Value());
+        }
     };
+
+    $scope.remove = function(item) {
+        var index = analyse.params.indexOf(item);
+        analyse.params.splice(index, 1);
+        for(index in analyse.dataseries){
+            //@todo remove the right column instead of the last for the moment
+            analyse.dataseries[index].values.pop();
+        }
+    }
+
+    /*analyse.removeParam = function(){
+
+    }*/
 
     analyse.addDataserie = function(){
         analyse.dataseries.push(new Dataserie(analyse.dataserieName,analyse.params.length));
