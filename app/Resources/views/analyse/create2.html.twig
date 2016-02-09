@@ -62,11 +62,11 @@
                                     <!--<li><input type="text" class="paramName text-center" value="{{param.name}}"></li>-->
                                     <li><input type="text" class="paramName" name="paramName" ng-model="param.name" ng-model-options="{ getterSetter: true }" /></li>
                                     <section class="extendedParamInfo" ng-show = "IsVisible">
-                                        <li><input type="text" class="paramMinValue text-center" value="{{param.minVal}}"></li>
-                                        <li><input type="text" class="paramMaxValue text-center" value="{{param.maxVal}}"></li>
-                                        <li><input type="text" class="paramPonderation text-center" value="{{param.ponderation}}"></li>
-                                        <li><input type="text" class="paramUnit text-center" value="{{param.unit}}"></li>
-                                        <li><input type="text" class="paramType text-center" value="{{param.type}}"></li>
+                                        <li><input type="text" class="paramMinValue text-center" ng-model="param.minVal" ng-model-options="{ getterSetter: true }" ></li>
+                                        <li><input type="text" class="paramMaxValue text-center" ng-model="param.maxVal" ng-model-options="{ getterSetter: true }" ></li>
+                                        <li><input type="text" class="paramPonderation text-center" ng-model="param.ponderation" ng-model-options="{ getterSetter: true }" ></li>
+                                        <li><input type="text" class="paramUnit text-center" ng-model="param.unit" ng-model-options="{ getterSetter: true }" ></li>
+                                        <li><input type="text" class="paramType text-center" ng-model="param.type" ng-model-options="{ getterSetter: true }" ></li>
                                     </section>
                                 </ul>
                             </li>
@@ -89,8 +89,8 @@
                 </div>
             {% endblock %}
 
-            <div>
-                <canvas id="myChart" width="400" height="400"></canvas>
+            <div id="chart">
+
             </div>
         </div>
     </div>
