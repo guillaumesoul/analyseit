@@ -6,7 +6,21 @@
 var analyseInit = initAnalyse(3);
 
 $(document).ready(function(){
-    
+    $('.paramType').selectize();
+
+
+    //détection a la volee de la validite de la saisi
+    $('.dataserieValue').bind('input', function() {
+        var objectValue = new Value();
+        objectValue.value = $(this).val();
+        //@todo faire la validation sur le type de parametre
+        //on voudrait faire if object isValid();
+        if(!objectValue.isValidNumber()){
+            $(this).notify('Number required');
+        }
+
+    });
+
 });
 
 /*
