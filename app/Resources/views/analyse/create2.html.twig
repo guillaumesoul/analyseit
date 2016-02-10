@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('css/analyse.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendor/selectize/dist/css/selectize.bootstrap3.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block appWindow %}
@@ -59,14 +60,23 @@
                                     <i class="fa fa-2x fa-remove" ng-click="removeParam(param)"></i>
                                 </div>
                                 <ul class="paramInfo">
-                                    <!--<li><input type="text" class="paramName text-center" value="{{param.name}}"></li>-->
                                     <li><input type="text" class="paramName" name="paramName" ng-model="param.name" ng-model-options="{ getterSetter: true }" /></li>
                                     <section class="extendedParamInfo" ng-show = "IsVisible">
                                         <li><input type="text" class="paramMinValue text-center" ng-model="param.minVal" ng-model-options="{ getterSetter: true }" ></li>
                                         <li><input type="text" class="paramMaxValue text-center" ng-model="param.maxVal" ng-model-options="{ getterSetter: true }" ></li>
                                         <li><input type="text" class="paramPonderation text-center" ng-model="param.ponderation" ng-model-options="{ getterSetter: true }" ></li>
                                         <li><input type="text" class="paramUnit text-center" ng-model="param.unit" ng-model-options="{ getterSetter: true }" ></li>
-                                        <li><input type="text" class="paramType text-center" ng-model="param.type" ng-model-options="{ getterSetter: true }" ></li>
+                                        <!--<li><input type="text" class="paramType text-center" ng-model="param.type" ng-model-options="{ getterSetter: true }" ></li>-->
+                                        <li>
+                                            <select class="paramType">
+                                                <option value="1">Number</option>
+                                                <option value="2">Text</option>
+                                                <option value="3">date</option>
+                                                <option value="4">time</option>
+                                                <option value="5">Localisation</option>
+                                                <option value="6">Money</option>
+                                            </select>
+                                        </li>
                                     </section>
                                 </ul>
                             </li>
@@ -78,8 +88,7 @@
                                 <ul class="list-inline">
                                     <li class="col1"><i class="fa fa-2x fa-remove" ng-click="removeDataserie(dataserie)"></i><input type="text" class="dataserieName text-center" value="{{dataserie.name}}"></li>
                                     <li ng-repeat="value in dataserie.values">
-                                        <!--<input type="text" class="dataserieValue text-center" value="{{value.value}}">-->
-                                        <input type="text" name="dataserieValue" ng-model="value.value" ng-model-options="{ getterSetter: true }" />
+                                        <input type="text" class="dataserieValue" name="dataserieValue" ng-model="value.value" ng-model-options="{ getterSetter: true }" />
                                     </li>
                                 </ul>
                             </li>
@@ -100,7 +109,11 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts 'additionnal_javascript' %}
+    <script src="{{ asset('assets/vendor/verify/verify.notify.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendor/selectize/dist/js/standalone/selectize.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendor/Chart.js/Chart.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/analyseAngular.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('js/objectsModel.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('js/analyseCreate.js') }}" type="text/javascript" charset="utf-8"></script>
     {% endjavascripts %}
 {% endblock %}
