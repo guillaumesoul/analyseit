@@ -10,18 +10,27 @@ $(document).ready(function(){
 
 
     //détection a la volee de la validite de la saisi
-    $('.dataserieValue').bind('input', function() {
+    $('.dataserieValue, .paramMinValue, .paramMaxValue, .paramPonderation').bind('input', function() {
         var objectValue = new Value();
         objectValue.value = $(this).val();
         //@todo faire la validation sur le type de parametre
         //on voudrait faire if object isValid();
         if(!objectValue.isValidNumber()){
-            $(this).notify('Number required');
+            $(this).notify('Number required',{autoHideDelay: 750});
         }
 
     });
 
+
+
 });
+
+//fonction permettant d'ajuster la width de id="panelAnalyseEdition" en fonction du nombre de param
+function updateView(nbParam)
+{
+    ($('.paramInfo li').width()*nbParam < window.screen.width) ? $('#panelAnalyseEdition').width(window.screen.width) : $('#panelAnalyseEdition').width($('.paramInfo li').width()*nbParam+100);
+    $('.paramType').selectize();    
+}
 
 /*
 * creation des differents object js pour le nbParam specifies

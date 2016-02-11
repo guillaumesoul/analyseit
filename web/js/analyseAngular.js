@@ -13,7 +13,7 @@ angular.module('datatalkApp', []).controller('AnalyseController', function($scop
         for(index in analyse.dataseries){  //update dataserie
             analyse.dataseries[index].values.push(new Value());
         }
-        adjustAnalysePanelWidth(analyse.params.length);
+        updateView(analyse.params.length);
     };
 
     $scope.removeParam = function(item) {
@@ -22,7 +22,7 @@ angular.module('datatalkApp', []).controller('AnalyseController', function($scop
         for(indice in analyse.dataseries){
             analyse.dataseries[indice].values.splice(index, 1);
         }
-        adjustAnalysePanelWidth(analyse.params.length);
+        updateView(analyse.params.length);
     }
 
     $scope.removeDataserie = function(item) {
@@ -116,8 +116,4 @@ angular.module('datatalkApp', []).controller('AnalyseController', function($scop
 
 });
 
-//fonction permettant d'ajuster la width de id="panelAnalyseEdition" en fonction du nombre de param
-function adjustAnalysePanelWidth(nbParam)
-{
-    ($('.paramInfo li').width()*nbParam < window.screen.width) ? $('#panelAnalyseEdition').width(window.screen.width) : $('#panelAnalyseEdition').width($('.paramInfo li').width()*nbParam+100);
-}
+
