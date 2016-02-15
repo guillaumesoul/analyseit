@@ -58,11 +58,11 @@
                                     </section>
                                 </ul>
                             </li>
-                            <li ng-repeat="param in analyse.params" set-selectize>
+                            <li ng-repeat="param in analyse.params">
                                 <div class="paramToolbar text-center">
                                     <i class="fa fa-2x fa-remove" ng-click="removeParam(param)"></i>
                                 </div>
-                                <ul class="paramInfo">
+                                <ul class="paramInfo paramData" paramIndex="{{$index}}">
                                     <li><input type="text" class="paramName" name="paramName" ng-model="param.name" ng-model-options="{ getterSetter: true }" /></li>
                                     <section class="extendedParamInfo" ng-show = "IsVisible">
                                         <li><input type="text" class="paramMinValue text-center" ng-model="param.minVal" ng-model-options="{ getterSetter: true }" ></li>
@@ -70,7 +70,7 @@
                                         <li><input type="text" class="paramPonderation text-center" ng-model="param.ponderation" ng-model-options="{ getterSetter: true }" ></li>
                                         <li><input type="text" class="paramUnit text-center" ng-model="param.unit" ng-model-options="{ getterSetter: true }" ></li>
                                         <li>
-                                            <selectize config='myConfig' options='typeparamOptions' ng-model="myModel"></selectize>
+                                            <selectize class="typeParam" config='myConfig' options='typeparamOptions' ng-model="myModel"></selectize>
                                         </li>
                                     </section>
                                 </ul>
@@ -83,7 +83,7 @@
                                 <ul class="list-inline">
                                     <li class="col1"><i class="fa fa-2x fa-remove" ng-click="removeDataserie(dataserie)"></i><input type="text" class="dataserieName text-center" value="{{dataserie.name}}"></li>
                                     <li ng-repeat="value in dataserie.values">
-                                        <input type="text" class="dataserieValue" name="dataserieValue" ng-model="value.value" ng-model-options="{ getterSetter: true }" />
+                                        <input type="text" class="dataserieValue" name="dataserieValue" ng-model="value.value" ng-model-options="{ getterSetter: true }" dataserieIndex="{{$index}}" />
                                     </li>
                                 </ul>
                             </li>

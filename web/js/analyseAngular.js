@@ -14,10 +14,8 @@ angular.module('datatalkApp', ['selectize'])
             for(index in analyse.dataseries){  //update dataserie
                 analyse.dataseries[index].values.push(new Value());
             }
-            //updateView(analyse.params.length);
             setTimeout(function() {
                 updateView(analyse.params.length);
-                //updateSelectize();
             });
         };
 
@@ -132,7 +130,7 @@ angular.module('datatalkApp', ['selectize'])
             {id: 3, title: 'Date'},
             {id: 4, title: 'Time'},
             {id: 5, title: 'Localization'},
-            {id: 5, title: 'Money'}
+            {id: 6, title: 'Money'}
         ];
 
         $scope.myConfig = {
@@ -143,7 +141,7 @@ angular.module('datatalkApp', ['selectize'])
             placeholder: 'Type',
             maxItems: 1,
             onInitialize: function(selectize){
-                // receives the selectize object as an argument
+                selectize.setValue(1);  //init selectize with number type
             },
             // maxItems: 1
         };

@@ -3,21 +3,49 @@
  */
 
 
+typeParamArray = {
+    1: 'Number',
+    2: 'Text',
+    3: 'Date',
+    4: 'Time',
+    5: 'Localization',
+    6: 'Money',
+};
+
+
 var analyseInit = initAnalyse(3);
 
 $(document).ready(function(){
-    //$('.paramType').selectize();
-
 
     //détection a la volee de la validite de la saisi
     $('.dataserieValue, .paramMinValue, .paramMaxValue, .paramPonderation').bind('input', function() {
         var objectValue = new Value();
         objectValue.value = $(this).val();
+
+
         //@todo faire la validation sur le type de parametre
-        //on voudrait faire if object isValid();
-        if(!objectValue.isValidNumber()){
-            $(this).notify('Number required',{autoHideDelay: 750});
+        //recuperer le type de parametre
+        //il faut que je sache quel paramètre est associé à l'input qui est triggered
+        //que sais je sur le this?
+
+
+        var typeParamIndex = $(".paramData[paramIndex='" + $(this).attr('dataserieIndex') + "'] .typeParam").val();
+        //console.log(typeParamArray);
+        //console.log(typeParamArray[typeParamIndex]);
+        var typeParamText = typeParamArray[typeParamIndex];
+
+
+        //console.log(typeParamArray.1);
+        var validationTest = objectValue.isValid(typeParamText);
+        if(validationTest != true){
+            $(this).notify(validationTest,{autoHideDelay: 750});
         }
+
+
+        //on voudrait faire if object isValid();
+        /*if(!objectValue.isValidNumber()){
+            $(this).notify('Number required',{autoHideDelay: 750});
+        }*/
 
     });
 

@@ -15,7 +15,7 @@ function Param (name) {
     this.maxVal = '';
     this.ponderation = '';
     this.unit = '';
-    this.type = '';
+    this.type = 1;  //type number see $scope.typeparamOptions in analyseAngular.js
 }
 function Dataserie (name, nbvalues) {
     this.name = name;
@@ -43,7 +43,27 @@ function Value () {
 
 
 //1 - Utilisation de prototype
+Value.prototype.isValid = function(typeParamText){
+    var response = false;
+    switch(typeParamText){
+        case 'Number':
+            response = this.isValidNumber();
+            break;
+        case 'Text':
+            response = this.isValidText();
+            break;
+    }
+    return response;
+}
+
 Value.prototype.isValidNumber = function(){
+    var response = false;
+    (isNaN(this.value)) ? response = 'number required !!!' : response = true;
+    return response;
+}
+
+Value.prototype.isValidText = function(){
+    var response = true;
     (isNaN(this.value)) ? response = false : response = true;
     return response;
 }
