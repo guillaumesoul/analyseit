@@ -6,7 +6,7 @@
 var analyseInit = initAnalyse(3);
 
 $(document).ready(function(){
-    $('.paramType').selectize();
+    //$('.paramType').selectize();
 
 
     //détection a la volee de la validite de la saisi
@@ -29,7 +29,7 @@ $(document).ready(function(){
 function updateView(nbParam)
 {
     ($('.paramInfo li').width()*nbParam < window.screen.width) ? $('#panelAnalyseEdition').width(window.screen.width) : $('#panelAnalyseEdition').width($('.paramInfo li').width()*nbParam+100);
-    $('.paramType').selectize();    
+
 }
 
 /*

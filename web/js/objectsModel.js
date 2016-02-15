@@ -44,7 +44,6 @@ function Value () {
 
 //1 - Utilisation de prototype
 Value.prototype.isValidNumber = function(){
-    console.log(this.value);
     (isNaN(this.value)) ? response = false : response = true;
     return response;
 }

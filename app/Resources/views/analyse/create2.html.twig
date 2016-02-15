@@ -52,14 +52,13 @@
                                         <li><label>Ponderation</label></li>
                                         <li><label>Unit</label></li>
                                         <li>
-                                            <select class="paramType">
-                                                <option>Type</option>
-                                            </select>
+                                            <!--<selectize config='myConfig' options='typeparamLabelOptions' ng-model="testModel"></selectize>-->
+                                            <selectize config='myConfig' options='' ng-model="testModel"></selectize>
                                         </li>
                                     </section>
                                 </ul>
                             </li>
-                            <li ng-repeat="param in analyse.params">
+                            <li ng-repeat="param in analyse.params" set-selectize>
                                 <div class="paramToolbar text-center">
                                     <i class="fa fa-2x fa-remove" ng-click="removeParam(param)"></i>
                                 </div>
@@ -70,16 +69,8 @@
                                         <li><input type="text" class="paramMaxValue text-center" ng-model="param.maxVal" ng-model-options="{ getterSetter: true }" ></li>
                                         <li><input type="text" class="paramPonderation text-center" ng-model="param.ponderation" ng-model-options="{ getterSetter: true }" ></li>
                                         <li><input type="text" class="paramUnit text-center" ng-model="param.unit" ng-model-options="{ getterSetter: true }" ></li>
-                                        <!--<li><input type="text" class="paramType text-center" ng-model="param.type" ng-model-options="{ getterSetter: true }" ></li>-->
                                         <li>
-                                            <select class="paramType">
-                                                <option value="1">Number</option>
-                                                <option value="2">Text</option>
-                                                <option value="3">date</option>
-                                                <option value="4">time</option>
-                                                <option value="5">Localisation</option>
-                                                <option value="6">Money</option>
-                                            </select>
+                                            <selectize config='myConfig' options='typeparamOptions' ng-model="myModel"></selectize>
                                         </li>
                                     </section>
                                 </ul>
@@ -116,6 +107,7 @@
     <script src="{{ asset('assets/vendor/verify/verify.notify.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendor/selectize/dist/js/standalone/selectize.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendor/Chart.js/Chart.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendor/angular-selectize2/dist/angular-selectize.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/analyseAngular.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('js/objectsModel.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('js/analyseCreate.js') }}" type="text/javascript" charset="utf-8"></script>
