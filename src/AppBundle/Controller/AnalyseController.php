@@ -72,11 +72,24 @@ class AnalyseController extends Controller
 
     public function createAction(Request $request)
     {
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject('uploads/documents/S5-S6.xls');
+
         $document = new Document();
         $uploadForm = $this->createFormBuilder($document)
             ->add('name')
             ->add('file')
+            ->add('Import','submit')
             ->getForm();
+        //$uploadForm = $this->createForm($this->get('document_form'));
+
+        $uploadForm->handleRequest($request);
+
+        if ($uploadForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $document->upload();
+            $em->persist($document);
+            $em->flush();
+        }
 
         return $this->render('analyse/create2.html.twig',array(
             'upload_form' => $uploadForm->createView()

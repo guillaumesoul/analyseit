@@ -15,8 +15,9 @@ class DocumentType
     {
         $builder
             ->setMethod('POST')
-            ->add('name', 'text')
-            ->add('save', 'submit', array('label' => 'Import'));
+            ->add('name')
+            ->add('file')
+            ->add('Import','submit');
     }
 
     public function getName()

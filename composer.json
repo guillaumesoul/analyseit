@@ -22,7 +22,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "symfony/serializer": "^3.0",
-        "symfony/stopwatch": "^3.0"
+        "symfony/stopwatch": "^3.0",
+        "liuggio/excelbundle": "^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
