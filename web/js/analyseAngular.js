@@ -16,6 +16,7 @@ angular.module('datatalkApp', ['selectize'])
             }
             setTimeout(function() {
                 updateView(analyse.params.length);
+                bindInputValidation();
             });
         };
 
@@ -25,7 +26,7 @@ angular.module('datatalkApp', ['selectize'])
             for(indice in analyse.dataseries){
                 analyse.dataseries[indice].values.splice(index, 1);
             }
-            //updateView(analyse.params.length);
+            updateView(analyse.params.length);
         }
 
         $scope.removeDataserie = function(item) {
@@ -35,6 +36,9 @@ angular.module('datatalkApp', ['selectize'])
 
         analyse.addDataserie = function(){
             analyse.dataseries.push(new Dataserie(analyse.dataserieName,analyse.params.length));
+            setTimeout(function() {
+                bindInputValidation();
+            });
         }
 
         //toggle display extendedParamInfo
@@ -50,25 +54,12 @@ angular.module('datatalkApp', ['selectize'])
 
         //Display chart on Chart button click
         analyse.Chart = function () {
-
-
-
-            //var val1 = analyse.dataseries[0].values[0].value;
-            var val1 = new Value();
-            var tezst = val1.isValidNumber();
-            console.log(tezst);
-
-
-
             $('#chart').html('<canvas id="myChart" width="400" height="400"></canvas>'); //to destroy previous chart
-
             var labels = [];
             var allParamsInfo = [];
             for(indiceParam in analyse.params){
-
                 //chart labels
                 labels.push(analyse.params[indiceParam].name);
-
                 //get parameters info
                 //@todo verify validity for each entries
                 var paramInfo = {
@@ -117,9 +108,8 @@ angular.module('datatalkApp', ['selectize'])
             });
         }
 
-        //$scope.myModel = 1;
 
-
+        /* SELECTIZE DATA */
         $scope.typeparamLabelOptions = [
             {id: 1, title: 'Param Type'}
         ];
@@ -143,8 +133,5 @@ angular.module('datatalkApp', ['selectize'])
             onInitialize: function(selectize){
                 selectize.setValue(1);  //init selectize with number type
             },
-            // maxItems: 1
         };
-
-        //$scope.myOptions = [{value: '1', text: 'Jordy'}];
 });

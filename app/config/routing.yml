@@ -25,6 +25,10 @@ analyse_create:
     path:      /analyse/create
     defaults:  { _controller: AppBundle:Analyse:create }
 
+analyse_upload:
+    path:      /analyse/upload
+    defaults:  { _controller: AppBundle:Analyse:upload }
+
 analyse_edit:
     path:      /analyse/edit/{analyseId}
     defaults:  { _controller: AppBundle:Analyse:edit }

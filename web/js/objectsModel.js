@@ -63,7 +63,7 @@ Value.prototype.isValidNumber = function(){
 }
 
 Value.prototype.isValidText = function(){
-    var response = true;
-    (isNaN(this.value)) ? response = false : response = true;
+    var response = 'text required!';
+    //(isNaN(this.value)) ? response = false : response = true;
     return response;
 }

@@ -1,10 +1,38 @@
 {% extends 'layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .gridster li {background-color:grey;}
+    </style>
+{% endblock %}
+
 {% block appWindow %}
-    <div class="container-fluid">
+    {#<div class="container-fluid">
         <div class="col-lg-12" id="mainWindow">
             {{ block('part1') }}
+
         </div>
+    </div>#}
+    <button class="btn btn-info" onclick="AuthenticateTrello()">TRELLO</button>
+    <div>
+        {#<canvas id="myChart" width="200" height="150"></canvas>#}
+        {#<canvas id="myChart2" width="400" height="300"></canvas>#}
+    </div>
+    <div class="gridster">
+        <ul>
+            <li data-row="1" data-col="1" data-sizex="3" data-sizey="1" >
+                {#<canvas id="myChart" width="150" height="80"></canvas>
+                <canvas id="myChart2" width="150" height="80"></canvas>#}
+                <canvas id="myChart" width="200" height="150"></canvas>
+                <canvas id="myChart2" width="200" height="150"></canvas>
+            </li>
+            <li data-row="1" data-col="3" data-sizex="4" data-sizey="4"><iframe src="http://localhost:3000/b/b46z2JWmbtCXkBnFk/liste1" style="width: 600px;height:620px;"> </iframe></li>
+            <li data-row="2" data-col="1" data-sizex="3" data-sizey="1"></li>
+            <li data-row="2" data-col="1" data-sizex="3" data-sizey="1"><textarea id="trelloJson" name="trelloJson"></textarea></li>
+            <li data-row="3" data-col="1" data-sizex="3" data-sizey="1"><iframe src="http://www.w3schools.com/" style="width: 300px;height:120px;"> </iframe></li>
+            <li data-row="4" data-col="1" data-sizex="3" data-sizey="1"></li>
+        </ul>
     </div>
 
 {% endblock %}
@@ -18,3 +46,167 @@
         <a href="{{ path('analyse_create') }}"><button class="btn btn-default"><i class="fa fa-3x fa-bar-chart"></i></button></a>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 'additionnal_javascript' %}
+    <script src="{{ asset('assets/vendor/Chart.js/Chart.min.js') }}" type="text/javascript"></script>
+    <script>
+
+        var data = {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: "My Second dataset",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: [28, 48, 40, 19, 86, 27, 90]
+                }
+            ]
+        };
+
+        var options = {
+
+            ///Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines : true,
+
+            //String - Colour of the grid lines
+            scaleGridLineColor : "rgba(0,0,0,.05)",
+
+            //Number - Width of the grid lines
+            scaleGridLineWidth : 1,
+
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
+
+            //Boolean - Whether the line is curved between points
+            bezierCurve : true,
+
+            //Number - Tension of the bezier curve between points
+            bezierCurveTension : 0.4,
+
+            //Boolean - Whether to show a dot for each point
+            pointDot : true,
+
+            //Number - Radius of each point dot in pixels
+            pointDotRadius : 4,
+
+            //Number - Pixel width of point dot stroke
+            pointDotStrokeWidth : 1,
+
+            //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+            pointHitDetectionRadius : 20,
+
+            //Boolean - Whether to show a stroke for datasets
+            datasetStroke : true,
+
+            //Number - Pixel width of dataset stroke
+            datasetStrokeWidth : 2,
+
+            //Boolean - Whether to fill the dataset with a colour
+            datasetFill : true,
+
+        };
+
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myLineChart = new Chart(ctx).Line(data,options);
+
+        var data2 = {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.5)",
+                    strokeColor: "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: "My Second dataset",
+                    fillColor: "rgba(151,187,205,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [28, 48, 40, 19, 86, 27, 90]
+                }
+            ]
+        };
+
+        var ctx2 = document.getElementById("myChart2").getContext("2d");
+        var myBarChart = new Chart(ctx2).Bar(data, options);
+
+
+
+
+        /*GRIDSTER*/
+        $(".gridster ul").gridster({
+            widget_margins: [10, 10],
+            widget_base_dimensions: [140, 140],
+            resize:{
+                enabled: true
+            }
+        });
+
+        /* TRELLO API */
+        function AuthenticateTrello() {
+            Trello.authorize({
+                name: "YourApplication",
+                type: "popup",
+                interactive: true,
+                expiration: "never",
+                persist: true,
+                success: function () { onAuthorizeSuccessful(); },
+                scope: { write: false, read: true },
+            });
+        }
+        function onAuthorizeSuccessful() {
+            var token = Trello.token();
+            $("#trelloJson").html("héhé");
+            console.log('success');
+            console.log(token);
+            /*$.ajax({
+                url: "https://trello.com/b/3iepBrr1/point-technique.json",
+                success: function(result){
+                $("#trelloJson").html(result);
+                }
+            });*/
+
+            var success = function(successMsg) {
+                console.log('success');
+                console.log(successMsg);
+                $("#trelloJson").html(successMsg);
+            };
+
+            var error = function(errorMsg) {
+                console.log('error');
+            };
+
+            Trello.get('boards/550a837bdfbe4a6ad91f3b80/cards', success, error);
+        }
+
+        //TOKEN
+        //eac4261e03d7c6cbc839c03ef3735939c3b43723a6f0b3eee9fe760dd08622da
+
+    </script>
+    <script src="https://api.trello.com/1/client.js?key=23a0a5e25238faf1abbe9fb60e31449f"></script>
+    {% endjavascripts %}
+{% endblock %}
+

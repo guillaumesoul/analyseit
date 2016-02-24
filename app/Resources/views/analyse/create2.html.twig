@@ -16,9 +16,12 @@
             {% block analyse_toolbar %}
                 <button type="button" class="btn btn-default"><i class="fa fa-3x fa-save"></i></button>
                 <button type="button" class="btn btn-default" ng-click="analyse.Chart()"><i class="fa fa-3x fa-bar-chart"></i></button>
-                <button type="button" class="btn btn-default"><i class="fa fa-3x fa-refresh"></i></button>
+                <button type="button" class="btn btn-default"><input type="file" id="fileToImport" name="fileToImport"><i class="fa fa-3x fa-file-excel-o" id="fileImport"></i></button>
                 <button type="submit" class="btn btn-default" ng-click="analyse.Reset()"><i class="fa fa-3x fa-recycle"></i></button>
             {% endblock %}
+            {{ form_start(upload_form) }}
+            {{ form_widget(upload_form) }}
+            {{ form_end(upload_form) }}
         </div>
         <div class="panel-body">
             {% block analyse_datatable %}
@@ -37,6 +40,7 @@
                                 <input class="btn-primary" type="submit" value="add">
                             </form>
                         </div>
+                        <!-- end tolbar section -->
 
                         <!-- params section -->
                         <ul class="list-inline">
@@ -52,7 +56,6 @@
                                         <li><label>Ponderation</label></li>
                                         <li><label>Unit</label></li>
                                         <li>
-                                            <!--<selectize config='myConfig' options='typeparamLabelOptions' ng-model="testModel"></selectize>-->
                                             <selectize config='myConfig' options='' ng-model="testModel"></selectize>
                                         </li>
                                     </section>
@@ -76,6 +79,7 @@
                                 </ul>
                             </li>
                         </ul>
+                        <!-- end params section -->
 
                         <!-- dataseries section -->
                         <ul class="dataserieList">
@@ -88,6 +92,7 @@
                                 </ul>
                             </li>
                         </ul>
+                        <!-- end dataseries -->
                     </div>
                 {% endverbatim %}
                 </div>
@@ -106,6 +111,7 @@
     {% javascripts 'additionnal_javascript' %}
     <script src="{{ asset('assets/vendor/verify/verify.notify.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendor/selectize/dist/js/standalone/selectize.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendor/angular/angular.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendor/Chart.js/Chart.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendor/angular-selectize2/dist/angular-selectize.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/analyseAngular.js') }}" type="text/javascript" charset="utf-8"></script>

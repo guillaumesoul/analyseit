@@ -15,41 +15,65 @@ typeParamArray = {
 
 var analyseInit = initAnalyse(3);
 
-$(document).ready(function(){
+$(document).ready(function()
+{
+    bindInputValidation();
 
-    //détection a la volee de la validite de la saisi
-    $('.dataserieValue, .paramMinValue, .paramMaxValue, .paramPonderation').bind('input', function() {
-        var objectValue = new Value();
-        objectValue.value = $(this).val();
-
-
-        //@todo faire la validation sur le type de parametre
-        //recuperer le type de parametre
-        //il faut que je sache quel paramètre est associé à l'input qui est triggered
-        //que sais je sur le this?
-
-
-        var typeParamIndex = $(".paramData[paramIndex='" + $(this).attr('dataserieIndex') + "'] .typeParam").val();
-        //console.log(typeParamArray);
-        //console.log(typeParamArray[typeParamIndex]);
-        var typeParamText = typeParamArray[typeParamIndex];
-
-
-        //console.log(typeParamArray.1);
-        var validationTest = objectValue.isValid(typeParamText);
-        if(validationTest != true){
-            $(this).notify(validationTest,{autoHideDelay: 750});
-        }
-
-
-        //on voudrait faire if object isValid();
-        /*if(!objectValue.isValidNumber()){
-            $(this).notify('Number required',{autoHideDelay: 750});
-        }*/
-
+    var files;
+    $('#fileToImport').on('change', function(){
+        files = event.target.files;
     });
+    $('#fileImport').on('click',uploadFiles);
 
 
+
+    //$('form').on('submit', uploadFiles);
+
+    // Catch the form submit and upload the files
+    function uploadFiles(event)
+    {
+        event.stopPropagation(); // Stop stuff happening
+        event.preventDefault(); // Totally stop stuff happening
+
+        // START A LOADING SPINNER HERE
+
+        // Create a formdata object and add the files
+        var data = new FormData();
+        $.each(files, function(key, value)
+        {
+            data.append(key, value);
+        });
+
+        $.ajax({
+            //url: 'submit.php?files',
+            url: 'upload',
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false, // Don't process the files
+            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+            success: function(data, textStatus, jqXHR)
+            {
+                if(typeof data.error === 'undefined')
+                {
+                    // Success so call function to process the form
+                    submitForm(event, data);
+                }
+                else
+                {
+                    // Handle errors here
+                    console.log('ERRORS: ' + data.error);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus);
+                // STOP LOADING SPINNER
+            }
+        });
+    }
 
 });
 
@@ -57,7 +81,6 @@ $(document).ready(function(){
 function updateView(nbParam)
 {
     ($('.paramInfo li').width()*nbParam < window.screen.width) ? $('#panelAnalyseEdition').width(window.screen.width) : $('#panelAnalyseEdition').width($('.paramInfo li').width()*nbParam+100);
-
 }
 
 /*
@@ -113,15 +136,22 @@ function generateNewColor()
 
 }
 
-//je veux faire la validation de mes inputs
 
-//2 solution : verify notify et angular
-//1 - architecture faire des objects de type value auxquels on va appliquer des prototype de méthodes
-// ex : Value.isValidNumber();
-//du coup faire des objets héritant de classe value : ValueNumber, ValueString, ValueDate, ValueChoiceList, ValueTime
-
-
-
-
-// je veux vérifier à la volée si la value saisie est de bon format
+// détection a la volee de la validite de la saisi en fonction du type de parametre sélectionné
 // un bon format est defini par le type de parametre en haut de la colonne
+function bindInputValidation()
+{
+    $('.dataserieValue, .paramMinValue, .paramMaxValue, .paramPonderation').bind('input', function() {
+        var objectValue = new Value();
+        objectValue.value = $(this).val();
+        //get type param in text : 'Number', 'Text' etc...
+        var typeParamText = typeParamArray[$(".paramData[paramIndex='" + $(this).attr('dataserieIndex') + "'] .typeParam").val()];
+        var validationTest = objectValue.isValid(typeParamText);
+        if(validationTest != true){
+            $(this).notify(validationTest,{autoHideDelay: 750});
+            $(this).addClass('alert-danger');
+        }else{
+            if($(this).hasClass('alert-danger')) $(this).removeClass('alert-danger');
+        }
+    });
+}

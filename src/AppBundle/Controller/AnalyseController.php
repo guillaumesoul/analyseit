@@ -8,8 +8,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Test1;
-use AppBundle\Entity\Test2;
+use AppBundle\Entity\Document;
 use AppBundle\Entity\Typeparam;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +35,7 @@ class AnalyseController extends Controller
         return $this->render('analyse/index.html.twig');
     }
 
+    //CREATE WITH FORM
     /*public function createAction(Request $request)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -72,7 +72,15 @@ class AnalyseController extends Controller
 
     public function createAction(Request $request)
     {
-        return $this->render('analyse/create2.html.twig');
+        $document = new Document();
+        $uploadForm = $this->createFormBuilder($document)
+            ->add('name')
+            ->add('file')
+            ->getForm();
+
+        return $this->render('analyse/create2.html.twig',array(
+            'upload_form' => $uploadForm->createView()
+        ));
     }
 
     public function getUserAnalysesListAction()
@@ -88,12 +96,6 @@ class AnalyseController extends Controller
 
     public function editAction(Request $request, $analyseId)
     {
-
-        $stopwatch = new Stopwatch();
-// Start event named 'eventName'
-        $stopwatch->start('eventName');
-
-
         $em = $this->getDoctrine()->getManager();
         $analyse = $em->getRepository('AppBundle:Analyse1')->findOneById($analyseId);
         $analyseForm = $this->createForm($this->get('analyse1_form'), $analyse);
@@ -125,16 +127,42 @@ class AnalyseController extends Controller
         $chartService = $this->get('chart_service');
         $jsonChartData = $chartService->getRadarData($analyse);
 
-        // ... some code goes here
-        $event = $stopwatch->stop('eventName');
-
-        $zaz = 'dsqd';
-
         return $this->render('analyse/edit.html.twig', array(
             'analyse' => $analyse,
             'analyse_form' => $analyseForm->createView(),
             'jsonChartData' => $jsonChartData,
         ));
+    }
+
+    public function uploadAction()
+    {
+        $data = array();
+
+        if(isset($_GET['files']))
+        {
+            $error = false;
+            $files = array();
+
+            $uploaddir = './uploads/';
+            foreach($_FILES as $file)
+            {
+                if(move_uploaded_file($file['tmp_name'], $uploaddir .basename($file['name'])))
+                {
+                    $files[] = $uploaddir .$file['name'];
+                }
+                else
+                {
+                    $error = true;
+                }
+            }
+            $data = ($error) ? array('error' => 'There was an error uploading your files') : array('files' => $files);
+        }
+        else
+        {
+            $data = array('success' => 'Form was submitted', 'formData' => $_POST);
+        }
+
+        return $this->redirect($this->generateUrl('analyse_create'));
     }
 
 
