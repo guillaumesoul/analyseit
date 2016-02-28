@@ -27,6 +27,7 @@ use AppBundle\Form\DataserieType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Stopwatch\Stopwatch;
 
+
 class AnalyseController extends Controller
 {
 
@@ -72,7 +73,7 @@ class AnalyseController extends Controller
 
     public function createAction(Request $request)
     {
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject('uploads/documents/S5-S6.xls');
+
 
         $document = new Document();
         $uploadForm = $this->createFormBuilder($document)
@@ -80,19 +81,21 @@ class AnalyseController extends Controller
             ->add('file')
             ->add('Import','submit')
             ->getForm();
-        //$uploadForm = $this->createForm($this->get('document_form'));
-
         $uploadForm->handleRequest($request);
 
-        if ($uploadForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        $excelService = $this->get('excel_service');
+        $excelData = $excelService->readExcelFile('uploads/documents/test.xlsx');
+        $za = 'dzae';
+
+        /*if ($uploadForm->isValid()) {
             $document->upload();
-            $em->persist($document);
-            $em->flush();
-        }
+            $excelService = $this->get('excel_service');
+            $test = $excelService->readExcelFile('uploads/documents/test.xlsx');
+        }*/
 
         return $this->render('analyse/create2.html.twig',array(
-            'upload_form' => $uploadForm->createView()
+            'upload_form' => $uploadForm->createView(),
+            'excelData' => $excelData
         ));
     }
 

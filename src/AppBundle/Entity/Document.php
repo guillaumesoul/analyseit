@@ -36,7 +36,7 @@ class Document
     public $path;
 
     /**
-     * @Assert\File(maxSize="6000000",mimeTypes = {"application/vnd.ms-excel", "application/vnd.ms-office"},)
+     * @Assert\File(maxSize="6000000",mimeTypes = {"application/vnd.ms-excel", "application/vnd.ms-office","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},)
      */
     private $file;
 

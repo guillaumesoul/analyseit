@@ -16,7 +16,7 @@
             {% block analyse_toolbar %}
                 <button type="button" class="btn btn-default"><i class="fa fa-3x fa-save"></i></button>
                 <button type="button" class="btn btn-default" ng-click="analyse.Chart()"><i class="fa fa-3x fa-bar-chart"></i></button>
-                <button type="button" class="btn btn-default"><input type="file" id="fileToImport" name="fileToImport"><i class="fa fa-3x fa-file-excel-o" id="fileImport"></i></button>
+                {#<button type="button" class="btn btn-default"><input type="file" id="fileToImport" name="fileToImport"><i class="fa fa-3x fa-file-excel-o" id="fileImport"></i></button>#}
                 <button type="submit" class="btn btn-default" ng-click="analyse.Reset()"><i class="fa fa-3x fa-recycle"></i></button>
             {% endblock %}
             {{ form_start(upload_form) }}
@@ -117,5 +117,8 @@
     <script src="{{ asset('js/analyseAngular.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('js/objectsModel.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('js/analyseCreate.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var excelData = '{{ excelData |json_encode()| raw }}';
+    </script>
     {% endjavascripts %}
 {% endblock %}
