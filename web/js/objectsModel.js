@@ -17,6 +17,10 @@ function Param (name) {
     this.unit = '';
     this.type = 1;  //type number see $scope.typeparamOptions in analyseAngular.js
 }
+function Dataserie () {
+    this.name = '';
+    this.values = [];
+}
 function Dataserie (name, nbvalues) {
     this.name = name;
     this.values = [];
