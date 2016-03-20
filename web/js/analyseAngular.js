@@ -12,6 +12,7 @@ typeParamArray = {
 };
 
 analyseInit = initAnalyse(3);
+bindInputValidation();
 
 angular.module('datatalkApp', ['selectize'])
     .controller('AnalyseController', function($scope) {
